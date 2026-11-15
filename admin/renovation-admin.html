@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration des rénovations | Vesubia</title>
+    <link rel="icon" type="image/png" href="logorouge.png">
+    <link rel="stylesheet" href="admin.css">
+    <style>
+        .renovation-admin { max-width: 850px; width: 92%; margin: 45px auto; color: #F5F2E9; }
+        .renovation-admin h1 { color: #FFD928; font-family: 'Playfair Display',serif; }
+        .renovation-admin .panel { background:#151518; border:1px solid rgba(255,217,40,.25); border-radius:10px; padding:25px; margin:25px 0; }
+        .renovation-admin label { display:block; margin:14px 0 7px; }
+        .renovation-admin input, .renovation-admin textarea { width:100%; box-sizing:border-box; padding:12px; color:#fff; background:#09090B; border:1px solid #555; border-radius:5px; }
+        .renovation-admin button { padding:11px 18px; margin-top:15px; border:0; border-radius:5px; background:#FFD928; color:#111; font-weight:bold; cursor:pointer; }
+        .renovation-admin .delete-post { background:#E53935; color:white; }
+        .renovation-admin .admin-post { border-top:1px solid #444; padding:18px 0; }
+        .renovation-admin .admin-post img { width:120px; height:120px; object-fit:cover; margin:8px 8px 0 0; border-radius:5px; }
+        #renovation-admin-message { color:#FFD928; }
+    </style>
+</head>
+<body class="admin-page">
+
+<header class="admin-header" style="padding:18px 4%;">
+    <a href="./dashboard.html" style="color:#FFD928;text-decoration:none;">
+    ← Retour à l'administration
+</a>
+</header>
+
+<main class="renovation-admin">
+    <section id="renovation-login" class="panel">
+        <h1>Connexion patron</h1>
+        <label for="admin-email">Adresse e-mail</label>
+        <input id="admin-email" type="email" autocomplete="username">
+        <label for="admin-password">Mot de passe</label>
+        <input id="admin-password" type="password" autocomplete="current-password">
+        <button id="renovation-login-button">Se connecter</button>
+    </section>
+
+    <section id="renovation-manager" hidden>
+        <h1>Publier une restauration</h1>
+        <form id="renovation-form" class="panel">
+            <label for="renovation-description">Texte de la publication</label>
+            <textarea id="renovation-description" rows="5" placeholder="Racontez cette restauration..."></textarea>
+
+            <label for="renovation-before">Photo AVANT</label>
+            <input id="renovation-before" type="file" accept="image/*" required>
+
+            <label for="renovation-after">Photo APRÈS</label>
+            <input id="renovation-after" type="file" accept="image/*" required>
+
+            <button id="renovation-publish-button" type="submit">Publier sur le fil d'actualité</button>
+            <p id="renovation-admin-message"></p>
+        </form>
+
+        <div class="panel">
+            <h2>Publications existantes</h2>
+            <div id="renovation-admin-posts">Chargement...</div>
+            <button id="renovation-logout-button">Se déconnecter</button>
+        </div>
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="renovation-admin.js"></script>
+</body>
+</html>

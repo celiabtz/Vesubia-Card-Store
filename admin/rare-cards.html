@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des cartes rares | Vesubia</title>
+<link rel="icon" type="image/png" href="logorouge.png">
+    <link rel="stylesheet" href="admin.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="rare-cards-admin.js" defer></script>
+</head>
+
+<body class="admin-page">
+
+<header class="admin-header">
+    <a href="dashboard.html" class="admin-brand">
+        <img src="../images/logo/logovs.png" alt="Vesubia">
+        <span>
+            <strong>VESUBIA</strong>
+            <small>CARD STORE · ADMINISTRATION</small>
+        </span>
+    </a>
+
+    <a href="dashboard.html" class="admin-back">Retour au tableau de bord</a>
+</header>
+
+<main class="admin-container">
+
+    <div class="admin-welcome">
+        <span class="admin-eyebrow">COLLECTION PRESTIGE</span>
+        <h1>Ajouter une carte rare</h1>
+        <p>Enregistrez les cartes de collection disponibles à la vente.</p>
+    </div>
+
+    <form id="rare-card-form" class="product-form">
+
+        <section class="form-section">
+            <h2>Informations générales</h2>
+
+            <label for="card-name">Nom de la carte</label>
+            <input id="card-name" type="text" required placeholder="Ex : Dracaufeu">
+
+            <div class="form-row">
+                <div>
+                    <label for="card-set">Extension</label>
+                    <input id="card-set" type="text" placeholder="Ex : Évolutions">
+                </div>
+                <div>
+                    <label for="card-number">Numéro de carte</label>
+                    <input id="card-number" type="text" placeholder="Ex : 4/108">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div>
+                    <label for="card-language">Langue</label>
+                    <select id="card-language">
+                        <option value="Français">Français</option>
+                        <option value="Japonais">Japonais</option>
+                        <option value="Anglais">Anglais</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="card-rarity">Rareté</label>
+                    <input id="card-rarity" type="text" placeholder="Ex : Illustration rare">
+                </div>
+            </div>
+        </section>
+
+        <section class="form-section">
+            <h2>Évaluation et gradation</h2>
+
+            <label for="card-grader">Organisme de gradation</label>
+            <select id="card-grader">
+                <option value="Non gradée">Non gradée</option>
+                <option value="PSA">PSA</option>
+                <option value="PCA">PCA</option>
+                <option value="CGC">CGC</option>
+                <option value="Beckett">Beckett (BGS)</option>
+                <option value="Autre">Autre</option>
+            </select>
+
+            <div class="form-row">
+                <div>
+                    <label for="card-grade">Note obtenue</label>
+                    <input id="card-grade" type="text" placeholder="Ex : 10">
+                </div>
+                <div>
+                    <label for="card-certification">Numéro de certification</label>
+                    <input id="card-certification" type="text" placeholder="Numéro officiel">
+                </div>
+            </div>
+
+            <label for="card-condition">État de la carte</label>
+            <select id="card-condition">
+                <option value="Mint">Mint</option>
+                <option value="Near Mint">Near Mint</option>
+                <option value="Excellent">Excellent</option>
+                <option value="Good">Good</option>
+                <option value="Played">Played</option>
+                <option value="Poor">Poor</option>
+            </select>
+        </section>
+
+        <section class="form-section">
+            <h2>Prix et disponibilité</h2>
+
+            <div class="form-row">
+                <div>
+                    <label for="card-price">Prix (€)</label>
+                    <input id="card-price" type="number" min="0" step="0.01" required>
+                </div>
+                <div>
+                    <label for="card-stock">Quantité disponible</label>
+                    <input id="card-stock" type="number" min="0" step="1" value="1" required>
+                </div>
+            </div>
+
+            <label class="featured-option">
+                <input id="card-available" type="checkbox" checked>
+                <span><strong>Afficher sur la boutique</strong></span>
+            </label>
+        </section>
+
+        <section class="form-section">
+            <h2>Photographie</h2>
+
+            <label for="card-image">Photo de la carte</label>
+            <input id="card-image" type="file"
+                   accept="image/jpeg,image/png,image/webp" required>
+            <small>Formats JPG, PNG ou WEBP — 5 Mo maximum.</small>
+
+            <div id="card-image-preview" class="image-preview"></div>
+        </section>
+
+        <section class="form-section">
+            <h2>Description</h2>
+            <label for="card-description">Informations complémentaires</label>
+            <textarea id="card-description" rows="5"
+                      placeholder="Description de la carte..."></textarea>
+        </section>
+
+        <div class="form-buttons">
+            <a href="dashboard.html" class="cancel-button">Annuler</a>
+            <button type="submit" id="save-card-button" class="publish-button">
+                Enregistrer la carte
+            </button>
+        </div>
+
+        <p id="rare-card-message" role="status"></p>
+
+    </form>
+</main>
+
+</body>
+</html>

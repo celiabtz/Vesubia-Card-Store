@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atelier de restauration | Vesubia Card Store</title>
+    <link rel="icon" type="image/png" href="images/logo/logovs.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="renovation-page">
+
+<header class="site-header">
+    <a href="index.html" class="brand">
+        <img src="images/logo/logovs.png" alt="Vesubia Card Store">
+        <span class="brand-name">
+            <strong>VESUBIA</strong>
+            <small>CARD STORE</small>
+        </span>
+    </a>
+
+    <nav class="main-nav">
+        <a href="index.html">Accueil</a>
+        <a href="boutique.html">Boutique</a>
+        <a href="cartes-rares.html">Cartes rares</a>
+        <a href="renovation.html" class="active">Rénovation</a>
+        <a href="histoire.html">Notre histoire</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    
+</header>
+
+<main>
+    <section class="renovation-hero">
+        <span class="renovation-eyebrow">VESUBIA CARD STORE · ATELIER</span>
+        <h1>L'art de redonner vie<br>aux cartes Pokémon</h1>
+        <p>Découvrez les restaurations réalisées dans notre atelier, étape après étape.</p>
+        <div class="renovation-line"></div>
+    </section>
+
+    <section class="renovation-feed-section">
+        <div class="renovation-feed-heading">
+            <div>
+                <span class="renovation-eyebrow">LES COULISSES DE L'ATELIER</span>
+                <h2>Nos dernières restaurations</h2>
+            </div>
+            <span class="feed-live">● ACTUALITÉS</span>
+        </div>
+
+        <div id="renovation-feed" class="renovation-feed">
+            <div class="feed-loading">Chargement des restaurations...</div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© 2026 Vesubia Card Store. Tous droits réservés.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="admin/supabase.js"></script>
+<script src="js/renovation.js"></script>
+
+</body>
+</html>

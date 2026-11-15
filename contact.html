@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service client | Vesubia Card Store</title>
+
+    <link rel="icon" type="image/png" href="images/logo/logovs.png">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body class="sav-page">
+
+<header class="site-header">
+    <a href="index.html" class="brand">
+        <img src="images/logo/logovs.png" alt="Vesubia Card Store">
+        <span class="brand-name">
+            <strong>VESUBIA</strong>
+            <small>CARD STORE</small>
+        </span>
+    </a>
+
+    <nav class="main-nav">
+        <a href="index.html">Accueil</a>
+        <a href="boutique.html">Boutique</a>
+        <a href="cartes-rares.html">Cartes rares</a>
+        <a href="renovation.html">Rénovation</a>
+        <a href="histoire.html">Notre histoire</a>
+        <a href="contact.html" class="active">Service client</a>
+    </nav>
+
+    
+</header>
+
+<main class="sav-container">
+
+    <!-- INTRODUCTION -->
+    <section class="sav-hero">
+        <span class="sav-eyebrow">VESUBIA CARD STORE · À VOTRE ÉCOUTE</span>
+        <h1>Comment pouvons-nous<br><span>vous aider ?</span></h1>
+        <p>
+            Une question sur une commande, une rénovation ou nos services ?
+            Retrouvez ici toutes les informations pour nous contacter.
+        </p>
+    </section>
+
+    <!-- RÉSEAUX SOCIAUX -->
+    <section class="sav-socials">
+        <div class="sav-social-text">
+            <span class="sav-eyebrow">RESTONS EN CONTACT</span>
+            <h2>Retrouvez-nous</h2>
+            <p>Suivez les nouveautés et l'actualité de la boutique.</p>
+        </div>
+
+        <div class="social-links">
+            <a href="https://www.facebook.com/profile.php?id=61587418525680"
+               target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+            </a>
+
+            <a href="https://www.instagram.com/vesubiacardstore/?hl=fr"
+               target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+        </div>
+
+        
+<div class="sav-contact-info">
+    <a href="https://maps.app.goo.gl/Tonyf9tKBkNFsneD7"
+       target="_blank" rel="noopener noreferrer">
+        <i class="fa-solid fa-location-dot"></i>
+        Voir notre boutique sur Google Maps
+    </a>
+
+    <a href="tel:+33635505812">
+        <i class="fa-solid fa-phone"></i>
+        06 35 55 05 12
+    </a>
+
+    <a href="mailto:poke.nikaiatcg@gmail.com">
+        <i class="fa-solid fa-envelope"></i>
+        poke.nikaiatcg@gmail.com
+    </a>
+</div>
+
+    <!-- ASSISTANCE ET FORMULAIRE -->
+    <section class="sav-support-grid">
+
+        <!-- CHATBOT -->
+        <div class="sav-chat-column">
+            <div class="sav-section-heading">
+                <span class="sav-eyebrow">ASSISTANCE IMMÉDIATE</span>
+                <h2>Une question ?</h2>
+                <p>Notre assistant vous aide à trouver rapidement une réponse.</p>
+            </div>
+
+            <div class="sav-chat">
+                <div class="sav-chat-header">
+                    <div class="sav-bot-avatar">V</div>
+                    <div class="sav-chat-identity">
+                        <strong>Assistant Vesubia</strong>
+                        <small>Assistant automatique</small>
+                    </div>
+                    <span class="sav-online">● En ligne</span>
+                </div>
+
+                <div id="sav-chat-messages" class="sav-chat-messages">
+                    <div class="sav-bot-message">
+                        Bonjour et bienvenue chez Vesubia Card Store !<br>
+                        Que souhaitez-vous savoir ?
+                    </div>
+                </div>
+
+                <div class="sav-quick-questions">
+                    <button type="button" data-question="location">
+                        <i class="fa-solid fa-location-dot"></i>
+                        Où trouver la boutique ?
+                    </button>
+
+                    <button type="button" data-question="phone">
+                        <i class="fa-solid fa-phone"></i>
+                        Quel est votre numéro ?
+                    </button>
+
+                    <button type="button" data-question="social">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        Vos réseaux sociaux
+                    </button>
+
+                    <button type="button" data-question="renovation">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        Demander une rénovation
+                    </button>
+
+                    <button type="button" data-question="sav">
+                        <i class="fa-solid fa-box"></i>
+                        Service après-vente
+                    </button>
+                </div>
+
+                <form id="sav-chat-form" class="sav-chat-input">
+                    <input
+                        id="sav-chat-text"
+                        type="text"
+                        placeholder="Écrivez votre question..."
+                        autocomplete="off"
+                    >
+                    <button type="submit" aria-label="Envoyer">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- FORMULAIRE -->
+        <div class="sav-request-column">
+            <div class="sav-section-heading">
+                <span class="sav-eyebrow">CONTACT DIRECT</span>
+                <h2>Envoyez-nous un message</h2>
+                <p>Décrivez votre besoin, notre équipe pourra vous répondre.</p>
+            </div>
+
+            <form id="sav-request-form" class="sav-form">
+
+                <div class="sav-form-field">
+                    <label for="sav-name">Votre nom</label>
+                    <input id="sav-name" type="text" required placeholder="Nom et prénom">
+                </div>
+
+                <div class="sav-form-field">
+                    <label for="sav-email">Votre adresse e-mail</label>
+                    <input id="sav-email" type="email" required placeholder="exemple@email.com">
+                </div>
+
+                <div class="sav-form-field">
+                    <label for="sav-category">Sujet de votre demande</label>
+                    <select id="sav-category" required>
+                        <option value="">Choisir une catégorie</option>
+                        <option value="Rénovation">Demande de rénovation</option>
+                        <option value="Service après-vente">Service après-vente</option>
+                        <option value="Autre demande">Autre demande</option>
+                    </select>
+                </div>
+
+                <div class="sav-form-field">
+                    <label for="sav-message">Votre message</label>
+                    <textarea
+                        id="sav-message"
+                        rows="5"
+                        required
+                        placeholder="Expliquez-nous votre demande..."
+                    ></textarea>
+                </div>
+
+                <button id="sav-submit" type="submit">
+                    Envoyer ma demande
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+                <p id="sav-form-status" role="status"></p>
+            </form>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 Vesubia Card Store. Tous droits réservés.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="admin/supabase.js"></script>
+<script src="js/sav.js"></script>
+</body>
+</html>

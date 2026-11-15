@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vesubia Card Store | Boutique Pokémon</title>
+
+    <link rel="icon" type="image/png" href="images/logo/logovs.png">
+
+    <meta name="description" content="Découvrez Vesubia Card Store, votre boutique dédiée aux cartes Pokémon, aux collectionneurs et à la rénovation de cartes.">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="admin/supabase.js"></script>
+
+    <script src="js/theme.js" defer></script>
+    <script src="js/main.js" defer></script>
+
+    <style>
+        .admin-secret-trigger {
+            background: none;
+            border: none;
+            color: inherit;
+            font: inherit;
+            cursor: pointer;
+            padding: 8px;
+            margin-left: 5px;
+            opacity: 0.65;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .admin-secret-trigger:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+
+    <a href="index.html" class="brand">
+        <img src="images/logo/logovs.png" alt="Logo Vesubia Card Store">
+
+        <span class="brand-name">
+            <strong>VESUBIA</strong>
+            <small>CARD STORE</small>
+        </span>
+    </a>
+
+    <nav class="main-nav">
+        <a href="index.html" class="active">Accueil</a>
+        <a href="boutique.html">Boutique</a>
+        <a href="cartes-rares.html">Cartes rares</a>
+        <a href="renovation.html">Rénovation</a>
+        <a href="histoire.html">Notre histoire</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+</header>
+
+<main>
+
+    <section class="featured-section">
+
+        <div class="section-heading">
+            <span class="section-eyebrow">LA SÉLECTION VESUBIA</span>
+            <h1>Nos packs à la une</h1>
+            <p>Découvrez les nouveautés et les incontournables de notre boutique.</p>
+        </div>
+
+        <div class="featured-products" id="featured-products">
+            <p class="products-loading">Chargement des produits...</p>
+        </div>
+
+        <div class="featured-footer">
+
+            <a href="boutique.html" class="all-products-button">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span>Découvrir toute la boutique</span>
+                <i class="fa-solid fa-arrow-right arrow-icon"></i>
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <p>
+        © 2026 <strong>VESUBIA CARD STORE</strong> — Tous droits réservés.
+
+        <button
+            type="button"
+            class="admin-secret-trigger"
+            id="admin-secret-trigger"
+            aria-label="Accès administration"
+            title="✦"
+        >✦</button>
+    </p>
+</footer>
+
+<script>
+    const secretButton = document.getElementById("admin-secret-trigger");
+
+    let clickCount = 0;
+    let clickTimer;
+
+    secretButton.addEventListener("click", function () {
+        clickCount++;
+
+        clearTimeout(clickTimer);
+
+        if (clickCount >= 5) {
+            window.location.href = "admin/dashboard.html";
+            return;
+        }
+
+        clickTimer = setTimeout(() => {
+            clickCount = 0;
+        }, 2500);
+    });
+</script>
+
+</body>
+</html>

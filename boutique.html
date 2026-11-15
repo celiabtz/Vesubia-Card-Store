@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Boutique Pokémon | Vesubia Card Store</title>
+    <link rel="icon" type="image/png" href="images/logo/logovs.png">
+    <meta name="description" content="Découvrez notre catalogue de cartes Pokémon, boosters, coffrets et displays.">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="admin/supabase.js"></script>
+    <script src="js/theme.js" defer></script>
+    <script src="js/main.js" defer></script>
+</head>
+
+<body>
+
+<header class="site-header">
+    <a href="index.html" class="brand">
+        <img src="images/logo/logovs.png" alt="Logo Vesubia Card Store">
+        <span class="brand-name">
+            <strong>VESUBIA</strong>
+            <small>CARD STORE</small>
+        </span>
+    </a>
+
+    <nav class="main-nav">
+        <a href="index.html">Accueil</a>
+        <a href="boutique.html" class="active">Boutique</a>
+        <a href="cartes-rares.html">Cartes rares</a>
+        <a href="renovation.html">Rénovation</a>
+        <a href="histoire.html">Notre histoire</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    
+</header>
+
+<main class="shop-page">
+
+    <section class="shop-heading shop-heading-compact">
+        <span class="section-eyebrow">L'UNIVERS VESUBIA</span>
+        <h1>Notre boutique</h1>
+    </section>
+
+    <section class="shop-catalogue">
+
+        <div class="shop-toolbar">
+            <div class="shop-search">
+                <input
+                    type="search"
+                    id="shop-search"
+                    placeholder="Rechercher un produit..."
+                    aria-label="Rechercher un produit"
+                >
+            </div>
+
+            <select id="category-filter" aria-label="Filtrer par catégorie">
+                <option value="">Toutes les catégories</option>
+                <option value="boosters">Boosters</option>
+                <option value="coffrets">Coffrets</option>
+                <option value="displays">Displays</option>
+                <option value="cartes">Cartes à l'unité</option>
+                <option value="accessoires">Accessoires</option>
+            </select>
+        </div>
+
+        <div class="shop-results">
+            <p id="shop-count">Chargement des produits...</p>
+        </div>
+
+        <div id="shop-products" class="featured-products">
+            <p>Chargement du catalogue...</p>
+        </div>
+
+        <p id="shop-message" role="status"></p>
+
+    </section>
+
+</main>
+<footer class="site-footer">
+    <p>© 2026 <strong>VESUBIA CARD STORE</strong> — Tous droits réservés.</p>
+</footer>
+</body>
+</html>
+

@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fiche produit | Vesubia Card Store</title>
+
+    <link rel="icon" type="image/png" href="images/logo/logovs.png">
+
+    <meta name="description" content="Découvrez les détails de nos produits Pokémon chez Vesubia Card Store.">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/product-detail.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="admin/supabase.js"></script>
+
+    <script src="js/theme.js" defer></script>
+    <script src="js/main.js" defer></script>
+</head>
+
+<body>
+
+<header class="site-header">
+
+    <a href="index.html" class="brand">
+        <img src="images/logo/logovs.png" alt="Logo Vesubia Card Store">
+
+        <span class="brand-name">
+            <strong>VESUBIA</strong>
+            <small>CARD STORE</small>
+        </span>
+    </a>
+
+    <nav class="main-nav">
+        <a href="index.html">Accueil</a>
+        <a href="boutique.html">Boutique</a>
+        <a href="cartes-rares.html">Cartes rares</a>
+        <a href="renovation.html">Rénovation</a>
+        <a href="histoire.html">Notre histoire</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+</header>
+
+<main class="product-page">
+
+    <a class="product-back-link" href="boutique.html">
+        <i class="fa-solid fa-arrow-left"></i>
+        Retour à la boutique
+    </a>
+
+    <section
+        id="product-detail"
+        class="product-detail-layout"
+        aria-live="polite"
+    >
+        <p>Chargement du produit…</p>
+    </section>
+
+    <section
+        id="related-products-section"
+        class="related-products-section"
+        hidden
+    >
+
+        <div class="section-heading">
+            <span class="section-eyebrow">LA SÉLECTION VESUBIA</span>
+            <h2>Vous pourriez aussi aimer</h2>
+        </div>
+
+        <div id="related-products" class="featured-products"></div>
+
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <p>© 2026 <strong>VESUBIA CARD STORE</strong> — Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

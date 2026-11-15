@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cartes rares | Vesubia Card Store</title>
+    <link rel="icon" type="image/png" href="images/logo/logovs.png">
+
+    <meta name="description" content="Découvrez notre collection de cartes Pokémon rares et gradées.">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="rare-page">
+
+    <!-- NAVIGATION -->
+    
+<header class="site-header">
+
+        <a href="index.html" class="brand">
+            <img src="images/logo/logovs.png"
+                 alt="Logo Vesubia Card Store">
+
+            <span class="brand-name">
+                <strong>VESUBIA</strong>
+                <small>CARD STORE</small>
+            </span>
+        </a>
+
+        <nav class="main-nav">
+            <a href="index.html">Accueil</a>
+<a href="boutique.html">Boutique</a>
+<a href="cartes-rares.html" class="active">Cartes rares</a>
+<a href="renovation.html">Rénovation</a>
+<a href="histoire.html">Notre histoire</a>
+<a href="contact.html">Contact</a>
+        </nav>
+
+    
+    </header>
+
+    <main>
+
+        <section class="rare-hero">
+            <span class="rare-eyebrow">
+                VESUBIA CARD STORE · COLLECTION
+            </span>
+
+            <h1>Cartes <span>rares</span></h1>
+
+            <p>
+                Découvrez notre sélection de cartes Pokémon d'exception.
+                Cartes gradées, pièces de collection et illustrations rares :
+                chaque carte possède son histoire.
+            </p>
+        </section>
+
+        <section class="rare-container">
+
+            <div class="rare-intro">
+                <div>
+                    <span class="rare-eyebrow">NOTRE SÉLECTION</span>
+                    <h2>La collection</h2>
+                    <p>Découvrez les pièces disponibles dans notre catalogue.</p>
+                </div>
+            </div>
+
+            <div class="rare-filters">
+                <button class="rare-filter active" data-filter="all">Toutes les cartes</button>
+                <button class="rare-filter" data-filter="psa">PSA</button>
+                <button class="rare-filter" data-filter="pca">PCA</button>
+                <button class="rare-filter" data-filter="cgc">CGC</button>
+                <button class="rare-filter" data-filter="raw">Non gradées</button>
+            </div>
+
+            <div class="rare-grid" id="rare-cards-grid">
+
+                <div class="rare-empty" id="rare-empty">
+                    <span>✧</span>
+                    <h3>La collection arrive bientôt</h3>
+                    <p>Nos cartes rares seront bientôt disponibles ici.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <!-- Footer commun à Vesubia -->
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/carte-rares.js"></script>
+
+</body>
+</html>
