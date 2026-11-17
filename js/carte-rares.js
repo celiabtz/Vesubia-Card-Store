@@ -29,7 +29,11 @@ async function loadRareCards() {
 
     cards.forEach(card => {
         const article = document.createElement("article");
-        article.className = "rare-card";
+        const tier = ["bronze", "gold", "diamond"].includes(card.tier)
+    ? card.tier
+    : "";
+
+article.className = "rare-card" + (tier ? " tier-" + tier : "");
 
         const grader = card.grader || "Non gradée";
 

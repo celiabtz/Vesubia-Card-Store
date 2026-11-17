@@ -85,7 +85,7 @@ async function showAdmin(user) {
         return;
     }
 
-    showProductForm(user);
+   window.location.replace("dashboard.html");
 }
 
 // ==========================================
@@ -109,8 +109,16 @@ async function initializeAdmin() {
     }
 
     if (data.session) {
-        await showAdmin(data.session.user);
+    const isAdmin = await checkAdmin(data.session.user);
+
+    if (!isAdmin) {
+        await supabaseClient.auth.signOut();
+        showLogin("Ce compte n'a pas les droits administrateur.");
+        return;
     }
+
+    showProductForm(data.session.user);
+}
 }
 
 // ==========================================

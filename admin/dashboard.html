@@ -1,20 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Administration | Vesubia Card Store</title>
- <link rel="icon" type="image/png" href="logorouge.png">
+    <link rel="icon" type="image/png" href="logorouge.png">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="admin.css">
-
-    <script src="admin.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="dashboard-auth.js" defer></script>
 </head>
-
 <body class="admin-page">
-
     <header class="admin-header">
         <a href="../index.html" class="admin-brand">
             <img src="../images/logo/logovs.png" alt="Vesubia Card Store">
@@ -23,14 +20,13 @@
                 <small>CARD STORE · ADMINISTRATION</small>
             </span>
         </a>
-
-        <a href="../index.html" class="admin-back">
-            Voir la boutique ↗
-        </a>
+        <div class="admin-header-actions">
+            <a href="../index.html" class="admin-back">Voir la boutique ↗</a>
+            <button type="button" id="dashboard-logout" class="dashboard-logout">Déconnexion</button>
+        </div>
     </header>
 
     <main class="admin-container">
-
         <section class="admin-welcome">
             <span class="admin-eyebrow">ESPACE PROFESSIONNEL</span>
             <h1>Tableau de bord</h1>
@@ -38,135 +34,132 @@
         </section>
 
         <section class="admin-stats">
-
-            <article class="admin-stat">
+            <button type="button" class="admin-stat stat-clickable" data-filter="all">
                 <span>Produits</span>
-                <strong>0</strong>
-                <small>Dans la boutique</small>
-            </article>
-
-            <article class="admin-stat">
+                <strong id="stat-products">—</strong>
+                <small>Voir tout le catalogue</small>
+            </button>
+            <button type="button" class="admin-stat stat-clickable" data-filter="featured">
                 <span>À la une</span>
-                <strong>0</strong>
-                <small>Produits mis en avant</small>
-            </article>
-
-            <article class="admin-stat">
+                <strong id="stat-featured">—</strong>
+                <small>Voir les produits mis en avant</small>
+            </button>
+            <button type="button" class="admin-stat stat-clickable" data-filter="low-stock">
                 <span>Stock faible</span>
-                <strong>0</strong>
-                <small>À surveiller</small>
-            </article>
-
+                <strong id="stat-low-stock">—</strong>
+                <small>Voir les produits à surveiller</small>
+            </button>
         </section>
 
-        <!-- GESTION DES PRODUITS -->
+        <section id="dashboard-product-list" class="admin-section" hidden>
+            <div class="admin-section-heading">
+                <div>
+                    <span class="admin-eyebrow">GESTION DU STOCK</span>
+                    <h2 id="dashboard-list-title">Produits</h2>
+                </div>
+                <button type="button" id="close-product-list">Fermer ✕</button>
+            </div>
+            <div id="dashboard-products-content"></div>
+        </section>
 
         <section class="admin-section">
-
             <div class="admin-section-heading">
                 <div>
                     <span class="admin-eyebrow">CATALOGUE</span>
                     <h2>Gestion des produits</h2>
                 </div>
             </div>
-
             <div class="admin-actions">
-
                 <a href="admin.html" class="admin-action-card">
                     <span class="admin-action-icon">＋</span>
                     <strong>Ajouter un produit</strong>
                     <small>Photo, description, prix et stock</small>
                 </a>
-
                 <a href="admin.html" class="admin-action-card">
                     <span class="admin-action-icon">★</span>
                     <strong>Produits à la une</strong>
                     <small>Choisir les produits de l'accueil</small>
                 </a>
-
                 <a href="admin.html" class="admin-action-card">
                     <span class="admin-action-icon">▤</span>
                     <strong>Catalogue complet</strong>
                     <small>Modifier et gérer les articles</small>
                 </a>
-
                 <a href="admin.html" class="admin-action-card">
                     <span class="admin-action-icon">▣</span>
                     <strong>Gestion des stocks</strong>
                     <small>Suivre les quantités disponibles</small>
                 </a>
-
                 <a href="messages.html" class="admin-action-card">
                     <span class="admin-action-icon">✉</span>
                     <strong>Messages clients</strong>
                     <small>Consulter et gérer les demandes reçues</small>
                 </a>
-
                 <a href="products.html" class="admin-action-card">
                     <span class="admin-action-icon">✎</span>
                     <strong>Gérer les produits</strong>
                     <small>Modifier ou supprimer les produits de la boutique</small>
                 </a>
-
             </div>
-
         </section>
 
-        <!-- NOUVELLE RUBRIQUE RENOVATION -->
-
         <section class="admin-section">
-
             <div class="admin-section-heading">
                 <div>
                     <span class="admin-eyebrow">RESTAURATION & COLLECTION</span>
                     <h2>Rénovation de cartes</h2>
                 </div>
             </div>
-
             <div class="admin-actions">
-
                 <a href="renovation-admin.html" class="admin-action-card">
                     <span class="admin-action-icon">✧</span>
                     <strong>Avant / Après</strong>
                     <small>Publier les transformations de cartes Pokémon</small>
                 </a>
-
                 <a href="renovation-admin.html" class="admin-action-card">
                     <span class="admin-action-icon">★</span>
                     <strong>Notes de rénovation</strong>
                     <small>Afficher les notes obtenues après restauration</small>
                 </a>
-
                 <a href="renovation-admin.html" class="admin-action-card">
                     <span class="admin-action-icon">▧</span>
                     <strong>Galerie des rénovations</strong>
                     <small>Gérer les photos et les descriptions publiées</small>
                 </a>
-
             </div>
-
         </section>
+        <!-- COLLECTION PRESTIGE -->
+<section class="admin-section">
+    <div class="admin-section-heading">
+        <div>
+            <span class="admin-eyebrow">COLLECTION PRESTIGE</span>
+            <h2>Cartes rares</h2>
+        </div>
+    </div>
 
-        <!-- ACTIVITE -->
+    <div class="admin-actions">
+        <a href="rare-cards.html" class="admin-action-card">
+            <span class="admin-action-icon">✧</span>
+            <strong>Ajouter une carte rare</strong>
+            <small>Photo, gradation, prix et classement prestige</small>
+        </a>
+    </div>
+</section>
 
+        <!-- GESTION DES AVIS CLIENTS -->
         <section class="admin-section">
-
             <div class="admin-section-heading">
                 <div>
-                    <span class="admin-eyebrow">ACTIVITÉ</span>
-                    <h2>Derniers produits ajoutés</h2>
+                    <span class="admin-eyebrow">RETOURS CLIENTS</span>
+                    <h2>Gestion des avis</h2>
                 </div>
+                <button type="button" id="refresh-reviews" class="reviews-refresh-button">Actualiser</button>
             </div>
-
-            <div class="admin-empty">
-                <span>◇</span>
-                <h3>Aucun produit pour le moment</h3>
-                <p>Vos prochaines nouveautés apparaîtront ici.</p>
-            </div>
-
+            <p id="reviews-admin-message" class="reviews-admin-message" role="status" aria-live="polite">
+                Les avis clients apparaîtront ici.
+            </p>
+            <div id="dashboard-reviews-list" class="dashboard-reviews-list"></div>
         </section>
-
     </main>
-
 </body>
 </html>

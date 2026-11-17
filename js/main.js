@@ -8,6 +8,77 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const PRODUCT_PAGE = "produit.html";
 
+let currentUser = null;
+let wishlistIds = new Set();
+
+async function loadWishlist() {
+    const { data: { user }, error: authError } =
+        await supabaseClient.auth.getUser();
+
+    if (authError) throw authError;
+
+    currentUser = user;
+
+    if (!currentUser) return;
+
+    const { data, error } = await supabaseClient
+        .from("wishlist")
+        .select("product_id")
+        .eq("user_id", currentUser.id);
+
+    if (error) throw error;
+
+    wishlistIds = new Set((data || []).map(item => String(item.product_id)));
+}
+
+async function toggleWishlist(product, button) {
+    if (!currentUser) {
+        window.location.href = "connexion.html";
+        return;
+    }
+
+    const productId = String(product.id);
+    const isFavorite = wishlistIds.has(productId);
+
+    button.disabled = true;
+
+    try {
+        if (isFavorite) {
+            const { error } = await supabaseClient
+                .from("wishlist")
+                .delete()
+                .eq("user_id", currentUser.id)
+                .eq("product_id", productId);
+
+            if (error) throw error;
+
+            wishlistIds.delete(productId);
+        } else {
+            const { error } = await supabaseClient
+                .from("wishlist")
+                .insert({
+                    user_id: currentUser.id,
+                    product_id: productId
+                });
+
+            if (error) throw error;
+
+            wishlistIds.add(productId);
+        }
+
+        button.classList.toggle("is-favorite", wishlistIds.has(productId));
+        button.innerHTML = wishlistIds.has(productId)
+            ? '<i class="fa-solid fa-heart"></i>'
+            : '<i class="fa-regular fa-heart"></i>';
+
+    } catch (error) {
+        console.error("Erreur favoris :", error);
+        alert("Impossible de modifier votre liste d'envies.");
+    } finally {
+        button.disabled = false;
+    }
+}
+
     function formatPrice(price) {
         const value = Number(price);
 
@@ -65,6 +136,31 @@ document.addEventListener("DOMContentLoaded", async () => {
         image.loading = "lazy";
 
         imageWrapper.appendChild(image);
+
+
+const favoriteButton = document.createElement("button");
+favoriteButton.type = "button";
+favoriteButton.className = "wishlist-button";
+
+const isFavorite = wishlistIds.has(String(product.id));
+
+favoriteButton.classList.toggle("is-favorite", isFavorite);
+favoriteButton.innerHTML = isFavorite
+    ? '<i class="fa-solid fa-heart"></i>'
+    : '<i class="fa-regular fa-heart"></i>';
+
+favoriteButton.setAttribute(
+    "aria-label",
+    isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"
+);
+
+favoriteButton.addEventListener("click", event => {
+    event.stopPropagation();
+    toggleWishlist(product, favoriteButton);
+});
+
+imageWrapper.appendChild(favoriteButton);
+
 
         // BADGE À LA UNE
         if (featured && product.featured) {
@@ -394,10 +490,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     // DÉMARRAGE
     // ==========================================
 
-    await Promise.all([
-        loadFeaturedProducts(),
-        loadShopProducts(),
-        loadProductDetail()
-    ]);
+    try {
+    await loadWishlist();
+} catch (error) {
+    console.error("Erreur chargement favoris :", error);
+}
+
+await Promise.all([
+    loadFeaturedProducts(),
+    loadShopProducts(),
+    loadProductDetail()
+]);
 
 });

@@ -117,6 +117,7 @@ form.addEventListener("submit", async (event) => {
             card_number: document.getElementById("card-number").value.trim(),
             language: document.getElementById("card-language").value,
             rarity: document.getElementById("card-rarity").value.trim(),
+            tier: document.getElementById("card-tier").value || null,
             grader: document.getElementById("card-grader").value,
             grade: document.getElementById("card-grade").value.trim(),
             certification: document.getElementById("card-certification").value.trim(),
