@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes favoris | Vesubia Card Store</title>
+<link rel="icon" type="image/png" href="images/logo/logovs.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="admin/supabase.js"></script>
+</head>
+
+<body>
+
+    <main class="cart-page">
+        <a href="index.html" class="cart-back">
+            <i class="fa-solid fa-arrow-left"></i> Retour à la boutique
+        </a>
+
+        <p class="section-eyebrow">VESUBIA CARD STORE</p>
+        <h1>Mes favoris</h1>
+        <p>Retrouvez toutes les cartes que vous avez aimées.</p>
+
+        <div id="favorite-products" class="featured-products">
+            <p>Chargement de vos favoris...</p>
+        </div>
+
+        <div class="cart-summary">
+            <h2>Valeur totale : <span id="favorites-total">0,00 €</span></h2>
+            <a href="contact.html" class="product-button">
+                Contacter la boutique
+            </a>
+        </div>
+    </main>
+<script src="js/favoris.js"></script>
+</body>
+</html>

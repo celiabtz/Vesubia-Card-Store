@@ -138,6 +138,7 @@ async function toggleWishlist(product, button) {
         imageWrapper.appendChild(image);
 
 
+
 const favoriteButton = document.createElement("button");
 favoriteButton.type = "button";
 favoriteButton.className = "wishlist-button";
@@ -160,6 +161,7 @@ favoriteButton.addEventListener("click", event => {
 });
 
 imageWrapper.appendChild(favoriteButton);
+
 
 
         // BADGE À LA UNE

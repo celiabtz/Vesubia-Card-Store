@@ -2327,7 +2327,12 @@ body.light-theme footer {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background: #101013 !important;
+    background: radial-gradient(
+    ellipse at center,
+    rgba(214, 180, 91, 0.20) 0%,
+    rgba(214, 180, 91, 0.08) 45%,
+    transparent 75%
+), #0d0d10 !important;
 }
 
 #featured-products .product-image img {
@@ -5050,6 +5055,16 @@ body.light-theme footer {
     margin-bottom: 24px !important;
 }
 
+
+/* ACCUEIL — SUPPRESSION DE L'ESPACE NOIR */
+.featured-section {
+    width: 82% !important;
+    max-width: 1450px !important;
+    margin: 0 auto !important;
+    padding: 0 0 25px !important;
+}
+
+
 /* Produits : trois colonnes équilibrées */
 .featured-section .featured-products {
     display: grid !important;
@@ -5081,7 +5096,7 @@ body.light-theme footer {
 @media (max-width: 650px) {
     .featured-section {
         width: 100% !important;
-        padding: 30px 16px 25px !important;
+        padding: 0 16px 25px !important;
     }
 
     .featured-section .section-heading {
@@ -5207,5 +5222,435 @@ body.light-theme footer {
     .featured-section .product-button {
         padding: 7px 9px !important;
         font-size: 12px !important;
+    }
+}
+
+
+/* ACCUEIL — CARTES RAPPROCHÉES */
+@media (min-width: 651px) {
+    .featured-section .featured-products {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: stretch !important;
+        gap: 32px !important;
+        width: 100% !important;
+    }
+
+    .featured-section .featured-products .product-card {
+        flex: 0 1 320px !important;
+        width: 320px !important;
+        max-width: 320px !important;
+        margin: 0 !important;
+    }
+}
+
+
+/* HALO DORÉ — PRODUITS À LA UNE */
+#featured-products .product-image {
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(214, 180, 91, 0.20) 0%,
+            rgba(214, 180, 91, 0.08) 45%,
+            transparent 75%
+        ),
+        #0d0d10 !important;
+}#featured-products .product-image {
+    background: radial-gradient(
+        ellipse at center,
+        rgba(214, 180, 91, 0.45) 0%,
+        rgba(214, 180, 91, 0.20) 45%,
+        #0d0d10 80%
+    ) !important;
+}
+/* =====================================
+   PAGE MES FAVORIS — VESUBIA
+===================================== */
+
+.cart-page {
+    width: min(1100px, calc(100% - 40px));
+    margin: 70px auto 100px;
+    color: #F5F2E9;
+}
+
+.cart-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 55px;
+    color: #D6B45B;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color .3s ease;
+}
+
+.cart-back:hover {
+    color: #FFD928;
+}
+
+.cart-page .section-eyebrow {
+    color: #D6B45B;
+    letter-spacing: 5px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.cart-page > h1 {
+    margin: 15px 0;
+    color: #F5F2E9;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 6vw, 68px);
+    font-weight: 500;
+}
+
+.cart-page > p:not(.section-eyebrow) {
+    color: #aaa7a0;
+    font-size: 15px;
+    margin-bottom: 35px;
+}
+
+#favorite-products {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+    margin: 35px 0;
+}
+
+#favorite-products .product-card {
+    overflow: hidden;
+    background: #151518;
+    border: 1px solid rgba(214,180,91,.28);
+    border-radius: 12px;
+    transition: transform .3s ease, border-color .3s ease;
+}
+
+#favorite-products .product-card:hover {
+    transform: translateY(-5px);
+    border-color: #D6B45B;
+}
+
+#favorite-products .product-image {
+    height: 260px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(
+        ellipse,
+        rgba(214,180,91,.16),
+        transparent 70%
+    ), #0d0d10;
+    position: relative;
+}
+
+#favorite-products .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#favorite-products .product-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#favorite-products .product-info h2 {
+    color: #F5F2E9;
+    font-size: 18px;
+}
+
+#favorite-products .product-price {
+    color: #D6B45B;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+#favorite-products .wishlist-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.cart-summary {
+    margin-top: 45px;
+    padding: 30px;
+    background: #151518;
+    border: 1px solid rgba(214,180,91,.3);
+    border-radius: 12px;
+}
+
+.cart-summary h2 {
+    color: #F5F2E9;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    margin-bottom: 22px;
+}
+
+.cart-summary h2 span {
+    color: #D6B45B;
+}
+
+.cart-summary .product-button {
+    display: inline-flex;
+    margin-top: 15px;
+    padding: 14px 25px;
+}
+
+@media (max-width: 750px) {
+    .cart-page {
+        margin-top: 35px;
+    }
+
+    #favorite-products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    #favorite-products .product-image {
+        height: 190px;
+    }
+}
+
+@media (max-width: 450px) {
+    #favorite-products {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =====================================
+   MES FAVORIS — PRÉSENTATION FAÇON PANIER
+===================================== */
+
+#favorite-products {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    margin: 35px 0 !important;
+}
+
+#favorite-products .product-card {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 24px !important;
+    width: 100% !important;
+    min-height: 145px !important;
+    padding: 15px !important;
+    box-sizing: border-box !important;
+    background: #151518 !important;
+    border: 1px solid rgba(214,180,91,.25) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+#favorite-products .product-image {
+    position: relative !important;
+    flex: 0 0 105px !important;
+    width: 105px !important;
+    height: 125px !important;
+    min-height: 125px !important;
+    padding: 8px !important;
+    background: #0d0d10 !important;
+    border-radius: 8px !important;
+}
+
+#favorite-products .product-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+}
+
+#favorite-products .product-info {
+    flex: 1 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 15px !important;
+    padding: 10px !important;
+}
+
+#favorite-products .product-info h2 {
+    color: #F5F2E9 !important;
+    font-size: 19px !important;
+    margin: 0 !important;
+}
+
+#favorite-products .product-price {
+    color: #D6B45B !important;
+    font-size: 21px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+}
+
+#favorite-products .wishlist-button {
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    z-index: 2 !important;
+}
+
+.cart-summary {
+    margin-top: 25px !important;
+    padding: 25px !important;
+    background: #151518 !important;
+    border: 1px solid rgba(214,180,91,.3) !important;
+    border-radius: 12px !important;
+}
+
+.cart-summary h2 {
+    color: #F5F2E9 !important;
+    font-size: 25px !important;
+}
+
+.cart-summary h2 span {
+    color: #D6B45B !important;
+}
+
+@media (max-width: 600px) {
+    #favorite-products .product-card {
+        gap: 12px !important;
+        min-height: 115px !important;
+        padding: 10px !important;
+    }
+
+    #favorite-products .product-image {
+        flex-basis: 85px !important;
+        width: 85px !important;
+        height: 105px !important;
+        min-height: 105px !important;
+    }
+
+    #favorite-products .product-info {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+    }
+
+    #favorite-products .product-info h2 {
+        font-size: 16px !important;
+    }
+
+    #favorite-products .product-price {
+        font-size: 18px !important;
+    }
+}
+
+/* CORRECTION — FAVORIS FORMAT PANIER PREMIUM */
+
+.cart-page {
+    width: min(1100px, calc(100% - 60px)) !important;
+    max-width: 1100px !important;
+    margin: 65px auto !important;
+}
+
+#favorite-products {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: none !important;
+    gap: 16px !important;
+}
+
+#favorite-products .product-card {
+    display: grid !important;
+    grid-template-columns: 110px minmax(0, 1fr) !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 145px !important;
+    padding: 16px !important;
+    gap: 25px !important;
+    box-sizing: border-box !important;
+    background: #151518 !important;
+    border: 1px solid rgba(214,180,91,.25) !important;
+    border-radius: 12px !important;
+}
+
+#favorite-products .product-image {
+    position: relative !important;
+    width: 110px !important;
+    height: 115px !important;
+    min-height: 115px !important;
+    padding: 8px !important;
+    background: #0d0d10 !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+}
+
+#favorite-products .product-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+}
+
+#favorite-products .product-info {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 10px !important;
+    gap: 20px !important;
+    background: transparent !important;
+}
+
+#favorite-products .product-info h2 {
+    flex: 1 !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    color: #F5F2E9 !important;
+    font-size: 20px !important;
+    line-height: 1.4 !important;
+    background: transparent !important;
+}
+
+#favorite-products .product-price {
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    color: #D6B45B !important;
+    font-size: 21px !important;
+    white-space: nowrap !important;
+}
+
+#favorite-products .wishlist-button {
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    z-index: 5 !important;
+}
+
+@media (max-width: 600px) {
+    .cart-page {
+        width: calc(100% - 28px) !important;
+    }
+
+    #favorite-products .product-card {
+        grid-template-columns: 85px minmax(0, 1fr) !important;
+        gap: 12px !important;
+        padding: 10px !important;
+    }
+
+    #favorite-products .product-image {
+        width: 85px !important;
+        height: 105px !important;
+        min-height: 105px !important;
+    }
+
+    #favorite-products .product-info {
+        gap: 8px !important;
+        padding: 5px !important;
+    }
+
+    #favorite-products .product-info h2 {
+        font-size: 15px !important;
+    }
+
+    #favorite-products .product-price {
+        font-size: 16px !important;
     }
 }
