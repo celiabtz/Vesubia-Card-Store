@@ -11,6 +11,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="card-recognition.js" defer></script>
+    <script async src="https://docs.opencv.org/4.x/opencv.js"></script>
+    <script src="card-scanner.js" defer></script>
   <script src="admin.js" defer></script>
 </head>
 
@@ -89,23 +93,87 @@
 
             <form id="product-form" class="product-form">
 
-                <section class="form-section">
-                    <h2>01. Photo du produit</h2>
+                
+<section class="form-section scanner-section">
 
-                    <label for="product-image" class="image-upload">
-                        <span class="upload-icon">＋</span>
-                        <strong>Ajouter une photo</strong>
-                        <small>JPG, PNG ou WEBP — 5 Mo maximum</small>
-                        <input
-                            type="file"
-                            id="product-image"
-                            accept="image/jpeg,image/png,image/webp"
-                            required
-                        >
-                    </label>
+    <div class="scanner-heading">
+        <span class="admin-eyebrow">VESUBIA DIGITAL SCAN</span>
+        <h2>01. Scanner une carte</h2>
+        <p>Transformez votre photographie en visuel propre et uniforme.</p>
+    </div>
 
-                    <div id="image-preview" class="image-preview"></div>
-                </section>
+    <div class="scanner-upload">
+
+        <div class="scanner-upload-icon">✧</div>
+
+        <h3>Importez votre carte Pokémon</h3>
+
+        <p>Choisissez une photographie depuis votre ordinateur.</p>
+
+        <label for="product-image" class="scanner-upload-button">
+            + Choisir une photo
+        </label>
+
+        <input
+            type="file"
+            id="product-image"
+            accept="image/jpeg,image/png,image/webp"
+            required
+        >
+
+        <small>JPG, PNG ou WEBP · 5 Mo maximum</small>
+
+    </div>
+
+    <div class="scanner-actions">
+        <button
+            type="button"
+            id="scan-card-button"
+            class="publish-button">
+            ✨ Scanner et améliorer
+        </button>
+
+
+<div class="vesubia-hd-options">
+
+    <label for="scan-quality">QUALITÉ DU SCAN</label>
+
+    <select id="scan-quality">
+        <option value="natural">Naturel — fidèle à l'original</option>
+        <option value="balanced" selected>Équilibré — recommandé</option>
+        <option value="premium">Premium — lumineux et détaillé</option>
+    </select>
+
+    <p>Les reflets holographiques et les détails originaux sont préservés.</p>
+
+</div>
+
+    </div>
+
+    <div class="scanner-preview">
+
+        <div class="scanner-preview-heading">
+            <h3>Aperçu de votre carte</h3>
+            <span>AVANT / APRÈS</span>
+        </div>
+
+        <div class="scanner-preview-grid">
+
+            <div class="scanner-preview-card">
+                <span>PHOTO ORIGINALE</span>
+                <div id="original-preview"></div>
+            </div>
+
+            <div class="scanner-preview-card">
+                <span>RÉSULTAT NUMÉRIQUE</span>
+                <div id="image-preview" class="image-preview"></div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
 
                 <section class="form-section">
                     <h2>02. Informations du produit</h2>

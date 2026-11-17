@@ -54,27 +54,42 @@
         </span>
     </a>
 
-    <nav class="main-nav">
+    <button class="menu-toggle"
+            id="menu-toggle"
+            type="button"
+            aria-label="Ouvrir le menu"
+            aria-expanded="false"
+            aria-controls="main-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <nav class="main-nav" id="main-nav">
+
         <a href="index.html" class="active">Accueil</a>
         <a href="boutique.html">Boutique</a>
-     <a href="cartes-rares.html">Cartes rares</a>
+        <a href="cartes-rares.html">Cartes rares</a>
         <a href="renovation.html">Rénovation</a>
         <a href="histoire.html">Notre histoire</a>
         <a href="contact.html">Contact</a>
-  <a href="connexion.html" class="header-account-btn">
-    <i class="fa-regular fa-user"></i>
-    Connexion
-</a>
-<a href="avis.html" class="header-avis-btn">
-    <span>★</span> Avis
-</a>
- <a href="favoris.html">
-    <i class="fa-regular fa-heart"></i>
-</a>
+
+        <a href="connexion.html" class="header-account-btn">
+            <i class="fa-regular fa-user"></i>
+            Connexion
+        </a>
+
+        <a href="avis.html" class="header-avis-btn">
+            <span>★</span> Avis
+        </a>
+
+        <a href="favoris.html" aria-label="Favoris">
+            <i class="fa-regular fa-heart"></i>
+        </a>
+
     </nav>
 
 </header>
-
 <main>
 
     <section class="featured-section">
@@ -138,6 +153,52 @@
         }, 2500);
     });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
 
+    const menuButton = document.getElementById("menu-toggle");
+    const menu = document.getElementById("main-nav");
+
+    if (!menuButton || !menu) return;
+
+    function closeMenu() {
+        menu.classList.remove("is-open");
+        menuButton.classList.remove("active");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "Ouvrir le menu");
+    }
+
+    menuButton.addEventListener("click", () => {
+
+        const isOpen = menu.classList.toggle("is-open");
+
+        menuButton.classList.toggle("active", isOpen);
+        menuButton.setAttribute("aria-expanded", isOpen);
+        menuButton.setAttribute(
+            "aria-label",
+            isOpen ? "Fermer le menu" : "Ouvrir le menu"
+        );
+
+    });
+
+    menu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("click", (event) => {
+        if (
+            !menu.contains(event.target) &&
+            !menuButton.contains(event.target)
+        ) {
+            closeMenu();
+        }
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeMenu();
+    });
+
+});
+</script>
 </body>
 </html>

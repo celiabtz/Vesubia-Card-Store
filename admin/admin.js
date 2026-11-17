@@ -1,389 +1,465 @@
-
 // ==========================================
-// VESUBIA CARD STORE - ADMINISTRATION
-// AVEC DÉTOURAGE AUTOMATIQUE REMOVE.BG
-// ==========================================
-
-const loginSection = document.getElementById("login-section");
-const productSection = document.getElementById("product-section");
-
-const loginForm = document.getElementById("login-form");
-const productForm = document.getElementById("product-form");
-
-const loginMessage = document.getElementById("login-message");
-const formMessage = document.getElementById("form-message");
-
-const logoutButton = document.getElementById("logout-button");
-const publishButton = document.getElementById("publish-button");
-
-const imageInput = document.getElementById("product-image");
-const imagePreview = document.getElementById("image-preview");
-
-let currentUser = null;
-let processedImageFile = null;
-let previewUrl = null;
-let isProcessingImage = false;
-
-// ==========================================
-// GESTION APERÇU
+// VESUBIA CARD STORE — ADMINISTRATION
+// Version stable sans Remove.bg
 // ==========================================
 
-function clearImagePreview() {
-    if (previewUrl) {
-        URL.revokeObjectURL(previewUrl);
-        previewUrl = null;
+(() => {
+    "use strict";
+
+    const loginSection = document.getElementById("login-section");
+    const productSection = document.getElementById("product-section");
+    const loginForm = document.getElementById("login-form");
+    const productForm = document.getElementById("product-form");
+    const loginMessage = document.getElementById("login-message");
+    const formMessage = document.getElementById("form-message");
+    const logoutButton = document.getElementById("logout-button");
+    const publishButton = document.getElementById("publish-button");
+    const imageInput = document.getElementById("product-image");
+    const originalPreview = document.getElementById("original-preview");
+    const imagePreview = document.getElementById("image-preview");
+    const scanCardButton = document.getElementById("scan-card-button");
+
+    let currentUser = null;
+    let processedImageFile = null;
+    let originalPreviewUrl = null;
+    let previewUrl = null;
+    let isProcessingImage = false;
+    let isPublishing = false;
+
+    function setMessage(element, message, isError = false) {
+        if (!element) return;
+        element.textContent = message;
+        element.style.color = isError ? "#ff7777" : "";
     }
 
-    imagePreview.innerHTML = "";
-    processedImageFile = null;
-}
-
-// ==========================================
-// AFFICHAGE
-// ==========================================
-
-function showLogin(message = "") {
-    loginSection.hidden = false;
-    productSection.hidden = true;
-    logoutButton.hidden = true;
-    loginMessage.textContent = message;
-}
-
-function showProductForm(user) {
-    currentUser = user;
-    loginSection.hidden = true;
-    productSection.hidden = false;
-    logoutButton.hidden = false;
-}
-
-// ==========================================
-// VÉRIFICATION ADMINISTRATEUR
-// ==========================================
-
-async function checkAdmin(user) {
-    const { data, error } = await supabaseClient
-        .from("admin_users")
-        .select("user_id")
-        .eq("user_id", user.id)
-        .maybeSingle();
-
-    if (error) {
-        console.error("Erreur de vérification :", error);
-        return false;
-    }
-
-    return !!data;
-}
-
-async function showAdmin(user) {
-    const isAdmin = await checkAdmin(user);
-
-    if (!isAdmin) {
-        await supabaseClient.auth.signOut();
-        currentUser = null;
-        showLogin("Ce compte n'a pas les droits administrateur.");
-        return;
-    }
-
-   window.location.replace("dashboard.html");
-}
-
-// ==========================================
-// INITIALISATION
-// ==========================================
-
-async function initializeAdmin() {
-    showLogin();
-
-    if (!window.supabase || typeof supabaseClient === "undefined") {
-        loginMessage.textContent = "Erreur de connexion à Supabase.";
-        return;
-    }
-
-    const { data, error } = await supabaseClient.auth.getSession();
-
-    if (error) {
-        console.error(error);
-        showLogin("Impossible de vérifier la connexion.");
-        return;
-    }
-
-    if (data.session) {
-    const isAdmin = await checkAdmin(data.session.user);
-
-    if (!isAdmin) {
-        await supabaseClient.auth.signOut();
-        showLogin("Ce compte n'a pas les droits administrateur.");
-        return;
-    }
-
-    showProductForm(data.session.user);
-}
-}
-
-// ==========================================
-// CONNEXION
-// ==========================================
-
-loginForm.addEventListener("submit", async function(event) {
-    event.preventDefault();
-
-    loginMessage.textContent = "Connexion en cours...";
-
-    const email = document.getElementById("login-email").value.trim();
-    const password = document.getElementById("login-password").value;
-
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-    });
-
-    if (error) {
-        console.error(error);
-        loginMessage.textContent = "E-mail ou mot de passe incorrect.";
-        return;
-    }
-
-    await showAdmin(data.user);
-});
-
-// ==========================================
-// DÉCONNEXION
-// ==========================================
-
-logoutButton.addEventListener("click", async function() {
-    await supabaseClient.auth.signOut();
-
-    currentUser = null;
-    productForm.reset();
-    clearImagePreview();
-
-    showLogin("Tu es déconnecté.");
-});
-
-// ==========================================
-// DÉTOURAGE AUTOMATIQUE DES PHOTOS
-// ==========================================
-
-imageInput.addEventListener("change", async function() {
-
-    clearImagePreview();
-    formMessage.textContent = "";
-
-    const file = this.files[0];
-
-    if (!file) return;
-
-    const allowedTypes = [
-        "image/jpeg",
-        "image/png",
-        "image/webp"
-    ];
-
-    if (!allowedTypes.includes(file.type)) {
-        alert("Choisis une image JPG, PNG ou WEBP.");
-        this.value = "";
-        return;
-    }
-
-    if (file.size > 5 * 1024 * 1024) {
-        alert("L'image ne doit pas dépasser 5 Mo.");
-        this.value = "";
-        return;
-    }
-
-    isProcessingImage = true;
-    publishButton.disabled = true;
-    imageInput.disabled = true;
-
-    formMessage.textContent =
-        "Détourage de ton produit en cours...";
-
-    try {
-
-        // Récupération de la session
-        const { data, error } =
-            await supabaseClient.auth.getSession();
-
-        if (error || !data.session) {
-            throw new Error("Session administrateur expirée.");
+    function clearImagePreview() {
+        if (originalPreviewUrl) {
+            URL.revokeObjectURL(originalPreviewUrl);
+            originalPreviewUrl = null;
         }
 
-        // Préparation de la photo
-        const formData = new FormData();
-        formData.append("image", file, file.name);
-
-        // Appel de la fonction Supabase
-        const response = await fetch(
-            `${SUPABASE_URL}/functions/v1/remove-background`,
-            {
-                method: "POST",
-                headers: {
-                    "Authorization":
-                        `Bearer ${data.session.access_token}`,
-                    "apikey": SUPABASE_ANON_KEY
-                },
-                body: formData
-            }
-        );
-
-        if (!response.ok) {
-            let message = "Impossible de détourer la photo.";
-
-            try {
-                const errorData = await response.json();
-                message = errorData.error || message;
-            } catch (_) {}
-
-            throw new Error(message);
+        if (previewUrl) {
+            URL.revokeObjectURL(previewUrl);
+            previewUrl = null;
         }
 
-        // Récupération du PNG transparent
-        const blob = await response.blob();
-
-        if (blob.type !== "image/png" || blob.size === 0) {
-            throw new Error("Le PNG reçu est invalide.");
-        }
-
-        // Création du fichier détouré
-        processedImageFile = new File(
-            [blob],
-            file.name.replace(/\.[^.]+$/, "") + ".png",
-            { type: "image/png" }
-        );
-
-        // Affichage de l'aperçu
-        previewUrl = URL.createObjectURL(processedImageFile);
-
-        const image = document.createElement("img");
-        image.src = previewUrl;
-        image.alt = "Produit détouré - fond transparent";
-
-        imagePreview.appendChild(image);
-
-        formMessage.textContent =
-            "Photo détourée avec succès ! Tu peux publier ton produit.";
-
-    } catch (error) {
-
-        console.error("Erreur de détourage :", error);
+        if (originalPreview) originalPreview.replaceChildren();
+        if (imagePreview) imagePreview.replaceChildren();
 
         processedImageFile = null;
-
-        formMessage.textContent =
-            "Erreur de détourage : " + error.message;
-
-    } finally {
-
-        isProcessingImage = false;
-        imageInput.disabled = false;
-        publishButton.disabled = false;
-
-    }
-});
-
-// ==========================================
-// PUBLICATION PRODUIT
-// ==========================================
-
-productForm.addEventListener("submit", async function(event) {
-
-    event.preventDefault();
-
-    if (!currentUser) {
-        showLogin("Connecte-toi pour publier un produit.");
-        return;
     }
 
-    if (!productForm.reportValidity()) return;
-
-    if (isProcessingImage) {
-        formMessage.textContent =
-            "Attends la fin du détourage.";
-        return;
+    function showLogin(message = "") {
+        if (loginSection) loginSection.hidden = false;
+        if (productSection) productSection.hidden = true;
+        if (logoutButton) logoutButton.hidden = true;
+        setMessage(loginMessage, message);
     }
 
-    if (!processedImageFile) {
-        formMessage.textContent =
-            "Ajoute une photo et attends son détourage.";
-        return;
+    function showProductForm(user) {
+        currentUser = user;
+        if (loginSection) loginSection.hidden = true;
+        if (productSection) productSection.hidden = false;
+        if (logoutButton) logoutButton.hidden = false;
     }
 
-    publishButton.disabled = true;
-    publishButton.textContent = "Publication en cours...";
-    formMessage.textContent = "";
-
-    let imagePath = null;
-
-    try {
-
-        const isAdmin = await checkAdmin(currentUser);
-
-        if (!isAdmin) {
-            throw new Error("Accès administrateur non autorisé.");
+    function checkDependencies() {
+        if (
+            typeof window.supabase === "undefined" ||
+            typeof supabaseClient === "undefined"
+        ) {
+            setMessage(
+                loginMessage,
+                "Erreur : connexion Supabase indisponible.",
+                true
+            );
+            return false;
         }
 
-        // Le fichier est désormais un PNG transparent
-        const imageFile = processedImageFile;
+        if (!loginForm || !productForm || !imageInput || !publishButton) {
+            console.error("Éléments HTML de l'administration introuvables.");
+            setMessage(
+                loginMessage,
+                "Erreur de chargement de l'administration.",
+                true
+            );
+            return false;
+        }
 
-        imagePath = currentUser.id + "/" +
-            crypto.randomUUID() + ".png";
+        return true;
+    }
 
-        // Envoi du PNG détouré dans Supabase Storage
-        const { error: uploadError } = await supabaseClient.storage
-            .from("product-images")
-            .upload(imagePath, imageFile, {
-                contentType: "image/png",
-                upsert: false
-            });
+    async function checkAdmin(user) {
+        const { data, error } = await supabaseClient
+            .from("admin_users")
+            .select("user_id")
+            .eq("user_id", user.id)
+            .maybeSingle();
 
-        if (uploadError) throw uploadError;
+        if (error) {
+            console.error("Erreur de vérification administrateur :", error);
+            return false;
+        }
 
-        const { data: imageData } = supabaseClient.storage
-            .from("product-images")
-            .getPublicUrl(imagePath);
+        return Boolean(data);
+    }
 
-        // Informations du produit
-        const product = {
-            name: document.getElementById("product-name").value.trim(),
-            description: document.getElementById("product-description").value.trim(),
-            price: Number(document.getElementById("product-price").value),
-            stock: Number(document.getElementById("product-stock").value),
-            category: document.getElementById("product-category").value,
-            image_url: imageData.publicUrl,
-            featured: document.getElementById("product-featured").checked
-        };
+    async function initializeAdmin() {
+        showLogin();
 
-        // Enregistrement dans la base
-        const { error: insertError } = await supabaseClient
-            .from("products")
-            .insert(product);
+        if (!checkDependencies()) return;
 
-        if (insertError) throw insertError;
+        try {
+            const { data, error } =
+                await supabaseClient.auth.getSession();
 
-        formMessage.textContent =
-            "Produit publié avec succès !";
+            if (error) throw error;
+            if (!data.session) return;
 
+            const user = data.session.user;
+            const isAdmin = await checkAdmin(user);
+
+            if (!isAdmin) {
+                await supabaseClient.auth.signOut();
+                showLogin("Ce compte n'a pas les droits administrateur.");
+                return;
+            }
+
+            showProductForm(user);
+
+        } catch (error) {
+            console.error("Initialisation admin :", error);
+            showLogin("Impossible de vérifier la connexion.");
+        }
+    }    // ==========================================
+    // CONNEXION
+    // ==========================================
+
+    loginForm?.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const email = document.getElementById("login-email")?.value.trim();
+        const password = document.getElementById("login-password")?.value;
+
+        setMessage(loginMessage, "Connexion en cours...");
+
+        try {
+            const { data, error } =
+                await supabaseClient.auth.signInWithPassword({
+                    email,
+                    password
+                });
+
+            if (error) throw error;
+
+            const isAdmin = await checkAdmin(data.user);
+
+            if (!isAdmin) {
+                await supabaseClient.auth.signOut();
+                showLogin("Ce compte n'a pas les droits administrateur.");
+                return;
+            }
+
+            showProductForm(data.user);
+
+        } catch (error) {
+            console.error("Erreur de connexion :", error);
+            setMessage(
+                loginMessage,
+                "E-mail ou mot de passe incorrect.",
+                true
+            );
+        }
+    });
+
+    // ==========================================
+    // DÉCONNEXION
+    // ==========================================
+
+    logoutButton?.addEventListener("click", async () => {
+        await supabaseClient.auth.signOut();
+
+        currentUser = null;
         productForm.reset();
         clearImagePreview();
 
-    } catch (error) {
+        showLogin("Tu es déconnecté.");
+    });
 
-        console.error("Erreur de publication :", error);
+    // ==========================================
+    // CHARGEMENT DE LA PHOTO
+    // Aucun appel Remove.bg
+    // ==========================================
 
-        formMessage.textContent =
-            "Erreur : " + error.message;
+    imageInput?.addEventListener("change", () => {
 
-    } finally {
+        clearImagePreview();
+        setMessage(formMessage, "");
 
-        publishButton.disabled = false;
-        publishButton.textContent = "Publier le produit";
+        const file = imageInput.files?.[0];
 
-    }
-});
+        if (!file) return;
 
-// ==========================================
-// DÉMARRAGE
-// ==========================================
+        const allowedTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+        ];
 
-initializeAdmin();
+        if (!allowedTypes.includes(file.type)) {
+            setMessage(
+                formMessage,
+                "Choisis une image JPG, PNG ou WEBP.",
+                true
+            );
+            imageInput.value = "";
+            return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+            setMessage(
+                formMessage,
+                "L'image ne doit pas dépasser 5 Mo.",
+                true
+            );
+            imageInput.value = "";
+            return;
+        }
+
+        // La photo originale est conservée.
+        processedImageFile = file;
+
+        originalPreviewUrl = URL.createObjectURL(file);
+
+        if (originalPreview) {
+            const originalImg = document.createElement("img");
+            originalImg.src = originalPreviewUrl;
+            originalImg.alt = "Photo originale";
+
+            originalPreview.replaceChildren(originalImg);
+        }
+
+        previewUrl = URL.createObjectURL(file);
+
+        if (imagePreview) {
+            const previewImg = document.createElement("img");
+            previewImg.src = previewUrl;
+            previewImg.alt = "Aperçu du produit";
+
+            imagePreview.replaceChildren(previewImg);
+        }
+
+        setMessage(
+            formMessage,
+            "Photo chargée. Tu peux lancer le scan ou publier l'originale."
+        );
+    });    // ==========================================
+    // SCANNER DE CARTE POKÉMON
+    // ==========================================
+
+    scanCardButton?.addEventListener("click", async () => {
+
+        if (isProcessingImage || isPublishing) return;
+
+        const originalFile = imageInput.files?.[0];
+
+        if (!originalFile) {
+            setMessage(formMessage, "Choisis d'abord une photo.", true);
+            return;
+        }
+
+        if (typeof window.scanPokemonCard !== "function") {
+            setMessage(
+                formMessage,
+                "Le scanner n'est pas chargé. Vérifie card-scanner.js.",
+                true
+            );
+            console.error("window.scanPokemonCard est introuvable.");
+            return;
+        }
+
+        isProcessingImage = true;
+        scanCardButton.disabled = true;
+        scanCardButton.textContent = "Scan en cours...";
+
+        if (publishButton) publishButton.disabled = true;
+
+        try {
+
+            const scannedFile =
+                await window.scanPokemonCard(originalFile);
+
+            if (
+                !(scannedFile instanceof File) ||
+                !scannedFile.type.startsWith("image/")
+            ) {
+                throw new Error("Le scanner n'a pas retourné une image valide.");
+            }
+
+            processedImageFile = scannedFile;
+
+            if (previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+            }
+
+            previewUrl = URL.createObjectURL(scannedFile);
+
+            if (imagePreview) {
+                const scannedImg = document.createElement("img");
+                scannedImg.src = previewUrl;
+                scannedImg.alt = "Carte Pokémon scannée";
+
+                imagePreview.replaceChildren(scannedImg);
+            }
+
+            setMessage(
+                formMessage,
+                "Scan terminé ! Vérifie le résultat avant publication."
+            );
+
+        } catch (error) {
+
+            console.error("Erreur du scanner :", error);
+
+            // On conserve la photo originale si le scan échoue.
+            processedImageFile = originalFile;
+
+            setMessage(
+                formMessage,
+                "Le scan a échoué : " + error.message +
+                " La photo originale reste disponible.",
+                true
+            );
+
+        } finally {
+
+            isProcessingImage = false;
+            scanCardButton.disabled = false;
+            scanCardButton.textContent =
+                "✨ Redresser et améliorer ma carte";
+
+            if (publishButton) publishButton.disabled = false;
+        }
+    });    // ==========================================
+    // PUBLICATION DU PRODUIT
+    // ==========================================
+
+    productForm?.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+        if (isPublishing || isProcessingImage) return;
+
+        if (!currentUser) {
+            showLogin("Connecte-toi pour publier un produit.");
+            return;
+        }
+
+        if (!productForm.reportValidity()) return;
+
+        if (!processedImageFile) {
+            setMessage(formMessage, "Ajoute d'abord une photo.", true);
+            return;
+        }
+
+        isPublishing = true;
+        publishButton.disabled = true;
+        publishButton.textContent = "Publication en cours...";
+
+        let uploadedImagePath = null;
+
+        try {
+
+            const isAdmin = await checkAdmin(currentUser);
+
+            if (!isAdmin) {
+                throw new Error("Accès administrateur non autorisé.");
+            }
+
+            const imageFile = processedImageFile;
+
+            const extension =
+                imageFile.type === "image/png" ? "png" :
+                imageFile.type === "image/webp" ? "webp" : "jpg";
+
+            uploadedImagePath =
+                currentUser.id + "/" +
+                crypto.randomUUID() + "." + extension;
+
+            // Envoi de la photo dans Supabase Storage
+            const { error: uploadError } = await supabaseClient.storage
+                .from("product-images")
+                .upload(uploadedImagePath, imageFile, {
+                    contentType: imageFile.type,
+                    upsert: false
+                });
+
+            if (uploadError) throw uploadError;
+
+            const { data: imageData } = supabaseClient.storage
+                .from("product-images")
+                .getPublicUrl(uploadedImagePath);
+
+            if (!imageData?.publicUrl) {
+                throw new Error("Impossible de récupérer l'adresse de l'image.");
+            }
+
+            // Informations du produit
+            const product = {
+                name: document.getElementById("product-name").value.trim(),
+                description: document.getElementById("product-description").value.trim(),
+                price: Number(document.getElementById("product-price").value),
+                stock: Number(document.getElementById("product-stock").value),
+                category: document.getElementById("product-category").value,
+                image_url: imageData.publicUrl,
+                featured: document.getElementById("product-featured").checked
+            };
+
+            // Enregistrement dans la base
+            const { error: insertError } = await supabaseClient
+                .from("products")
+                .insert(product);
+
+            if (insertError) throw insertError;
+
+            setMessage(formMessage, "Produit publié avec succès !");
+
+            productForm.reset();
+            clearImagePreview();
+
+        } catch (error) {
+
+            console.error("Erreur de publication :", error);
+
+            // Nettoyage de l'image si la publication échoue
+            if (uploadedImagePath) {
+                const { error: removeError } = await supabaseClient.storage
+                    .from("product-images")
+                    .remove([uploadedImagePath]);
+
+                if (removeError) {
+                    console.warn("Nettoyage impossible :", removeError);
+                }
+            }
+
+            setMessage(
+                formMessage,
+                "Erreur de publication : " + error.message,
+                true
+            );
+
+        } finally {
+
+            isPublishing = false;
+            publishButton.disabled = false;
+            publishButton.textContent = "Publier le produit";
+        }
+    });
+
+    // ==========================================
+    // DÉMARRAGE DE L'ADMINISTRATION
+    // ==========================================
+
+    initializeAdmin();
+
+})();

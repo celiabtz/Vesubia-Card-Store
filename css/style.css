@@ -5654,3 +5654,429 @@ body.light-theme footer {
         font-size: 16px !important;
     }
 }
+
+/* ==========================================
+   VESUBIA — NOUVEAU MENU RESPONSIVE
+========================================== */
+
+
+/* ==========================================
+   VESUBIA — MENU RESPONSIVE PROPRE
+========================================== */
+
+/* BOUTON HAMBURGER */
+
+.menu-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    z-index: 10000;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 21px;
+    height: 2px;
+    background: var(--gold-light);
+    border-radius: 2px;
+    transition: 0.3s ease;
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* TABLETTES : MENU CLASSIQUE COMPACT */
+
+@media (min-width: 651px) and (max-width: 1100px) {
+
+    .site-header {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: nowrap !important;
+        gap: 10px !important;
+        padding: 12px 2% !important;
+        min-height: 90px !important;
+        height: auto !important;
+        box-sizing: border-box !important;
+    }
+
+    .site-header > .brand {
+        display: flex !important;
+        flex: 0 0 auto !important;
+        align-items: center !important;
+        gap: 6px !important;
+        width: auto !important;
+        margin: 0 !important;
+    }
+
+    .site-header .brand img {
+        width: 43px !important;
+        height: 43px !important;
+        object-fit: contain !important;
+    }
+
+    .site-header .brand-name strong {
+        font-size: 18px !important;
+    }
+
+    .site-header .brand-name small {
+        font-size: 7px !important;
+        letter-spacing: 2px !important;
+    }
+
+    .site-header > .menu-toggle {
+        display: none !important;
+    }
+
+    .site-header > .main-nav {
+        display: flex !important;
+        position: static !important;
+        transform: none !important;
+        flex: 1 1 auto !important;
+        width: auto !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 5px 12px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    .site-header > .main-nav a {
+        display: inline-flex !important;
+        width: auto !important;
+        flex: 0 0 auto !important;
+        padding: 5px 0 !important;
+        font-size: 12px !important;
+        white-space: nowrap !important;
+    }
+}
+
+/* TÉLÉPHONES : MENU HAMBURGER */
+
+@media (max-width: 650px) {
+
+    .site-header {
+        position: relative !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-wrap: nowrap !important;
+        width: 100% !important;
+        min-height: 76px !important;
+        padding: 10px 12px !important;
+        gap: 0 !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+    }
+
+    .site-header > .brand {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: auto !important;
+        margin: 0 auto !important;
+        gap: 8px !important;
+    }
+
+    .site-header .brand img {
+        width: 48px !important;
+        height: 48px !important;
+    }
+
+    .site-header .brand-name strong {
+        font-size: 20px !important;
+    }
+
+    .site-header .brand-name small {
+        font-size: 8px !important;
+        letter-spacing: 3px !important;
+    }
+
+    .site-header > .menu-toggle {
+        display: flex !important;
+        position: absolute !important;
+        right: 12px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+    }
+
+    .site-header > .main-nav {
+        display: none !important;
+        position: fixed !important;
+        top: 76px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        justify-content: flex-start !important;
+        gap: 0 !important;
+        margin: 0 !important;
+        padding: 12px 5% 20px !important;
+        box-sizing: border-box !important;
+        background: #101014 !important;
+        border-bottom: 2px solid var(--gold) !important;
+        box-shadow: 0 12px 25px rgba(0,0,0,0.45) !important;
+        z-index: 9999 !important;
+    }
+
+    .site-header > .main-nav.is-open {
+        display: flex !important;
+    }
+
+    .site-header > .main-nav a {
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+        padding: 13px 8px !important;
+        font-size: 15px !important;
+        border-bottom: 1px solid rgba(182,154,97,0.15);
+    }
+
+    .site-header > .main-nav a::after {
+        display: none !important;
+    }
+}
+/* VESUBIA — FIX MENU CARTES RARES */
+
+@media (max-width: 650px) {
+
+    .rare-page .site-header > .main-nav:not(.is-open) {
+        display: none !important;
+    }
+
+    .rare-page .site-header > .main-nav.is-open {
+        display: flex !important;
+        position: fixed !important;
+        top: 76px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        flex-direction: column !important;
+        background: #101014 !important;
+        z-index: 9999 !important;
+        padding: 12px 5% 20px !important;
+        box-sizing: border-box !important;
+    }
+
+    .rare-page .site-header > .main-nav a {
+        display: flex !important;
+        width: 100% !important;
+        padding: 13px 8px !important;
+        box-sizing: border-box !important;
+    }
+
+}/* VESUBIA — ESPACEMENT LOGO / MENU TABLETTE */
+
+@media (min-width: 651px) and (max-width: 1100px) {
+
+    .site-header {
+        justify-content: space-between !important;
+        gap: 20px !important;
+        padding: 12px 3% !important;
+    }
+
+    .site-header > .brand {
+        flex-shrink: 0 !important;
+        margin-right: 10px !important;
+    }
+
+    .site-header .brand img {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .site-header .brand-name strong {
+        font-size: 16px !important;
+    }
+
+    .site-header .brand-name small {
+        font-size: 6px !important;
+        letter-spacing: 2px !important;
+    }
+
+    .site-header > .main-nav {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        justify-content: flex-end !important;
+        gap: 5px 10px !important;
+    }
+
+    .site-header > .main-nav a {
+        font-size: 11px !important;
+    }
+}/* VESUBIA — CORRECTION DEFINITIVE TABLETTES */
+
+@media (min-width: 651px) and (max-width: 1400px) {
+
+    .site-header {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 15px !important;
+        padding: 12px 3% !important;
+        min-height: 90px !important;
+    }
+
+    .site-header > .brand {
+        position: relative !important;
+        left: auto !important;
+        transform: none !important;
+        flex: 0 0 auto !important;
+        margin: 0 !important;
+        gap: 6px !important;
+    }
+
+    .site-header > .brand img {
+        width: 42px !important;
+        height: 42px !important;
+    }
+
+    .site-header > .brand .brand-name strong {
+        font-size: 18px !important;
+    }
+
+    .site-header > .main-nav {
+        position: static !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        transform: none !important;
+
+        display: flex !important;
+        flex: 1 1 auto !important;
+        width: auto !important;
+        max-width: none !important;
+        min-width: 0 !important;
+
+        justify-content: center !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 5px 12px !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .site-header > .main-nav a {
+    width: auto !important;
+    flex: 0 0 auto !important;
+    font-size: 15px !important;
+    padding: 7px 0 !important;
+    white-space: nowrap !important;
+}
+    }
+
+    .site-header > .menu-toggle {
+        display: none !important;
+    }
+}
+
+/* VESUBIA — INDEX MOBILE : 1 PRODUIT PAR LIGNE */
+
+@media screen and (max-width: 650px) {
+
+    #shop-products {
+        grid-template-columns: minmax(0, 1fr) !important;
+        justify-items: center !important;
+        gap: 22px !important;
+    }
+
+    #shop-products .product-card {
+        width: 100% !important;
+        max-width: 340px !important;
+        margin: 0 auto !important;
+    }
+
+}/* ==========================================
+   VESUBIA — CORRECTIONS ACCUEIL MOBILE
+========================================== */
+
+@media screen and (max-width: 650px) {
+
+    /* UN PRODUIT PAR LIGNE */
+
+    #featured-products {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        justify-items: center !important;
+        width: 100% !important;
+        gap: 22px !important;
+    }
+
+    #featured-products > * {
+        width: 100% !important;
+        max-width: 340px !important;
+        min-width: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        box-sizing: border-box !important;
+    }
+
+    /* RESTAURATION DU HAMBURGER */
+
+    .site-header > .menu-toggle {
+        display: flex !important;
+        position: absolute !important;
+        right: 12px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        z-index: 10000 !important;
+    }
+
+    /* MENU FERMÉ PAR DÉFAUT */
+
+    .site-header > .main-nav:not(.is-open) {
+        display: none !important;
+    }
+
+    /* MENU OUVERT AU CLIC */
+
+    .site-header > .main-nav.is-open {
+        display: flex !important;
+        position: fixed !important;
+        top: 76px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        flex-direction: column !important;
+        background: #101014 !important;
+        z-index: 9999 !important;
+    }
+}

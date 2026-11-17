@@ -22,34 +22,51 @@
 <body>
 
 <header class="site-header">
+
     <a href="index.html" class="brand">
         <img src="images/logo/logovs.png" alt="Logo Vesubia Card Store">
+
         <span class="brand-name">
             <strong>VESUBIA</strong>
             <small>CARD STORE</small>
         </span>
     </a>
 
-    <nav class="main-nav">
+    <button class="menu-toggle"
+            id="menu-toggle"
+            type="button"
+            aria-label="Ouvrir le menu"
+            aria-expanded="false"
+            aria-controls="main-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <nav class="main-nav" id="main-nav">
+
         <a href="index.html">Accueil</a>
-        <a href="boutique.html" class="active">Boutique</a>
+        <a href="boutique.html">Boutique</a>
         <a href="cartes-rares.html">Cartes rares</a>
         <a href="renovation.html">Rénovation</a>
         <a href="histoire.html">Notre histoire</a>
         <a href="contact.html">Contact</a>
+
         <a href="connexion.html" class="header-account-btn">
-    <i class="fa-regular fa-user"></i>
-    Connexion
-</a>
-<a href="avis.html" class="header-avis-btn">
-    <span>★</span> Avis
-</a>
- <a href="favoris.html">
-    <i class="fa-regular fa-heart"></i>
-</a>
+            <i class="fa-regular fa-user"></i>
+            Connexion
+        </a>
+
+        <a href="avis.html" class="header-avis-btn">
+            <span>★</span> Avis
+        </a>
+
+        <a href="favoris.html" aria-label="Favoris">
+            <i class="fa-regular fa-heart"></i>
+        </a>
+
     </nav>
 
-    
 </header>
 
 <main class="shop-page">
@@ -97,6 +114,35 @@
 <footer class="site-footer">
     <p>© 2026 <strong>VESUBIA CARD STORE</strong> — Tous droits réservés.</p>
 </footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const button = document.getElementById("menu-toggle");
+    const menu = document.getElementById("main-nav");
+
+    if (!button || !menu) return;
+
+    button.addEventListener("click", () => {
+        const opened = menu.classList.toggle("is-open");
+
+        button.classList.toggle("active", opened);
+        button.setAttribute("aria-expanded", opened);
+        button.setAttribute(
+            "aria-label",
+            opened ? "Fermer le menu" : "Ouvrir le menu"
+        );
+    });
+
+    menu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+            menu.classList.remove("is-open");
+            button.classList.remove("active");
+            button.setAttribute("aria-expanded", "false");
+        });
+    });
+});
+</script>
+
 </body>
 </html>
 
