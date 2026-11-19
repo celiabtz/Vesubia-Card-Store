@@ -1,380 +1,527 @@
+/* ==========================================
+   VESUBIA DIGITAL SCAN — V5
+   Détection multi-méthodes + perspective
+========================================== */
 
-// ==========================================
-// VESUBIA CARD SCANNER — HD
-// Détection, redressement et amélioration
-// ==========================================
+(() => {
+    "use strict";
 
-window.scanPokemonCard = async function (file) {
+    function waitForOpenCV() {
+        return new Promise((resolve, reject) => {
+            let attempts = 0;
 
-    if (typeof cv === "undefined" || !cv.Mat) {
-        throw new Error("Le moteur OpenCV n'est pas prêt.");
+            function check() {
+                if (window.cv && window.cv.Mat) {
+                    resolve({ cv: window.cv });
+                    return;
+                }
+
+                attempts++;
+
+                if (attempts > 150) {
+                    reject(new Error("OpenCV n'a pas réussi à se charger."));
+                    return;
+                }
+
+                setTimeout(check, 200);
+            }
+
+            check();
+        });
     }
 
-    if (!file || !file.type.startsWith("image/")) {
-        throw new Error("Veuillez sélectionner une image valide.");
+    function loadImage(file) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            const url = URL.createObjectURL(file);
+
+            img.onload = () => {
+                URL.revokeObjectURL(url);
+                resolve(img);
+            };
+
+            img.onerror = () => {
+                URL.revokeObjectURL(url);
+                reject(new Error("Impossible de lire la photographie."));
+            };
+
+            img.src = url;
+        });
     }
 
-    const image = await createImageBitmap(file);
+    function distance(a, b) {
+        return Math.hypot(b.x - a.x, b.y - a.y);
+    }
 
-    const canvas = document.createElement("canvas");
-    canvas.width = image.width;
-    canvas.height = image.height;
+    function orderCorners(points) {
+        const sum = points.map(p => p.x + p.y);
+        const diff = points.map(p => p.y - p.x);
 
-    const context = canvas.getContext("2d", {
-        willReadFrequently: true
-    });
+        return [
+            points[sum.indexOf(Math.min(...sum))],
+            points[diff.indexOf(Math.min(...diff))],
+            points[sum.indexOf(Math.max(...sum))],
+            points[diff.indexOf(Math.max(...diff))]
+        ];
+    }
 
-    context.drawImage(image, 0, 0);
-    image.close();
+    function expandCorners(points, factor = 1.012) {
+        const center = {
+            x: points.reduce((s, p) => s + p.x, 0) / 4,
+            y: points.reduce((s, p) => s + p.y, 0) / 4
+        };
 
-    const source = cv.imread(canvas);
+        return points.map(p => ({
+            x: center.x + (p.x - center.x) * factor,
+            y: center.y + (p.y - center.y) * factor
+        }));
+    }
 
-    let gray = null;
-    let blurred = null;
-    let edges = null;
-    let dilated = null;
-    let kernel = null;
-    let contours = null;
-    let hierarchy = null;
-    let result = null;
-    let enhanced = null;
-    let blurredImage = null;
-    let srcPoints = null;
-    let dstPoints = null;
-    let matrix = null;
+    function getCardRatio(corners) {
+        const width = (
+            distance(corners[0], corners[1]) +
+            distance(corners[3], corners[2])
+        ) / 2;
 
-    try {
+        const height = (
+            distance(corners[0], corners[3]) +
+            distance(corners[1], corners[2])
+        ) / 2;
 
-        // ==========================================
-        // 1. PRÉPARATION DE L'IMAGE
-        // ==========================================
+        if (!width || !height) return null;
 
-        gray = new cv.Mat();
-        blurred = new cv.Mat();
-        edges = new cv.Mat();
-        dilated = new cv.Mat();
+        return height / width;
+    }
 
-        cv.cvtColor(source, gray, cv.COLOR_RGBA2GRAY);
-
-        cv.GaussianBlur(
-            gray,
-            blurred,
-            new cv.Size(5, 5),
-            0
-        );
-
-        cv.Canny(blurred, edges, 40, 130);
-
-        kernel = cv.Mat.ones(3, 3, cv.CV_8U);
-        cv.dilate(edges, dilated, kernel);
-
-        contours = new cv.MatVector();
-        hierarchy = new cv.Mat();
-
-        cv.findContours(
-            dilated,
-            contours,
-            hierarchy,
-            cv.RETR_LIST,
-            cv.CHAIN_APPROX_SIMPLE
-        );
-
-        // ==========================================
-        // 2. DÉTECTION DU CONTOUR EXTÉRIEUR
-        // ==========================================
-
+    function findBestQuadrilateral(cv, contours, imageArea) {
         let bestCorners = null;
-        let bestScore = 0;
+        let bestScore = -Infinity;
 
         for (let i = 0; i < contours.size(); i++) {
-
             const contour = contours.get(i);
-            const hull = new cv.Mat();
-            const approx = new cv.Mat();
 
             try {
+                const area = cv.contourArea(contour);
 
-                cv.convexHull(contour, hull, false, true);
+                if (
+                    area < imageArea * 0.03 ||
+                    area > imageArea * 0.98
+                ) {
+                    continue;
+                }
 
-                const perimeter = cv.arcLength(hull, true);
+                const perimeter = cv.arcLength(contour, true);
 
-                for (const tolerance of [
+                if (!perimeter) continue;
+
+                const factors = [
                     0.008,
+                    0.01,
                     0.012,
-                    0.018,
+                    0.015,
+                    0.02,
                     0.025,
-                    0.035
-                ]) {
+                    0.03,
+                    0.04,
+                    0.05,
+                    0.06
+                ];
 
-                    cv.approxPolyDP(
-                        hull,
-                        approx,
-                        tolerance * perimeter,
-                        true
-                    );
+                for (const factor of factors) {
+                    const approx = new cv.Mat();
 
-                    if (
-                        approx.rows !== 4 ||
-                        !cv.isContourConvex(approx)
-                    ) {
-                        continue;
-                    }
-
-                    const points = [];
-
-                    for (let j = 0; j < 4; j++) {
-                        points.push({
-                            x: approx.data32S[j * 2],
-                            y: approx.data32S[j * 2 + 1]
-                        });
-                    }
-
-                    // Trier les points autour du centre
-                    const center = {
-                        x: points.reduce((s, p) => s + p.x, 0) / 4,
-                        y: points.reduce((s, p) => s + p.y, 0) / 4
-                    };
-
-                    points.sort((a, b) => {
-                        return Math.atan2(
-                            a.y - center.y,
-                            a.x - center.x
-                        ) - Math.atan2(
-                            b.y - center.y,
-                            b.x - center.x
+                    try {
+                        cv.approxPolyDP(
+                            contour,
+                            approx,
+                            perimeter * factor,
+                            true
                         );
-                    });
 
-                    // Commencer par le coin supérieur gauche
-                    let startIndex = 0;
-                    let smallestSum = Infinity;
-
-                    points.forEach((p, index) => {
-                        const sum = p.x + p.y;
-
-                        if (sum < smallestSum) {
-                            smallestSum = sum;
-                            startIndex = index;
+                        if (
+                            approx.rows !== 4 ||
+                            !cv.isContourConvex(approx)
+                        ) {
+                            continue;
                         }
-                    });
 
-                    const ordered = [
-                        ...points.slice(startIndex),
-                        ...points.slice(0, startIndex)
-                    ];
+                        const points = [];
 
-                    const topLeft = ordered[0];
-                    const topRight = ordered[1];
-                    const bottomRight = ordered[2];
-                    const bottomLeft = ordered[3];
+                        for (let j = 0; j < 4; j++) {
+                            points.push({
+                                x: approx.data32S[j * 2],
+                                y: approx.data32S[j * 2 + 1]
+                            });
+                        }
 
-                    const distance = (a, b) =>
-                        Math.hypot(
-                            b.x - a.x,
-                            b.y - a.y
-                        );
+                        const corners = orderCorners(points);
+                        const ratio = getCardRatio(corners);
 
-                    const widthTop = distance(topLeft, topRight);
-                    const widthBottom = distance(bottomLeft, bottomRight);
-                    const heightLeft = distance(topLeft, bottomLeft);
-                    const heightRight = distance(topRight, bottomRight);
+                        if (
+                            !ratio ||
+                            ratio < 1.20 ||
+                            ratio > 1.60
+                        ) {
+                            continue;
+                        }
 
-                    const cardWidth =
-                        (widthTop + widthBottom) / 2;
+                        const cardWidth = (
+                            distance(corners[0], corners[1]) +
+                            distance(corners[3], corners[2])
+                        ) / 2;
 
-                    const cardHeight =
-                        (heightLeft + heightRight) / 2;
+                        const cardHeight = (
+                            distance(corners[0], corners[3]) +
+                            distance(corners[1], corners[2])
+                        ) / 2;
 
-                    const ratio = cardWidth / cardHeight;
-                    const area = cv.contourArea(approx);
+                        if (
+                            cardWidth < 50 ||
+                            cardHeight < 70
+                        ) {
+                            continue;
+                        }
 
-                    // Proportions d'une carte Pokémon
-                    if (
-                        ratio < 0.60 ||
-                        ratio > 0.84 ||
-                        cardWidth < source.cols * 0.15 ||
-                        cardHeight < source.rows * 0.15 ||
-                        area < source.cols * source.rows * 0.025
-                    ) {
-                        continue;
-                    }
+                        const ratioScore =
+                            1 - Math.abs(ratio - 1.40) / 0.20;
 
-                    // Favoriser les cartes proches du ratio 0,72
-                    const ratioScore =
-                        1 - Math.abs(ratio - 0.72);
+                        const areaScore = area / imageArea;
 
-                    const score = area * ratioScore;
+                        // Favorise les cartes assez grandes
+                        // et proches du ratio attendu.
+                        const score =
+                            ratioScore * 5 +
+                            areaScore * 2;
 
-                    if (score > bestScore) {
+                        if (score > bestScore) {
+                            bestScore = score;
+                            bestCorners = corners;
+                        }
 
-                        // IMPORTANT : mémoriser le meilleur score
-                        bestScore = score;
-
-                        bestCorners = [
-                            topLeft,
-                            topRight,
-                            bottomRight,
-                            bottomLeft
-                        ];
+                    } finally {
+                        approx.delete();
                     }
                 }
 
             } finally {
-                hull.delete();
-                approx.delete();
                 contour.delete();
             }
         }
 
-        if (!bestCorners) {
-            throw new Error(
-                "Carte non détectée. Essaie avec un fond uni et contrasté."
+        return bestCorners;
+    }
+
+    function detectFromEdges(cv, src, imageArea, low, high) {
+        const gray = new cv.Mat();
+        const blurred = new cv.Mat();
+        const edges = new cv.Mat();
+        const contours = new cv.MatVector();
+        const hierarchy = new cv.Mat();
+
+        let kernel = null;
+
+        try {
+            cv.cvtColor(
+                src,
+                gray,
+                cv.COLOR_RGBA2GRAY
             );
+
+            cv.GaussianBlur(
+                gray,
+                blurred,
+                new cv.Size(5, 5),
+                0
+            );
+
+            cv.Canny(
+                blurred,
+                edges,
+                low,
+                high
+            );
+
+            kernel = cv.getStructuringElement(
+                cv.MORPH_RECT,
+                new cv.Size(5, 5)
+            );
+
+            cv.dilate(
+                edges,
+                edges,
+                kernel
+            );
+
+            cv.findContours(
+                edges,
+                contours,
+                hierarchy,
+                cv.RETR_LIST,
+                cv.CHAIN_APPROX_SIMPLE
+            );
+
+            return findBestQuadrilateral(
+                cv,
+                contours,
+                imageArea
+            );
+
+        } finally {
+            gray.delete();
+            blurred.delete();
+            edges.delete();
+            contours.delete();
+            hierarchy.delete();
+
+            if (kernel) kernel.delete();
+        }
+    }
+
+    function detectFromThreshold(cv, src, imageArea, thresholdMode) {
+        const gray = new cv.Mat();
+        const thresholded = new cv.Mat();
+        const contours = new cv.MatVector();
+        const hierarchy = new cv.Mat();
+
+        try {
+            cv.cvtColor(
+                src,
+                gray,
+                cv.COLOR_RGBA2GRAY
+            );
+
+            if (thresholdMode === "otsu") {
+                cv.threshold(
+                    gray,
+                    thresholded,
+                    0,
+                    255,
+                    cv.THRESH_BINARY + cv.THRESH_OTSU
+                );
+            } else {
+                cv.adaptiveThreshold(
+                    gray,
+                    thresholded,
+                    255,
+                    cv.ADAPTIVE_THRESH_GAUSSIAN_C,
+                    cv.THRESH_BINARY,
+                    11,
+                    2
+                );
+            }
+
+            cv.findContours(
+                thresholded,
+                contours,
+                hierarchy,
+                cv.RETR_LIST,
+                cv.CHAIN_APPROX_SIMPLE
+            );
+
+            return findBestQuadrilateral(
+                cv,
+                contours,
+                imageArea
+            );
+
+        } finally {
+            gray.delete();
+            thresholded.delete();
+            contours.delete();
+            hierarchy.delete();
+        }
+    }
+
+    async function scanPokemonCard(file) {
+        if (!(file instanceof File)) {
+            throw new Error("Fichier image invalide.");
         }
 
-        console.log("Vesubia : contour retenu", bestCorners);
+        const { cv } = await waitForOpenCV();
+        const img = await loadImage(file);
 
-        // ==========================================
-        // 3. REDRESSEMENT DE LA PERSPECTIVE
-        // ==========================================
+        const canvas = document.createElement("canvas");
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
 
-        const width = 630;
-        const height = 880;
-
-        srcPoints = cv.matFromArray(4, 1, cv.CV_32FC2, [
-            bestCorners[0].x, bestCorners[0].y,
-            bestCorners[1].x, bestCorners[1].y,
-            bestCorners[2].x, bestCorners[2].y,
-            bestCorners[3].x, bestCorners[3].y
-        ]);
-
-        dstPoints = cv.matFromArray(4, 1, cv.CV_32FC2, [
-            0, 0,
-            width - 1, 0,
-            width - 1, height - 1,
-            0, height - 1
-        ]);
-
-        matrix = cv.getPerspectiveTransform(
-            srcPoints,
-            dstPoints
-        );
-
-        result = new cv.Mat();
-
-        cv.warpPerspective(
-            source,
-            result,
-            matrix,
-            new cv.Size(width, height),
-            cv.INTER_CUBIC,
-            cv.BORDER_CONSTANT,
-            new cv.Scalar(0, 0, 0, 0)
-        );
-
-        // ==========================================
-        // 4. VESUBIA HD
-        // ==========================================
-
-        enhanced = new cv.Mat();
-        blurredImage = new cv.Mat();
-
-        result.convertTo(
-            enhanced,
-            -1,
-            1.08,
-            5
-        );
-
-        cv.GaussianBlur(
-            enhanced,
-            blurredImage,
-            new cv.Size(0, 0),
-            1.2
-        );
-
-        cv.addWeighted(
-            enhanced,
-            1.2,
-            blurredImage,
-            -0.2,
-            0,
-            enhanced
-        );
-
-        // ==========================================
-        // 5. COINS ARRONDIS
-        // ==========================================
-
-        const output = document.createElement("canvas");
-        output.width = width;
-        output.height = height;
-
-        cv.imshow(output, enhanced);
-
-        const ctx = output.getContext("2d");
-        const radius = 28;
-
-        ctx.globalCompositeOperation = "destination-in";
-
-        ctx.beginPath();
-        ctx.moveTo(radius, 0);
-        ctx.lineTo(width - radius, 0);
-        ctx.quadraticCurveTo(width, 0, width, radius);
-        ctx.lineTo(width, height - radius);
-        ctx.quadraticCurveTo(
-            width,
-            height,
-            width - radius,
-            height
-        );
-        ctx.lineTo(radius, height);
-        ctx.quadraticCurveTo(0, height, 0, height - radius);
-        ctx.lineTo(0, radius);
-        ctx.quadraticCurveTo(0, 0, radius, 0);
-        ctx.closePath();
-        ctx.fill();
-
-        ctx.globalCompositeOperation = "source-over";
-
-        // ==========================================
-        // 6. EXPORT PNG
-        // ==========================================
-
-        const finalBlob = await new Promise(resolve => {
-            output.toBlob(resolve, "image/png");
+        const ctx = canvas.getContext("2d", {
+            willReadFrequently: true
         });
 
-        if (!finalBlob) {
-            throw new Error("Impossible de créer l'image finale.");
+        ctx.drawImage(img, 0, 0);
+
+        const src = cv.imread(canvas);
+        let bestCorners = null;
+
+        try {
+            const imageArea = src.cols * src.rows;
+
+            // ==================================
+            // 1. MULTIPLE CANNY
+            // ==================================
+
+            const edgeSettings = [
+                [20, 80],
+                [30, 120],
+                [50, 150],
+                [15, 60]
+            ];
+
+            for (const [low, high] of edgeSettings) {
+                bestCorners = detectFromEdges(
+                    cv,
+                    src,
+                    imageArea,
+                    low,
+                    high
+                );
+
+                if (bestCorners) break;
+            }
+
+            // ==================================
+            // 2. THRESHOLD OTSU
+            // ==================================
+
+            if (!bestCorners) {
+                bestCorners = detectFromThreshold(
+                    cv,
+                    src,
+                    imageArea,
+                    "otsu"
+                );
+            }
+
+            // ==================================
+            // 3. THRESHOLD ADAPTATIF
+            // ==================================
+
+            if (!bestCorners) {
+                bestCorners = detectFromThreshold(
+                    cv,
+                    src,
+                    imageArea,
+                    "adaptive"
+                );
+            }
+
+            // ==================================
+            // 4. ÉCHEC
+            // ==================================
+
+            if (!bestCorners) {
+                throw new Error(
+                    "Carte non détectée. Essaie de photographier la carte avec davantage de contraste et de fond autour."
+                );
+            }
+
+            // ==================================
+            // 5. MARGE
+            // ==================================
+
+            const corners = expandCorners(
+                bestCorners,
+                1.012
+            );
+
+            // ==================================
+            // 6. DIMENSIONS
+            // ==================================
+
+            const width = Math.round(Math.max(
+                distance(corners[0], corners[1]),
+                distance(corners[3], corners[2])
+            ));
+
+            const height = Math.round(Math.max(
+                distance(corners[0], corners[3]),
+                distance(corners[1], corners[2])
+            ));
+
+            // ==================================
+            // 7. PERSPECTIVE
+            // ==================================
+
+            const dst = cv.matFromArray(
+                4,
+                1,
+                cv.CV_32FC2,
+                [
+                    0, 0,
+                    width, 0,
+                    width, height,
+                    0, height
+                ]
+            );
+
+            const srcPoints = cv.matFromArray(
+                4,
+                1,
+                cv.CV_32FC2,
+                [
+                    corners[0].x, corners[0].y,
+                    corners[1].x, corners[1].y,
+                    corners[2].x, corners[2].y,
+                    corners[3].x, corners[3].y
+                ]
+            );
+
+            const transform = cv.getPerspectiveTransform(
+                srcPoints,
+                dst
+            );
+
+            const result = new cv.Mat();
+
+            try {
+                cv.warpPerspective(
+                    src,
+                    result,
+                    transform,
+                    new cv.Size(width, height),
+                    cv.INTER_LINEAR,
+                    cv.BORDER_REPLICATE
+                );
+
+                const outputCanvas = document.createElement("canvas");
+                outputCanvas.width = width;
+                outputCanvas.height = height;
+
+                cv.imshow(outputCanvas, result);
+
+                const outputFile = await new Promise((resolve, reject) => {
+                    outputCanvas.toBlob(blob => {
+                        if (!blob) {
+                            reject(
+                                new Error("Impossible de générer l'image.")
+                            );
+                            return;
+                        }
+
+                        resolve(
+                            new File(
+                                [blob],
+                                "vesubia-scan.jpg",
+                                { type: "image/jpeg" }
+                            )
+                        );
+                    }, "image/jpeg", 0.95);
+                });
+
+                return outputFile;
+
+            } finally {
+                dst.delete();
+                srcPoints.delete();
+                transform.delete();
+                result.delete();
+            }
+
+        } finally {
+            src.delete();
         }
-
-        return new File(
-            [finalBlob],
-            "vesubia-scan.png",
-            { type: "image/png" }
-        );
-
-    } finally {
-
-        // ==========================================
-        // 7. LIBÉRATION MÉMOIRE
-        // ==========================================
-
-        source.delete();
-
-        if (gray) gray.delete();
-        if (blurred) blurred.delete();
-        if (edges) edges.delete();
-        if (dilated) dilated.delete();
-        if (kernel) kernel.delete();
-        if (contours) contours.delete();
-        if (hierarchy) hierarchy.delete();
-        if (result) result.delete();
-        if (enhanced) enhanced.delete();
-        if (blurredImage) blurredImage.delete();
-        if (srcPoints) srcPoints.delete();
-        if (dstPoints) dstPoints.delete();
-        if (matrix) matrix.delete();
     }
-};
+
+    window.scanPokemonCard = scanPokemonCard;
+
+})();

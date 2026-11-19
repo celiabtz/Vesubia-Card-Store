@@ -1,6 +1,6 @@
 // ==========================================
 // VESUBIA CARD STORE — ADMINISTRATION
-// Version stable sans Remove.bg
+// Remove.bg supprimé — détourage maison à venir
 // ==========================================
 
 (() => {
@@ -25,6 +25,10 @@
     let previewUrl = null;
     let isProcessingImage = false;
     let isPublishing = false;
+
+    // ==========================================
+    // OUTILS
+    // ==========================================
 
     function setMessage(element, message, isError = false) {
         if (!element) return;
@@ -63,6 +67,10 @@
         if (logoutButton) logoutButton.hidden = false;
     }
 
+    // ==========================================
+    // VÉRIFICATION DES DÉPENDANCES
+    // ==========================================
+
     function checkDependencies() {
         if (
             typeof window.supabase === "undefined" ||
@@ -78,16 +86,22 @@
 
         if (!loginForm || !productForm || !imageInput || !publishButton) {
             console.error("Éléments HTML de l'administration introuvables.");
+
             setMessage(
                 loginMessage,
                 "Erreur de chargement de l'administration.",
                 true
             );
+
             return false;
         }
 
         return true;
     }
+
+    // ==========================================
+    // VÉRIFICATION ADMIN
+    // ==========================================
 
     async function checkAdmin(user) {
         const { data, error } = await supabaseClient
@@ -103,6 +117,10 @@
 
         return Boolean(data);
     }
+
+    // ==========================================
+    // INITIALISATION
+    // ==========================================
 
     async function initializeAdmin() {
         showLogin();
@@ -131,7 +149,9 @@
             console.error("Initialisation admin :", error);
             showLogin("Impossible de vérifier la connexion.");
         }
-    }    // ==========================================
+    }
+
+    // ==========================================
     // CONNEXION
     // ==========================================
 
@@ -164,6 +184,7 @@
 
         } catch (error) {
             console.error("Erreur de connexion :", error);
+
             setMessage(
                 loginMessage,
                 "E-mail ou mot de passe incorrect.",
@@ -187,17 +208,14 @@
     });
 
     // ==========================================
-    // CHARGEMENT DE LA PHOTO
-    // Aucun appel Remove.bg
+    // CHARGEMENT DE LA PHOTO — SANS REMOVE.BG
     // ==========================================
 
     imageInput?.addEventListener("change", () => {
-
         clearImagePreview();
         setMessage(formMessage, "");
 
         const file = imageInput.files?.[0];
-
         if (!file) return;
 
         const allowedTypes = [
@@ -212,6 +230,7 @@
                 "Choisis une image JPG, PNG ou WEBP.",
                 true
             );
+
             imageInput.value = "";
             return;
         }
@@ -222,43 +241,43 @@
                 "L'image ne doit pas dépasser 5 Mo.",
                 true
             );
+
             imageInput.value = "";
             return;
         }
 
-        // La photo originale est conservée.
+        originalPreviewUrl = URL.createObjectURL(file);
         processedImageFile = file;
 
-        originalPreviewUrl = URL.createObjectURL(file);
-
+        // Affichage de la photo originale
         if (originalPreview) {
             const originalImg = document.createElement("img");
             originalImg.src = originalPreviewUrl;
             originalImg.alt = "Photo originale";
-
             originalPreview.replaceChildren(originalImg);
         }
 
+        // Affichage de la photo de travail
         previewUrl = URL.createObjectURL(file);
 
         if (imagePreview) {
             const previewImg = document.createElement("img");
             previewImg.src = previewUrl;
-            previewImg.alt = "Aperçu du produit";
-
+            previewImg.alt = "Photo du produit";
             imagePreview.replaceChildren(previewImg);
         }
 
         setMessage(
             formMessage,
-            "Photo chargée. Tu peux lancer le scan ou publier l'originale."
+            "Photo chargée. Tu peux scanner ou publier."
         );
-    });    // ==========================================
-    // SCANNER DE CARTE POKÉMON
+    });
+
+    // ==========================================
+    // SCANNER VESUBIA
     // ==========================================
 
     scanCardButton?.addEventListener("click", async () => {
-
         if (isProcessingImage || isPublishing) return;
 
         const originalFile = imageInput.files?.[0];
@@ -271,29 +290,24 @@
         if (typeof window.scanPokemonCard !== "function") {
             setMessage(
                 formMessage,
-                "Le scanner n'est pas chargé. Vérifie card-scanner.js.",
+                "Le scanner n'est pas chargé.",
                 true
             );
-            console.error("window.scanPokemonCard est introuvable.");
             return;
         }
 
         isProcessingImage = true;
         scanCardButton.disabled = true;
-        scanCardButton.textContent = "Scan en cours...";
-
-        if (publishButton) publishButton.disabled = true;
+        scanCardButton.textContent = "Redressement en cours...";
+        publishButton.disabled = true;
 
         try {
+            const scannedFile = await window.scanPokemonCard(
+                processedImageFile || originalFile
+            );
 
-            const scannedFile =
-                await window.scanPokemonCard(originalFile);
-
-            if (
-                !(scannedFile instanceof File) ||
-                !scannedFile.type.startsWith("image/")
-            ) {
-                throw new Error("Le scanner n'a pas retourné une image valide.");
+            if (!(scannedFile instanceof File)) {
+                throw new Error("Le résultat du scan est invalide.");
             }
 
             processedImageFile = scannedFile;
@@ -304,11 +318,11 @@
 
             previewUrl = URL.createObjectURL(scannedFile);
 
-            if (imagePreview) {
-                const scannedImg = document.createElement("img");
-                scannedImg.src = previewUrl;
-                scannedImg.alt = "Carte Pokémon scannée";
+            const scannedImg = document.createElement("img");
+            scannedImg.src = previewUrl;
+            scannedImg.alt = "Carte redressée avec marge";
 
+            if (imagePreview) {
                 imagePreview.replaceChildren(scannedImg);
             }
 
@@ -318,34 +332,31 @@
             );
 
         } catch (error) {
-
             console.error("Erreur du scanner :", error);
 
-            // On conserve la photo originale si le scan échoue.
             processedImageFile = originalFile;
 
             setMessage(
                 formMessage,
-                "Le scan a échoué : " + error.message +
-                " La photo originale reste disponible.",
+                "Le scan a échoué : " +
+                error.message +
+                " La photo originale est conservée.",
                 true
             );
 
         } finally {
-
             isProcessingImage = false;
             scanCardButton.disabled = false;
-            scanCardButton.textContent =
-                "✨ Redresser et améliorer ma carte";
-
-            if (publishButton) publishButton.disabled = false;
+            scanCardButton.textContent = "✨ Scanner et améliorer";
+            publishButton.disabled = false;
         }
-    });    // ==========================================
+    });
+
+    // ==========================================
     // PUBLICATION DU PRODUIT
     // ==========================================
 
     productForm?.addEventListener("submit", async (event) => {
-
         event.preventDefault();
 
         if (isPublishing || isProcessingImage) return;
@@ -369,7 +380,6 @@
         let uploadedImagePath = null;
 
         try {
-
             const isAdmin = await checkAdmin(currentUser);
 
             if (!isAdmin) {
@@ -401,7 +411,9 @@
                 .getPublicUrl(uploadedImagePath);
 
             if (!imageData?.publicUrl) {
-                throw new Error("Impossible de récupérer l'adresse de l'image.");
+                throw new Error(
+                    "Impossible de récupérer l'adresse de l'image."
+                );
             }
 
             // Informations du produit
@@ -428,7 +440,6 @@
             clearImagePreview();
 
         } catch (error) {
-
             console.error("Erreur de publication :", error);
 
             // Nettoyage de l'image si la publication échoue
@@ -449,7 +460,6 @@
             );
 
         } finally {
-
             isPublishing = false;
             publishButton.disabled = false;
             publishButton.textContent = "Publier le produit";

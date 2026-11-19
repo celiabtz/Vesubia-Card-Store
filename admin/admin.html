@@ -10,12 +10,15 @@
     <link rel="stylesheet" href="admin.css">
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="supabase.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="card-recognition.js" defer></script>
-    <script async src="https://docs.opencv.org/4.x/opencv.js"></script>
-    <script src="card-scanner.js" defer></script>
-  <script src="admin.js" defer></script>
+
+<script async src="https://docs.opencv.org/4.x/opencv.js"></script>
+<script src="card-scanner.js" defer></script>
+
+<script src="admin.js" defer></script>
 </head>
 
 <body class="admin-page">
@@ -105,6 +108,46 @@
     <div class="scanner-upload">
 
         <div class="scanner-upload-icon">✧</div>
+
+        <!-- VESUBIA CAMERA SCANNER -->
+<div id="camera-scanner" class="camera-scanner">
+
+    <button type="button" id="open-camera-button">
+        📷 Scanner une carte
+    </button>
+
+    <div id="camera-panel" hidden>
+
+        <div class="camera-container">
+
+            <video
+                id="camera-video"
+                autoplay
+                playsinline
+                muted
+            ></video>
+
+            <div class="camera-guide"></div>
+
+        </div>
+
+        <div class="camera-actions">
+
+            <button type="button" id="capture-card-button">
+                📸 Prendre la photo
+            </button>
+
+            <button type="button" id="close-camera-button">
+                Fermer
+            </button>
+
+        </div>
+
+    </div>
+
+    <canvas id="camera-canvas" hidden></canvas>
+
+</div>
 
         <h3>Importez votre carte Pokémon</h3>
 
@@ -259,6 +302,6 @@
         </section>
 
     </main>
-
+<script src="camera-scanner.js"></script>
 </body>
 </html>
