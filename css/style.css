@@ -6005,7 +6005,7 @@ body.light-theme footer {
     .site-header > .menu-toggle {
         display: none !important;
     }
-}
+
 
 /* VESUBIA — INDEX MOBILE : 1 PRODUIT PAR LIGNE */
 
@@ -6078,5 +6078,40 @@ body.light-theme footer {
         flex-direction: column !important;
         background: #101014 !important;
         z-index: 9999 !important;
-    }
+
+
+    }.shop-selection-description {
+    text-align: center;
+    color: #c5c0c0;
+    font-size: 13px;
+    line-height: 1.8;
+    max-width: 700px;
+    margin: 0 auto 30px;
+    font-family: 'Poppins', sans-serif;
+
+    
+.shop-page .shop-heading.shop-heading-compact {
+    position: relative;
+}
+
+.shop-page .shop-heading.shop-heading-compact .shop-selection-description {
+    position: relative;
+    max-width: 620px;
+    margin: 20px auto 30px !important;
+    padding: 20px 25px;
+    line-height: 1.7;
+    opacity: 1;
+    z-index: 1;
+}
+
+.shop-page .shop-heading.shop-heading-compact .shop-selection-description {
+    background: radial-gradient(
+        ellipse at center,
+        rgba(180, 15, 30, 0.18) 0%,
+        rgba(180, 15, 30, 0.08) 45%,
+        transparent 75%
+    );
+}
+.shop-selection-description {
+    background: red !important;
 }

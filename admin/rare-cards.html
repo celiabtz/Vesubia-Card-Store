@@ -10,6 +10,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="card-recognition.js" defer></script>
+
+<script async src="https://docs.opencv.org/4.x/opencv.js"></script>
+<script src="card-scanner.js" defer></script>
     <script src="rare-cards-admin.js" defer></script>
 </head>
 
@@ -134,18 +139,148 @@
                 <span><strong>Afficher sur la boutique</strong></span>
             </label>
         </section>
+<section class="form-section scanner-section">
 
-        <section class="form-section">
-            <h2>Photographie</h2>
+    <div class="scanner-heading">
+        <span class="admin-eyebrow">VESUBIA DIGITAL SCAN</span>
+        <h2>Photographie de la carte</h2>
+        <p>Transformez votre photographie en visuel propre et uniforme.</p>
+    </div>
 
-            <label for="card-image">Photo de la carte</label>
-            <input id="card-image" type="file"
-                   accept="image/jpeg,image/png,image/webp" required>
-            <small>Formats JPG, PNG ou WEBP — 5 Mo maximum.</small>
+    <div class="scanner-upload">
 
-            <div id="card-image-preview" class="image-preview"></div>
-        </section>
+        <div class="scanner-upload-icon">✧</div>
 
+        <!-- CAMERA SCANNER RARE -->
+        <div id="rare-camera-scanner" class="camera-scanner">
+
+            <button type="button" id="rare-open-camera-button">
+                📷 Scanner une carte
+            </button>
+
+            <div id="rare-camera-panel" hidden>
+
+                <div class="camera-container">
+
+                    <video
+                        id="rare-camera-video"
+                        autoplay
+                        playsinline
+                        muted
+                    ></video>
+
+                    <div class="camera-guide"></div>
+
+                </div>
+
+                <div class="camera-actions">
+
+                    <button type="button" id="rare-capture-card-button">
+                        📸 Prendre la photo
+                    </button>
+
+                    <button type="button" id="rare-close-camera-button">
+                        Fermer
+                    </button>
+
+                </div>
+
+            </div>
+
+            <canvas id="rare-camera-canvas" hidden></canvas>
+
+        </div>
+
+        <h3>Importez votre carte Pokémon</h3>
+
+        <p>Choisissez une photographie depuis votre ordinateur.</p>
+
+        <label for="card-image" class="scanner-upload-button">
+            + Choisir une photo
+        </label>
+
+        <input
+            type="file"
+            id="card-image"
+            accept="image/jpeg,image/png,image/webp"
+            required
+        >
+
+        <small>JPG, PNG ou WEBP · 5 Mo maximum</small>
+
+    </div>
+
+    <div class="scanner-actions">
+
+        <button
+            type="button"
+            id="rare-scan-card-button"
+            class="publish-button">
+            ✨ Scanner et améliorer
+        </button>
+
+        <div class="vesubia-hd-options">
+
+            <label for="rare-scan-quality">QUALITÉ DU SCAN</label>
+
+            <select id="rare-scan-quality">
+
+                <option value="natural">
+                    Naturel — fidèle à l'original
+                </option>
+
+                <option value="balanced" selected>
+                    Équilibré — recommandé
+                </option>
+
+                <option value="premium">
+                    Premium — lumineux et détaillé
+                </option>
+
+            </select>
+
+            <p>
+                Les reflets holographiques et les détails originaux
+                sont préservés.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="scanner-preview">
+
+        <div class="scanner-preview-heading">
+            <h3>Aperçu de votre carte</h3>
+            <span>AVANT / APRÈS</span>
+        </div>
+
+        <div class="scanner-preview-grid">
+
+            <div class="scanner-preview-card">
+
+                <span>PHOTO ORIGINALE</span>
+
+                <div id="rare-original-preview"></div>
+
+            </div>
+
+            <div class="scanner-preview-card">
+
+                <span>RÉSULTAT NUMÉRIQUE</span>
+
+                <div
+                    id="rare-image-preview"
+                    class="image-preview">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
         <section class="form-section">
             <h2>Description</h2>
             <label for="card-description">Informations complémentaires</label>
@@ -164,6 +299,6 @@
 
     </form>
 </main>
-
+<script src="rare-camera-scanner.js"></script>
 </body>
 </html>

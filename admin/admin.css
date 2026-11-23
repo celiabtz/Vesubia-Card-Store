@@ -1615,3 +1615,101 @@ clip-path: inset(0 round 18px);
     }
 
 }
+
+/* =========================
+   VESUBIA DIGITAL SCAN
+========================= */
+
+.vesubia-scan-section {
+    border: 1px solid rgba(214, 180, 91, 0.35);
+}
+
+.scan-description {
+    color: #bdbdbd;
+    margin-bottom: 25px;
+}
+
+.scan-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+#card-camera,
+#card-import {
+    display: none;
+}
+
+.scan-action-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 55px;
+    padding: 15px 22px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .25s ease;
+    font-weight: 600;
+    font-family: inherit;
+}
+
+.scan-camera {
+    background: linear-gradient(135deg, #d6b45b, #b89137);
+    color: #0a0a0a;
+    border: 1px solid #d6b45b;
+}
+
+.scan-import {
+    background: #191919;
+    color: #f2f2f2;
+    border: 1px solid rgba(214, 180, 91, 0.4);
+}
+
+.scan-action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(214, 180, 91, 0.12);
+}
+
+.scan-icon {
+    font-size: 20px;
+}
+
+.scan-info {
+    display: block;
+    color: #999;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+#card-image-preview {
+    margin-top: 20px;
+}
+
+#card-image-preview img {
+    display: block;
+    max-width: 280px;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(214, 180, 91, 0.35);
+    margin-top: 15px;
+}
+
+#card-image-preview p {
+    color: #d6b45b;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+    .scan-actions {
+        flex-direction: column;
+    }
+
+    .scan-action-button {
+        width: 100%;
+    }
+}

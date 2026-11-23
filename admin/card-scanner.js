@@ -484,30 +484,29 @@
                 );
 
                 const outputCanvas = document.createElement("canvas");
-                outputCanvas.width = width;
-                outputCanvas.height = height;
+outputCanvas.width = width;
+outputCanvas.height = height;
 
-                cv.imshow(outputCanvas, result);
+cv.imshow(outputCanvas, result);
 
-                const outputFile = await new Promise((resolve, reject) => {
-                    outputCanvas.toBlob(blob => {
-                        if (!blob) {
-                            reject(
-                                new Error("Impossible de générer l'image.")
-                            );
-                            return;
-                        }
+const outputFile = await new Promise((resolve, reject) => {
+    outputCanvas.toBlob(blob => {
+        if (!blob) {
+            reject(new Error("Impossible de générer l'image."));
+            return;
+        }
 
-                        resolve(
-                            new File(
-                                [blob],
-                                "vesubia-scan.jpg",
-                                { type: "image/jpeg" }
-                            )
-                        );
-                    }, "image/jpeg", 0.95);
-                });
+        resolve(
+            new File(
+                [blob],
+                "vesubia-scan.jpg",
+                { type: "image/jpeg" }
+            )
+        );
+    }, "image/jpeg", 0.95);
+});
 
+return outputFile;
                 return outputFile;
 
             } finally {

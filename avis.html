@@ -1,56 +1,17 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Avis clients | Vesubia Card Store</title>
-      <link rel="icon" type="image/png" href="images/logo/logovs.png">
-    <meta name="description" content="Découvrez les avis clients de Vesubia Card Store et partagez votre expérience.">
+    <link rel="icon" type="image/png" href="images/logo/logovs.png">
+    <meta name="description" content="Découvrez les avis Google de Vesubia Card Store.">
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/avis.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <style>
-        /* Sélecteur d'étoiles : styles autonomes pour garantir le clic et l'affichage */
-        #rating-picker {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 8px 0 18px;
-        }
-        #rating-picker button {
-            appearance: none;
-            -webkit-appearance: none;
-            border: 0;
-            background: transparent;
-            padding: 0 2px;
-            color: #777;
-            font-size: 30px;
-            line-height: 1;
-            cursor: pointer;
-            pointer-events: auto;
-            transition: color .18s ease, transform .18s ease;
-        }
-        #rating-picker button:hover,
-        #rating-picker button.active {
-            color: #d8ad55;
-        }
-        #rating-picker button:hover {
-            transform: scale(1.12);
-        }
-        #rating-picker button:focus-visible {
-            outline: 2px solid #d8ad55;
-            outline-offset: 3px;
-            border-radius: 4px;
-        }
-        .reviews-note a { color: #d8ad55; }
-    
-        #review-photos { display:block; width:100%; margin:8px 0; padding:10px; color:#f5f1e8; background:#0d0d0d; border:1px solid #9d7b3e; border-radius:6px; }
-        .reviews-photo-help { display:block; color:#999; font-size:10px; margin:5px 0 12px; }
-        .review-photo-preview, .review-photo-gallery { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin:12px 0; }
-        .review-photo-preview-image, .review-photo-gallery img { width:100px; height:100px; object-fit:cover; border-radius:8px; border:1px solid #9d7b3e; }
-        </style>
 </head>
 <body>
 
@@ -84,10 +45,10 @@
         <a href="histoire.html">Notre histoire</a>
         <a href="contact.html">Contact</a>
 
-        <a href="connexion.html" class="header-account-btn">
-            <i class="fa-regular fa-user"></i>
-            Connexion
-        </a>
+      
+    <a href="connexion.html">
+    <i class="fa-regular fa-user"></i> Mon compte
+</a>
 
         <a href="avis.html" class="header-avis-btn">
             <span>★</span> Avis
@@ -102,352 +63,51 @@
 </header>
 
 <main class="reviews-page">
+
     <section class="reviews-hero">
         <span class="reviews-eyebrow">VESUBIA CARD STORE</span>
         <h1>Vos avis, <span>notre fierté.</span></h1>
-        <p>Votre expérience compte énormément pour nous. Découvrez les retours de notre communauté et partagez à votre tour votre expérience chez Vesubia Card Store.</p>
+        <p>
+            Votre expérience compte énormément pour nous.
+            Découvrez les retours de notre communauté sur Google.
+        </p>
     </section>
 
     <section class="google-summary">
+
         <h2>Notre réputation sur Google</h2>
+
         <div class="google-rating">5,0 / 5</div>
-        <div class="review-stars" aria-label="5 étoiles sur 5">★★★★★</div>
-        <p>Basé sur 5 avis Google</p>
-        <a class="gold-button" href="https://share.google/34rqfPbUsYlvEjkCw" target="_blank" rel="noopener">Voir notre fiche Google</a>
-        <a class="gold-button" href="https://share.google/34rqfPbUsYlvEjkCw" target="_blank" rel="noopener">Laisser un avis sur Google</a>
-    </section>
 
-    <section class="reviews-section">
-        <h2>Les avis de notre <span>communauté</span></h2>
-        <div class="reviews-empty" aria-live="polite">
-            <div class="empty-icon">✦</div>
-            <p>Les avis de nos clients apparaîtront ici.</p>
+        <div class="review-stars" aria-label="5 étoiles sur 5">
+            ★★★★★
         </div>
+
+        <p>Basé sur 5 avis Google</p>
+
+        <a class="gold-button"
+           href="https://share.google/34rqfPbUsYlvEjkCw"
+           target="_blank"
+           rel="noopener">
+            Voir notre fiche Google
+        </a>
+
+        <a class="gold-button"
+           href="https://share.google/34rqfPbUsYlvEjkCw"
+           target="_blank"
+           rel="noopener">
+            Laisser un avis sur Google
+        </a>
+
     </section>
 
-    <section class="reviews-section">
-        <h2>Partagez votre <span>expérience</span></h2>
-        <form class="reviews-form" id="review-form">
-            <label for="review-name">Votre prénom</label>
-            <input type="text" id="review-name" placeholder="Ex : Camille" maxlength="50" autocomplete="given-name" required>
-
-            <label>Votre note</label>
-            <div class="rating-picker" id="rating-picker" role="group" aria-label="Choisissez une note sur cinq">
-                <button type="button" data-rating="1" aria-label="1 étoile" aria-pressed="false">★</button>
-                <button type="button" data-rating="2" aria-label="2 étoiles" aria-pressed="false">★</button>
-                <button type="button" data-rating="3" aria-label="3 étoiles" aria-pressed="false">★</button>
-                <button type="button" data-rating="4" aria-label="4 étoiles" aria-pressed="false">★</button>
-                <button type="button" data-rating="5" aria-label="5 étoiles" aria-pressed="false">★</button>
-            </div>
-
-            <label for="review-message">Votre commentaire</label>
-            <textarea id="review-message" placeholder="Racontez-nous votre expérience..." maxlength="1000" required></textarea>
-
-            <label for="review-photos">Ajouter des photos (3 maximum)</label>
-            <input type="file" id="review-photos" accept="image/jpeg,image/png,image/webp" multiple>
-            <small class="reviews-photo-help">Formats JPG, PNG ou WebP. 5 Mo maximum par photo.</small>
-            <div id="review-photo-preview" class="review-photo-preview" aria-live="polite"></div>
-
-            <button type="submit" class="gold-button" id="review-submit">Envoyer mon avis</button>
-            <p class="reviews-note" role="status" aria-live="polite">Votre avis sera soumis à validation avant publication. Pour publier également sur Google, vous devrez déposer votre avis directement sur Google.</p>
-        </form>
-    </section>
 </main>
 
 <footer class="site-footer">
     <p>© 2026 <strong>VESUBIA CARD STORE</strong> — Tous droits réservés.</p>
 </footer>
 
-<!-- Charger Supabase avant le script de la page. Ne pas imbriquer ces balises. -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="admin/supabase.js"></script>
+<script src="js/avis.js"></script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("review-form");
-    const nameInput = document.getElementById("review-name");
-    const messageInput = document.getElementById("review-message");
-    const photoInput = document.getElementById("review-photos");
-    const photoPreview = document.getElementById("review-photo-preview");
-    const statusMessage = document.querySelector(".reviews-note");
-    const reviewsContainer = document.querySelector(".reviews-empty");
-    const ratingButtons = Array.from(document.querySelectorAll("#rating-picker button"));
-    const submitButton = document.getElementById("review-submit");
-    const DRAFT_KEY = "vesubia_review_draft";
-    let selectedRating = 0;
-    let currentUser = null;
-
-    // Les étoiles sont activées immédiatement, sans attendre Supabase.
-    function selectRating(rating) {
-        selectedRating = Number(rating);
-        ratingButtons.forEach(button => {
-            const active = Number(button.dataset.rating) <= selectedRating;
-            button.classList.toggle("active", active);
-            button.setAttribute("aria-pressed", String(Number(button.dataset.rating) === selectedRating));
-        });
-    }
-
-    ratingButtons.forEach(button => {
-        button.addEventListener("click", () => selectRating(button.dataset.rating));
-    });
-
-    function saveDraft() {
-        const draft = {
-            name: nameInput.value.trim(),
-            rating: selectedRating,
-            comment: messageInput.value.trim()
-        };
-        localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-    }
-
-    function restoreDraft() {
-        const saved = localStorage.getItem(DRAFT_KEY);
-        if (!saved) return;
-        try {
-            const draft = JSON.parse(saved);
-            if (draft.comment) messageInput.value = draft.comment;
-            if (draft.name && !currentUser) nameInput.value = draft.name;
-            if (draft.rating) selectRating(draft.rating);
-            statusMessage.textContent = "Votre avis a été conservé. Vérifiez-le puis cliquez à nouveau sur Envoyer mon avis.";
-        } catch (error) {
-            console.error("Impossible de restaurer le brouillon :", error);
-            localStorage.removeItem(DRAFT_KEY);
-        }
-    }
-
-    function fillUserName() {
-        if (!currentUser) return;
-        const firstName = currentUser.user_metadata?.first_name || "";
-        const lastName = currentUser.user_metadata?.last_name || "";
-        nameInput.value = `${firstName} ${lastName}`.trim() || currentUser.email?.split("@")[0] || "Client";
-        nameInput.readOnly = true;
-    }
-
-    async function loadReviews() {
-        const { data, error } = await supabaseClient
-            .from("reviews")
-            .select("display_name, rating, comment, photo_urls, created_at")
-            .eq("status", "published")
-            .order("created_at", { ascending: false });
-
-        if (error) {
-            console.error("Erreur de chargement des avis :", error);
-            reviewsContainer.innerHTML = "<p>Impossible de charger les avis pour le moment.</p>";
-            return;
-        }
-
-        reviewsContainer.replaceChildren();
-        if (!data || data.length === 0) {
-            const empty = document.createElement("p");
-            empty.textContent = "Les avis de nos clients apparaîtront ici.";
-            reviewsContainer.appendChild(empty);
-            return;
-        }
-
-        data.forEach(review => {
-            const card = document.createElement("article");
-            card.className = "review-card";
-            const name = document.createElement("h3");
-            name.textContent = review.display_name;
-            const stars = document.createElement("div");
-            stars.className = "review-stars";
-            stars.textContent = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
-            const comment = document.createElement("p");
-            comment.textContent = review.comment;
-            const date = document.createElement("small");
-            date.textContent = new Date(review.created_at).toLocaleDateString("fr-FR");
-            card.append(name, stars, comment);
-
-            if (Array.isArray(review.photo_urls) && review.photo_urls.length) {
-                const gallery = document.createElement("div");
-                gallery.className = "review-photo-gallery";
-                review.photo_urls.forEach(url => {
-                    const link = document.createElement("a");
-                    link.href = url;
-                    link.target = "_blank";
-                    link.rel = "noopener";
-                    const image = document.createElement("img");
-                    image.src = url;
-                    image.alt = "Photo ajoutée à un avis client";
-                    image.loading = "lazy";
-                    link.appendChild(image);
-                    gallery.appendChild(link);
-                });
-                card.appendChild(gallery);
-            }
-
-            card.appendChild(date);
-            reviewsContainer.appendChild(card);
-        });
-    }
-
-    // Aperçu et validation des photos sélectionnées.
-    photoInput.addEventListener("change", () => {
-        photoPreview.replaceChildren();
-        const files = Array.from(photoInput.files || []);
-        if (files.length > 3) {
-            statusMessage.textContent = "Vous pouvez ajouter 3 photos maximum.";
-            photoInput.value = "";
-            return;
-        }
-        for (const file of files) {
-            if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024) {
-                statusMessage.textContent = "Chaque photo doit être au format JPG, PNG ou WebP et faire 5 Mo maximum.";
-                photoInput.value = "";
-                photoPreview.replaceChildren();
-                return;
-            }
-            const image = document.createElement("img");
-            image.src = URL.createObjectURL(file);
-            image.alt = "Aperçu de votre photo";
-            image.className = "review-photo-preview-image";
-            photoPreview.appendChild(image);
-        }
-    });
-
-    // Le formulaire garde son brouillon avant toute redirection vers la connexion.
-    form.addEventListener("submit", async event => {
-        event.preventDefault();
-        const name = nameInput.value.trim();
-        const comment = messageInput.value.trim();
-
-        if (!name) {
-            statusMessage.textContent = "Merci de renseigner votre prénom.";
-            nameInput.focus();
-            return;
-        }
-        if (!selectedRating) {
-            statusMessage.textContent = "Merci de sélectionner une note.";
-            return;
-        }
-        if (comment.length < 5) {
-            statusMessage.textContent = "Votre commentaire doit contenir au moins 5 caractères.";
-            messageInput.focus();
-            return;
-        }
-
-        saveDraft();
-
-        if (typeof supabaseClient === "undefined") {
-            statusMessage.textContent = "Le service de connexion est indisponible. Votre avis est conservé dans ce navigateur. Réessayez dans un instant.";
-            return;
-        }
-
-        submitButton.disabled = true;
-        submitButton.textContent = "Vérification...";
-
-        try {
-            const { data, error: authError } = await supabaseClient.auth.getUser();
-            if (authError) throw authError;
-            currentUser = data.user;
-
-            if (!currentUser) {
-                statusMessage.textContent = "Connectez-vous ou créez un compte. Votre avis sera conservé.";
-                window.location.href = "connexion.html?retour=avis";
-                return;
-            }
-
-            fillUserName();
-
-            const selectedPhotos = Array.from(photoInput.files || []);
-            if (selectedPhotos.length > 3) throw new Error("Vous pouvez ajouter 3 photos maximum.");
-
-            const photoUrls = [];
-            for (const file of selectedPhotos) {
-                if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5 * 1024 * 1024) {
-                    throw new Error("Chaque photo doit être au format JPG, PNG ou WebP et faire 5 Mo maximum.");
-                }
-
-                const extension = file.type === "image/jpeg" ? "jpg" : file.type.split("/")[1];
-                const filePath = `${currentUser.id}/${crypto.randomUUID()}.${extension}`;
-
-                const { error: uploadError } = await supabaseClient.storage
-                    .from("review-photos")
-                    .upload(filePath, file, { contentType: file.type, upsert: false });
-
-                if (uploadError) throw uploadError;
-
-                const { data: publicUrlData } = supabaseClient.storage
-                    .from("review-photos")
-                    .getPublicUrl(filePath);
-
-                photoUrls.push(publicUrlData.publicUrl);
-            }
-
-            const { error } = await supabaseClient.from("reviews").insert({
-                user_id: currentUser.id,
-                display_name: nameInput.value.trim(),
-                rating: selectedRating,
-                comment,
-                photo_urls: photoUrls,
-                status: "published"
-            });
-            if (error) throw error;
-
-            localStorage.removeItem(DRAFT_KEY);
-            statusMessage.textContent = "Merci pour votre avis ! Il a bien été publié.";
-            messageInput.value = "";
-            photoInput.value = "";
-            photoPreview.replaceChildren();
-            selectRating(0);
-            await loadReviews();
-        } catch (error) {
-            console.error("Erreur lors de l'envoi de l'avis :", error);
-            statusMessage.textContent = "Une erreur est survenue. Votre avis a été conservé. Vous pouvez réessayer.";
-        } finally {
-            submitButton.disabled = false;
-            submitButton.textContent = "Envoyer mon avis";
-        }
-    });
-
-    // Initialisation asynchrone : les étoiles fonctionnent même si Supabase échoue.
-    restoreDraft();
-    if (typeof supabaseClient === "undefined") {
-        console.error("supabaseClient est introuvable. Vérifier admin/supabase.js et le chargement du CDN.");
-        return;
-    }
-
-    (async () => {
-        try {
-            const { data, error } = await supabaseClient.auth.getUser();
-            if (error) throw error;
-            currentUser = data.user;
-            if (currentUser) fillUserName();
-            restoreDraft();
-            await loadReviews();
-        } catch (error) {
-            console.error("Erreur d'initialisation des avis :", error);
-            statusMessage.textContent = "Les étoiles et la rédaction sont disponibles, mais le chargement du compte ou des avis a échoué.";
-        }
-    })();
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const button = document.getElementById("menu-toggle");
-    const menu = document.getElementById("main-nav");
-
-    if (!button || !menu) return;
-
-    button.addEventListener("click", () => {
-        const opened = menu.classList.toggle("is-open");
-
-        button.classList.toggle("active", opened);
-        button.setAttribute("aria-expanded", opened);
-        button.setAttribute(
-            "aria-label",
-            opened ? "Fermer le menu" : "Ouvrir le menu"
-        );
-    });
-
-    menu.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", () => {
-            menu.classList.remove("is-open");
-            button.classList.remove("active");
-            button.setAttribute("aria-expanded", "false");
-        });
-    });
-});
-</script>
 </body>
 </html>
