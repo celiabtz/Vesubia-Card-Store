@@ -17,9 +17,7 @@ const conversationHistory = [];
 const quickQuestions = {
     location: "Où se trouve votre boutique ?",
     phone: "Quel est votre numéro de téléphone ?",
-    social: "Quels sont vos réseaux sociaux ?",
-    renovation: "Je souhaite faire rénover une carte Pokémon.",
-    sav: "J'ai besoin du service après-vente."
+    social: "Quels sont vos réseaux sociaux ?"
 };
 
 // -----------------------------
@@ -186,34 +184,6 @@ document.querySelectorAll("[data-question]").forEach(button => {
 
         if (!question || chatBusy) return;
 
-        if (key === "renovation" || key === "sav") {
-            const category = document.getElementById("sav-category");
-            const requestForm = document.getElementById(
-                "sav-request-form"
-            );
-
-            if (category) {
-                const wanted = key === "renovation"
-                    ? "Rénovation"
-                    : "Service après-vente";
-
-                const option = Array.from(category.options).find(
-                    item =>
-                        item.value === wanted ||
-                        item.textContent.trim() === wanted
-                );
-
-                if (option) category.value = option.value;
-            }
-
-            if (requestForm) {
-                requestForm.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center"
-                });
-            }
-        }
-
         sendChatQuestion(question);
     });
 });
@@ -279,7 +249,6 @@ if (requestForm) {
 
         const nameInput = document.getElementById("sav-name");
         const emailInput = document.getElementById("sav-email");
-        const categoryInput = document.getElementById("sav-category");
         const messageInput = document.getElementById("sav-message");
 
         if (
@@ -287,7 +256,6 @@ if (requestForm) {
             !status ||
             !nameInput ||
             !emailInput ||
-            !categoryInput ||
             !messageInput
         ) {
             if (status) {
@@ -298,13 +266,11 @@ if (requestForm) {
 
         const customerName = nameInput.value.trim();
         const customerEmail = emailInput.value.trim();
-        const category = categoryInput.value.trim();
         const message = messageInput.value.trim();
 
         if (
             !customerName ||
             !customerEmail ||
-            !category ||
             !message
         ) {
             status.textContent =
@@ -335,7 +301,6 @@ if (requestForm) {
                     sender_role: "customer",
                     customer_name: customerName,
                     customer_email: customerEmail,
-                    category: category,
                     message: message
                 });
 

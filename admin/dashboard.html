@@ -10,20 +10,27 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase.js"></script>
     <script src="dashboard-auth.js" defer></script>
+    <link rel="stylesheet" href="notifications.css">
 </head>
 <body class="admin-page">
     <header class="admin-header">
         <a href="../index.html" class="admin-brand">
-            <img src="../images/logo/logovs.png" alt="Vesubia Card Store">
+           <img src="logorouge.png" alt="Vesubia">
             <span>
                 <strong>VESUBIA</strong>
                 <small>CARD STORE · ADMINISTRATION</small>
             </span>
         </a>
         <div class="admin-header-actions">
-            <a href="../index.html" class="admin-back">Voir la boutique ↗</a>
-            <button type="button" id="dashboard-logout" class="dashboard-logout">Déconnexion</button>
-        </div>
+    <div class="admin-header-actions">
+    <a href="../index.html" class="admin-header-link admin-shop-button">
+        Retour boutique
+    </a>
+
+    <button id="dashboard-logout" class="admin-logout">
+        Déconnexion
+    </button>
+</div>
     </header>
 
     <main class="admin-container">
@@ -51,6 +58,24 @@
             </button>
         </section>
 
+        <!-- CALENDRIER -->
+<section class="admin-section">
+    <div class="admin-section-heading">
+        <div>
+            <span class="admin-eyebrow">ORGANISATION</span>
+            <h2>Rendez-vous</h2>
+        </div>
+    </div>
+
+    <div class="admin-actions">
+        <a href="calendrier.html" class="admin-action-card">
+            <span class="admin-action-icon">▦</span>
+            <strong>Calendrier des rendez-vous</strong>
+            <small>Consulter, planifier et gérer les rendez-vous</small>
+        </a>
+    </div>
+</section>
+
         <section id="dashboard-product-list" class="admin-section" hidden>
             <div class="admin-section-heading">
                 <div>
@@ -75,11 +100,7 @@
                     <strong>Ajouter un produit</strong>
                     <small>Photo, description, prix et stock</small>
                 </a>
-                  <a href="messages.html" class="admin-action-card">
-                    <span class="admin-action-icon">✉</span>
-                    <strong>Messages clients</strong>
-                    <small>Consulter et gérer les demandes reçues</small>
-                </a>
+                
                 <a href="products.html" class="admin-action-card">
                     <span class="admin-action-icon">✎</span>
                     <strong>Gérer les produits</strong>
@@ -109,5 +130,7 @@
 
         
     </main>
+
+    <script src="notifications.js"></script>
 </body>
 </html>

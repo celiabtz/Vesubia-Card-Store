@@ -1712,4 +1712,90 @@ clip-path: inset(0 round 18px);
     .scan-action-button {
         width: 100%;
     }
+}/* HEADER BUTTONS */
+
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-shop-button,
+.admin-logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 18px;
+    border-radius: 7px;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: 0.25s ease;
+    cursor: pointer;
+}
+
+.admin-shop-button {
+    color: #d4af37 !important;
+    background: #171717;
+    border: 1px solid #383838;
+}
+
+.admin-shop-button:hover {
+    color: #fff !important;
+    border-color: #d4af37;
+    background: #202020;
+}
+
+.admin-logout {
+    color: #fff;
+    background: #a9252c;
+    border: 1px solid #a9252c;
+}
+
+.admin-logout:hover {
+    background: #c32b33;
+    border-color: #c32b33;
+}/* HEADER ADMIN BUTTONS */
+
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-dashboard-button,
+.admin-logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 18px;
+    border-radius: 7px;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: 0.25s ease;
+    cursor: pointer;
+}
+
+.admin-dashboard-button {
+    color: #d4af37 !important;
+    background: #171717;
+    border: 1px solid #383838;
+}
+
+.admin-dashboard-button:hover {
+    color: #fff !important;
+    border-color: #d4af37;
+    background: #202020;
+}
+
+.admin-logout {
+    color: #fff;
+    background: #a9252c;
+    border: 1px solid #a9252c;
+}
+
+.admin-logout:hover {
+    background: #c32b33;
+    border-color: #c32b33;
 }

@@ -300,3 +300,39 @@
     }
 }
 
+/* CENTRAGE DU QCM CONTACT */
+
+.contact-qcm,
+.qcm-container,
+#contact-qcm {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-qcm > *,
+.qcm-container > *,
+#contact-qcm > * {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* CENTRAGE DU QCM APRÈS SUPPRESSION DU FORMULAIRE */
+
+.sav-page .sav-support-grid {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.sav-page .sav-support-grid > section,
+.sav-page .sav-support-grid > div {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.sav-page .sav-support-grid .sav-section-heading {
+    text-align: center;
+}

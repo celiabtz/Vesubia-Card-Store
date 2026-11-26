@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier | Vesubia Card Store</title>
+
+    <link rel="icon" type="image/png" href="../logorouge.png">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="calendrier.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="calendrier-auth.js" defer></script>
+    <script src="calendrier.js" defer></script>
+</head>
+
+<body class="admin-page calendrier-page">
+
+<header class="admin-header">
+    <div class="admin-header-inner">
+
+        <a href="dashboard.html" class="admin-brand">
+            <img src="logorouge.png" alt="Vesubia">
+
+            <div class="admin-brand-text">
+                <span class="admin-brand-name">VESUBIA</span>
+                <span class="admin-brand-subtitle">CARD STORE</span>
+                <span class="admin-brand-admin">ADMINISTRATION</span>
+            </div>
+        </a>
+
+        <div class="admin-header-actions">
+    <a href="dashboard.html" class="admin-header-link admin-dashboard-button">
+        Retour dashboard
+    </a>
+
+    <button id="dashboard-logout" class="admin-logout">
+        Déconnexion
+    </button>
+    </div>
+</header>
+
+<main class="admin-container calendrier-container">
+
+    <!-- HEADER CALENDRIER -->
+    <section class="calendrier-heading">
+        <div class="calendrier-heading-title">
+            <div class="calendrier-heading-icon">▦</div>
+            <div>
+                <h1>Calendrier</h1>
+                <p>Gestion des rendez-vous et des créneaux</p>
+            </div>
+        </div>
+
+        <button id="add-appointment" class="calendar-add-main">
+            <span>+</span> Nouveau rendez-vous
+        </button>
+    </section>
+
+    <!-- STATISTIQUES -->
+    <section class="calendar-stats">
+
+        <div class="calendar-stat">
+            <div class="calendar-stat-icon red">▦</div>
+            <div class="calendar-stat-content">
+                <span>Rendez-vous</span>
+                <strong id="calendar-stat-total">0</strong>
+            </div>
+        </div>
+
+        <div class="calendar-stat">
+            <div class="calendar-stat-icon green">✓</div>
+            <div class="calendar-stat-content">
+                <span>Confirmés</span>
+                <strong id="calendar-stat-confirmed">0</strong>
+            </div>
+        </div>
+
+        <div class="calendar-stat">
+            <div class="calendar-stat-icon gold">◷</div>
+            <div class="calendar-stat-content">
+                <span>En attente</span>
+                <strong id="calendar-stat-pending">0</strong>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ZONE CALENDRIER -->
+    <section class="calendar-main-layout">
+
+        <!-- CALENDRIER -->
+        <div class="calendar-main-card">
+
+            <div class="calendar-toolbar">
+
+                <div class="calendar-month-navigation">
+                    <button id="calendar-prev" aria-label="Mois précédent">‹</button>
+                    <button id="calendar-next" aria-label="Mois suivant">›</button>
+
+                    <h2 id="calendar-title"></h2>
+                </div>
+
+                <div class="calendar-toolbar-controls">
+                    <div class="calendar-view-switch">
+                        <button data-view="month" class="active">Mois</button>
+                        <button data-view="week">Semaine</button>
+                    </div>
+
+                    <button id="calendar-today">Aujourd'hui</button>
+                </div>
+
+            </div>
+
+            <div class="calendar-weekdays">
+                <div>Lun.</div>
+                <div>Mar.</div>
+                <div>Mer.</div>
+                <div>Jeu.</div>
+                <div>Ven.</div>
+                <div>Sam.</div>
+                <div>Dim.</div>
+            </div>
+
+            <div id="calendar-grid"></div>
+
+            <div class="calendar-legend">
+                <span>
+                    <i class="calendar-legend-dot confirmed"></i>
+                    Confirmé
+                </span>
+
+                <span>
+                    <i class="calendar-legend-dot pending"></i>
+                    En attente
+                </span>
+
+                <span>
+                    <i class="calendar-legend-dot cancelled"></i>
+                    Annulé
+                </span>
+            </div>
+
+        </div>
+
+        <!-- PANNEAU DROIT -->
+        <aside class="calendar-side-panel">
+
+            <div id="calendar-day-details"></div>
+
+        </aside>
+
+    </section>
+
+</main>
+
+<!-- MODAL -->
+<div id="appointment-modal" hidden>
+
+    <div class="modal-overlay"></div>
+
+    <div class="modal-content">
+
+        <div class="calendar-modal-header">
+            <div>
+                <span class="calendar-modal-eyebrow">ORGANISATION</span>
+                <h2>Rendez-vous</h2>
+            </div>
+
+            <button type="button" id="appointment-cancel" class="calendar-modal-close">
+                ×
+            </button>
+        </div>
+
+        <form id="appointment-form">
+
+            <input type="hidden" id="appointment-id">
+
+            <div class="calendar-form-group">
+                <label for="client-name">Nom du client *</label>
+                <input type="text" id="client-name" required>
+            </div>
+
+            <div class="calendar-form-grid">
+
+                <div class="calendar-form-group">
+                    <label for="client-email">Adresse e-mail</label>
+                    <input type="email" id="client-email">
+                </div>
+
+                <div class="calendar-form-group">
+                    <label for="client-phone">Téléphone</label>
+                    <input type="tel" id="client-phone">
+                </div>
+
+            </div>
+
+            <div class="calendar-form-group">
+                <label for="appointment-type">Type de rendez-vous</label>
+
+                <select id="appointment-type">
+                    <option value="Autre">Autre</option>
+                    <option value="Retrait">Retrait commande</option>
+                    <option value="Réservation">Réservation</option>
+                    <option value="Recherche">Recherche carte</option>
+                    <option value="Événement">Événement</option>
+                    <option value="Vente">Vente</option>
+                </select>
+            </div>
+
+            <div class="calendar-form-group">
+                <label for="appointment-date">Date *</label>
+                <input type="date" id="appointment-date" required>
+            </div>
+
+            <div class="calendar-form-grid">
+
+                <div class="calendar-form-group">
+                    <label for="appointment-start">Heure de début *</label>
+                    <input type="time" id="appointment-start" required>
+                </div>
+
+                <div class="calendar-form-group">
+                    <label for="appointment-end">Heure de fin *</label>
+                    <input type="time" id="appointment-end" required>
+                </div>
+
+            </div>
+
+            <div class="calendar-form-group">
+                <label for="appointment-status">Statut</label>
+
+                <select id="appointment-status">
+                    <option value="confirmed">Confirmé</option>
+                    <option value="pending">En attente</option>
+                    <option value="cancelled">Annulé</option>
+                </select>
+            </div>
+
+            <div class="calendar-form-group">
+                <label for="appointment-notes">Notes</label>
+                <textarea id="appointment-notes" placeholder="Informations complémentaires..."></textarea>
+            </div>
+
+            <div id="appointment-message"></div>
+
+            <div class="calendar-modal-actions">
+                <button type="button" id="appointment-cancel-bottom">
+                    Annuler
+                </button>
+
+                <button type="submit" id="appointment-save">
+                    Enregistrer
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>
