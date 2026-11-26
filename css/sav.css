@@ -1,0 +1,302 @@
+
+/* =========================================
+   VESUBIA CARD STORE - SERVICE CLIENT
+========================================= */
+
+.sav-page {
+    background: #09090b;
+    color: #f5f2e9;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* CONTAINER */
+
+.sav-page .sav-container {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 35px 0 55px;
+    box-sizing: border-box;
+}
+
+/* INTRODUCTION */
+
+.sav-page .sav-hero {
+    max-width: 760px;
+    margin: 0 auto 35px;
+    text-align: center;
+}
+
+.sav-page .sav-eyebrow {
+    display: inline-block;
+    color: #ffd928;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    margin-bottom: 16px;
+}
+
+.sav-page .sav-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 5vw, 58px);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0 0 20px;
+}
+
+.sav-page .sav-hero h1 span {
+    color: #ffd928;
+}
+
+.sav-page .sav-hero p,
+.sav-page .sav-section-heading p {
+    color: #aaaab2;
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 0;
+}
+
+/* RÉSEAUX SOCIAUX */
+
+.sav-page .sav-socials {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 25px;
+    padding: 28px 34px;
+    margin-bottom: 45px;
+    background: #141417;
+    border: 1px solid rgba(255, 217, 40, 0.22);
+    border-radius: 14px;
+    box-sizing: border-box;
+}
+
+.sav-page .sav-social-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 27px;
+    margin: 0 0 5px;
+}
+
+.sav-page .sav-social-text p {
+    color: #aaaab2;
+    font-size: 13px;
+    margin: 0;
+}
+
+.sav-page .social-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 0;
+}
+
+.sav-page .social-links a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #202024;
+    color: #ffd928;
+    font-size: 23px;
+    text-decoration: none;
+    transition: 0.25s ease;
+}
+
+.sav-page .social-links a:hover {
+    background: #ffd928;
+    color: #111;
+    transform: translateY(-3px);
+}
+
+.sav-page .sav-contact-placeholder {
+    width: 100%;
+    padding-top: 15px;
+    margin: 0;
+    border-top: 1px solid #29292e;
+    color: #888890;
+    font-size: 12px;
+}
+
+.sav-page .sav-contact-placeholder i {
+    color: #ffd928;
+    margin-right: 8px;
+}
+
+/* SECTIONS */
+
+.sav-page .sav-support-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 45px;
+    width: 100%;
+}
+
+.sav-page .sav-section-heading {
+    margin-bottom: 24px;
+}
+
+.sav-page .sav-section-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0 0 10px;
+}
+
+/* FORMULAIRE */
+
+.sav-page .sav-form {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    padding: 25px;
+    background: #141417;
+    border: 1px solid #29292e;
+    border-radius: 14px;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.sav-page .sav-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+}
+
+.sav-page .sav-form label {
+    color: #e8e5dc;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.sav-page .sav-form input,
+.sav-page .sav-form select,
+.sav-page .sav-form textarea {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    padding: 13px 14px;
+    background: #202024;
+    border: 1px solid #35353b;
+    border-radius: 8px;
+    color: #f5f2e9;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.sav-page .sav-form input:focus,
+.sav-page .sav-form select:focus,
+.sav-page .sav-form textarea:focus {
+    border-color: #ffd928;
+}
+
+.sav-page .sav-form input::placeholder,
+.sav-page .sav-form textarea::placeholder {
+    color: #777780;
+}
+
+.sav-page .sav-form textarea {
+    resize: vertical;
+    min-height: 125px;
+}
+
+.sav-page .sav-form select {
+    cursor: pointer;
+}
+
+.sav-page .sav-form button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 20px;
+    margin-top: 3px;
+    background: #ffd928;
+    border: none;
+    border-radius: 8px;
+    color: #111;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.sav-page .sav-form button:hover {
+    background: #f0c900;
+    transform: translateY(-2px);
+}
+
+.sav-page #sav-form-status {
+    margin: 0;
+    font-size: 12px;
+    color: #aaaab2;
+}
+
+/* PIED DE PAGE */
+
+.sav-page footer {
+    margin-top: 20px;
+}
+
+/* CORRECTION LARGEUR */
+
+.sav-page .sav-container {
+    max-width: 1120px;
+}
+
+.sav-page .sav-support-grid > * {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 800px) {
+    .sav-page .sav-container {
+        width: calc(100% - 30px);
+        padding: 45px 0 65px;
+    }
+
+    .sav-page .sav-hero {
+        margin-bottom: 45px;
+    }
+
+    .sav-page .sav-socials {
+        margin-bottom: 50px;
+        padding: 24px;
+    }
+
+    .sav-page .sav-support-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sav-page .sav-socials {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .sav-page .sav-section-heading h2 {
+        font-size: 27px;
+    }
+
+    .sav-page .sav-form {
+        padding: 18px;
+    }
+}
+

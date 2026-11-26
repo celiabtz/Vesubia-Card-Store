@@ -1,0 +1,132 @@
+/* ==================================
+   PAGE NOTRE HISTOIRE
+================================== */
+
+.histoire-page {
+    background: #09090B;
+    color: #F5F2E9;
+    font-family: 'Poppins', sans-serif;
+}
+
+.histoire-hero {
+    text-align: center;
+    padding: 100px 20px 90px;
+    background: radial-gradient(ellipse at top, #28221b 0%, #09090B 70%);
+}
+
+.histoire-eyebrow,
+.histoire-label {
+    color: #FFD928;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.histoire-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 7vw, 82px);
+    line-height: 1.08;
+    margin: 28px 0;
+}
+
+.histoire-hero h1 span {
+    color: #D6B45B;
+}
+
+.histoire-hero p {
+    max-width: 650px;
+    margin: auto;
+    color: #B9B9BE;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.histoire-presentation {
+    max-width: 850px;
+    width: 88%;
+    margin: auto;
+    padding: 85px 0;
+    text-align: center;
+}
+
+.histoire-presentation h2,
+.histoire-boutique h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 4vw, 43px);
+    margin: 20px 0;
+}
+
+.histoire-presentation p,
+.histoire-boutique p {
+    color: #B9B9BE;
+    font-size: 14px;
+    line-height: 2;
+    max-width: 720px;
+    margin: 15px auto;
+}
+
+.histoire-boutique {
+    text-align: center;
+    padding: 75px 20px 100px;
+    background: #111113;
+}
+
+.histoire-photo-placeholder {
+    max-width: 1050px;
+    min-height: 300px;
+    margin: 45px auto 0;
+    border: 1px dashed rgba(255,217,40,.4);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #D6B45B;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.histoire-page footer {
+    text-align: center;
+    padding: 25px;
+    color: #929299;
+    font-size: 12px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:600px) {
+    .histoire-hero {
+        padding: 65px 20px;
+    }
+
+    .histoire-presentation {
+        padding: 60px 0;
+    }
+
+    .histoire-photo-placeholder {
+        min-height: 200px;
+    }
+}
+
+/* =========================================
+   UNIFORMISATION — PAGE NOTRE HISTOIRE
+========================================= */
+
+.histoire-hero h1 {
+    font-size: clamp(34px, 4.5vw, 52px) !important;
+    line-height: 1.15 !important;
+    margin: 20px 0 !important;
+}
+
+.histoire-hero p {
+    font-size: 15px !important;
+    line-height: 1.8 !important;
+}
+
+@media (max-width: 520px) {
+    .histoire-hero h1 {
+        font-size: 34px !important;
+    }
+}

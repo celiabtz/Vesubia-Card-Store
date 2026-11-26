@@ -1,0 +1,138 @@
+/* ==================================================
+   1. BOUTONS PRESTIGE
+================================================== */
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 14px 28px;
+
+    background: var(--gold);
+
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+
+    color: var(--blue-night);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    letter-spacing: 0.5px;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
+
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 13px 27px;
+
+    background: transparent;
+
+    border: 1.5px solid var(--gold);
+    border-radius: 4px;
+
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.btn-secondary:hover {
+    background: var(--gold);
+    color: var(--blue-night);
+}
+
+/* ==================================================
+   2. HEADER — DÉCORATION VESUBIA GLOBAL
+   ================================================== */
+
+/* Fond et halo subtil */
+header,
+.site-header,
+.navbar {
+    position: relative;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 100%,
+            rgba(255, 217, 40, .07),
+            transparent 55%
+        ),
+        #101012 !important;
+}
+
+/* Trait rouge et doré en bas */
+header::after,
+.site-header::after,
+.navbar::after {
+    content: "";
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        #E53935 0%,
+        #FFD928 50%,
+        #E53935 100%
+    );
+
+    box-shadow:
+        0 0 8px rgba(255, 217, 40, .18),
+        0 0 12px rgba(229, 57, 53, .12);
+}
+
+/* Navigation */
+header nav a,
+.site-header nav a,
+.navbar nav a,
+nav a {
+    transition:
+        color .25s ease,
+        text-shadow .25s ease,
+        border-color .25s ease;
+}
+
+/* Survol */
+header nav a:hover,
+.site-header nav a:hover,
+.navbar nav a:hover,
+nav a:hover {
+    color: #FFD928 !important;
+    text-shadow: 0 0 10px rgba(255, 217, 40, .20);
+}
+
+/* Page active */
+header nav a.active,
+.site-header nav a.active,
+.navbar nav a.active,
+nav a.active {
+    color: #FFD928 !important;
+    border-bottom: 2px solid #FFD928;
+    text-shadow: 0 0 8px rgba(255, 217, 40, .12);
+}

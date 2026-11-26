@@ -1,0 +1,502 @@
+/* ==========================================
+   VESUBIA CARD STORE - ESPACE CLIENT
+   DESIGN NOIR & OR
+========================================== */
+
+.customer-dashboard {
+    min-height: 80vh;
+    padding: 65px 20px 90px;
+    background: #09090b;
+    color: #f5f2e9;
+}
+
+.dashboard-container {
+    width: min(1100px, 100%);
+    margin: auto;
+}
+
+.dashboard-welcome {
+    margin-bottom: 40px;
+}
+
+.dashboard-eyebrow {
+    color: #ffd928;
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-weight: 700;
+}
+
+.dashboard-welcome h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 5vw, 43px);
+    margin: 12px 0;
+}
+
+.dashboard-welcome h1 span {
+    color: #ffd928;
+}
+
+.dashboard-welcome p {
+    color: #aaa;
+    font-size: 14px;
+}
+
+/* CARTES DU TABLEAU DE BORD */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.dashboard-card {
+    padding: 25px;
+    background: #151518;
+    border: 1px solid rgba(255,217,40,.22);
+    border-radius: 13px;
+    transition: .25s ease;
+}
+
+.dashboard-card:hover {
+    border-color: #ffd928;
+    transform: translateY(-3px);
+}
+
+.dashboard-card i {
+    display: block;
+    color: #ffd928;
+    font-size: 24px;
+    margin-bottom: 18px;
+}
+
+.dashboard-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    margin-bottom: 9px;
+}
+
+.dashboard-card p {
+    color: #999;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* SECTIONS */
+
+.dashboard-section {
+    padding: 30px;
+    margin-bottom: 25px;
+    background: #151518;
+    border: 1px solid rgba(255,217,40,.22);
+    border-radius: 13px;
+}
+
+.dashboard-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.dashboard-section h2 i {
+    color: #ffd928;
+    margin-right: 8px;
+}
+
+.dashboard-section > p {
+    color: #999;
+    font-size: 13px;
+    margin-bottom: 25px;
+}
+
+/* PROFIL */
+
+.profile-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.profile-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ccc;
+    font-size: 12px;
+}
+
+.profile-field input {
+    width: 100%;
+    height: 46px;
+    padding: 0 13px;
+    background: #09090b;
+    border: 1px solid #38383d;
+    border-radius: 8px;
+    color: white;
+    outline: none;
+}
+
+.profile-field input:focus {
+    border-color: #ffd928;
+}
+
+.profile-field input:disabled {
+    opacity: .65;
+    cursor: not-allowed;
+}
+
+.profile-email,
+.profile-actions {
+    grid-column: 1 / -1;
+}
+
+/* BOUTON ENREGISTRER */
+
+.dashboard-button {
+    padding: 13px 22px;
+    border: 1px solid #ffd928;
+    border-radius: 8px;
+    background: #ffd928;
+    color: #111;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.dashboard-button:hover {
+    background: #ffe875;
+    transform: translateY(-2px);
+}
+
+.dashboard-button:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+.dashboard-message {
+    margin-top: 15px;
+    color: #ffd928;
+    font-size: 13px;
+}
+
+/* DÉCONNEXION */
+
+.dashboard-logout {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 20px;
+    border: 1px solid #8d3535;
+    border-radius: 8px;
+    background: transparent;
+    color: #ff7777;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.dashboard-logout:hover {
+    background: #8d3535;
+    color: white;
+}
+
+.dashboard-logout:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 750px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-form {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-email,
+    .profile-actions {
+        grid-column: 1;
+    }
+
+    .dashboard-section {
+        padding: 22px;
+    }
+}
+
+@media(max-width: 500px) {
+    .customer-dashboard {
+        padding: 40px 16px 60px;
+    }
+
+    .dashboard-welcome h1 {
+        font-size: 29px;
+    }
+}
+
+/* =====================================
+   PAGE MES FAVORIS — STYLE CONSOLIDÉ
+   (Conserve l'apparence actuelle : format liste/panier)
+===================================== */
+
+.cart-page {
+    width: min(1100px, calc(100% - 60px)) !important;
+    max-width: 1100px !important;
+    margin: 65px auto !important;
+    color: #F5F2E9;
+}
+
+.cart-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 55px;
+    color: #D6B45B;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color .3s ease;
+}
+
+.cart-back:hover { color: #FFD928; }
+
+.cart-page .section-eyebrow {
+    color: #D6B45B;
+    letter-spacing: 5px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.cart-page > h1 {
+    margin: 15px 0;
+    color: #F5F2E9;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 6vw, 68px);
+    font-weight: 500;
+}
+
+.cart-page > p:not(.section-eyebrow) {
+    color: #aaa7a0;
+    font-size: 15px;
+    margin-bottom: 35px;
+}
+
+#favorite-products {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: none !important;
+    gap: 16px !important;
+    margin: 35px 0 !important;
+}
+
+#favorite-products .product-card {
+    display: grid !important;
+    grid-template-columns: 110px minmax(0, 1fr) !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 145px !important;
+    padding: 16px !important;
+    gap: 25px !important;
+    box-sizing: border-box !important;
+    background: #151518 !important;
+    border: 1px solid rgba(214,180,91,.25) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    transition: transform .3s ease, border-color .3s ease;
+}
+
+#favorite-products .product-card:hover {
+    transform: translateY(-5px);
+    border-color: #D6B45B !important;
+}
+
+#favorite-products .product-image {
+    position: relative !important;
+    width: 110px !important;
+    height: 115px !important;
+    min-height: 115px !important;
+    padding: 8px !important;
+    background: #0d0d10 !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+}
+
+#favorite-products .product-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+}
+
+#favorite-products .product-info {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 10px !important;
+    gap: 20px !important;
+    background: transparent !important;
+}
+
+#favorite-products .product-info h2 {
+    flex: 1 !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    color: #F5F2E9 !important;
+    font-size: 20px !important;
+    line-height: 1.4 !important;
+    background: transparent !important;
+}
+
+#favorite-products .product-price {
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    color: #D6B45B !important;
+    font-size: 21px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+}
+
+#favorite-products .wishlist-button {
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    z-index: 5 !important;
+}
+
+.cart-summary {
+    margin-top: 25px !important;
+    padding: 25px !important;
+    background: #151518 !important;
+    border: 1px solid rgba(214,180,91,.3) !important;
+    border-radius: 12px !important;
+}
+
+.cart-summary h2 {
+    color: #F5F2E9 !important;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 25px !important;
+    margin-bottom: 22px;
+}
+
+.cart-summary h2 span { color: #D6B45B !important; }
+
+.cart-summary .product-button {
+    display: inline-flex;
+    margin-top: 15px;
+    padding: 14px 25px;
+}
+
+@media (max-width: 600px) {
+    .cart-page { width: calc(100% - 28px) !important; margin-top: 35px !important; }
+
+    #favorite-products .product-card {
+        grid-template-columns: 85px minmax(0, 1fr) !important;
+        gap: 12px !important;
+        min-height: 115px !important;
+        padding: 10px !important;
+    }
+
+    #favorite-products .product-image {
+        width: 85px !important;
+        height: 105px !important;
+        min-height: 105px !important;
+    }
+
+    #favorite-products .product-info { gap: 8px !important; padding: 5px !important; }
+    #favorite-products .product-info h2 { font-size: 15px !important; }
+    #favorite-products .product-price { font-size: 16px !important; }
+}
+
+/* ===== SÉLECTION POUR RÉSERVATION - FAVORIS ===== */
+
+#favorite-products .product-image {
+    position: relative !important;
+}
+
+#favorite-products .reservation-selection {
+    position: absolute !important;
+    bottom: 8px !important;
+    left: 8px !important;
+    top: auto !important;
+    right: auto !important;
+
+    z-index: 10 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 26px !important;
+    height: 26px !important;
+    padding: 5px !important;
+    margin: 0 !important;
+
+    background: rgba(15, 15, 15, 0.90) !important;
+    border: 1px solid rgba(214, 180, 91, 0.5) !important;
+    border-radius: 6px !important;
+
+    cursor: pointer !important;
+    box-sizing: border-box !important;
+}
+
+#favorite-products .reservation-selection input[type="checkbox"] {
+    position: static !important;
+    display: block !important;
+
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+    appearance: auto !important;
+    accent-color: #c62828 !important;
+
+    cursor: pointer !important;
+}
+/* FIX VISIBILITÉ CASE DE RÉSERVATION */
+
+#favorite-products .product-image {
+    position: relative !important;
+}
+
+#favorite-products .reservation-selection {
+    position: absolute !important;
+    left: 6px !important;
+    bottom: 6px !important;
+    z-index: 20 !important;
+
+    display: block !important;
+    width: 28px !important;
+    height: 28px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #151518 !important;
+    border: 1px solid #D6B45B !important;
+    border-radius: 5px !important;
+}
+
+#favorite-products .reservation-selection input {
+    position: absolute !important;
+    top: 5px !important;
+    left: 5px !important;
+
+    display: block !important;
+    width: 16px !important;
+    height: 16px !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+    appearance: auto !important;
+    accent-color: #c62828 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+}

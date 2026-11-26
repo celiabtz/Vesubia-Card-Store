@@ -1,0 +1,38 @@
+/* ==================================================
+   1. FOOTER
+================================================== */
+
+footer {
+    padding: 45px 6%;
+
+    background: #0B1424;
+
+    border-top: 3px solid var(--gold);
+
+    color: var(--ivory);
+}
+
+
+/* FOOTER — VESUBIA CARD STORE */
+
+.site-footer {
+    width: 100%;
+    padding: 25px 15px;
+    margin-top: 50px;
+    box-sizing: border-box;
+    text-align: center;
+    background: #101013;
+    border-top: 1px solid rgba(255, 217, 40, 0.3);
+}
+
+.site-footer p {
+    margin: 0;
+    color: #AFAFB5;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+.site-footer strong {
+    color: #FFD928;
+    letter-spacing: 1.5px;
+}

@@ -1,0 +1,531 @@
+
+/* =========================================================
+   VESUBIA — PALETTE NOIR / ROUGE / JAUNE
+========================================================= */
+
+:root {
+    --blue-petrol: #171719;
+    --blue-night: #09090B;
+    --blue-slate: #242428;
+    --blue-deep: #303036;
+
+    --gold: #FFD928;
+    --gold-light: #FFE766;
+    --gold-dark: #D8B900;
+
+    --ivory: #F5F2E9;
+    --silver: #B9B9BE;
+
+    --background: #09090B;
+    --surface: #151518;
+    --surface-light: #202024;
+
+    --text: #F5F2E9;
+    --text-secondary: #B9B9BE;
+
+    --border-gold: rgba(255, 217, 40, 0.38);
+    --transition: all .3s ease;
+}
+
+/* =========================================================
+   FOND GÉNÉRAL
+========================================================= */
+
+html,
+body {
+    background: #09090B !important;
+    color: #F5F2E9 !important;
+}
+
+body {
+    background-image: none !important;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.site-header {
+    position: relative !important;
+    isolation: isolate;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 100%,
+            rgba(255, 217, 40, .09),
+            transparent 55%
+        ),
+        #101013 !important;
+
+    border-top: 0 !important;
+    border-bottom: none !important;
+    margin-bottom: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Trait lumineux inférieur */
+
+.site-header::after {
+    content: "" !important;
+    position: absolute !important;
+
+    left: 0 !important;
+    bottom: -1px !important;
+
+    display: block !important;
+    width: 100% !important;
+    height: 2px !important;
+
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(229, 57, 53, .85) 20%,
+        #FFD928 50%,
+        rgba(229, 57, 53, .85) 80%,
+        transparent 100%
+    ) !important;
+
+    box-shadow:
+        0 0 8px rgba(255, 217, 40, .25),
+        0 0 14px rgba(229, 57, 53, .15) !important;
+
+    pointer-events: none !important;
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.main-nav a {
+    position: relative !important;
+    display: inline-block !important;
+
+    color: #F5F2E9 !important;
+    text-decoration: none !important;
+
+    transition:
+        color .25s ease,
+        text-shadow .25s ease !important;
+}
+
+/* Soulignement animé */
+
+.main-nav a::after {
+    content: "" !important;
+
+    position: absolute !important;
+    left: 0 !important;
+    bottom: -6px !important;
+
+    width: 100% !important;
+    height: 2px !important;
+
+    background: linear-gradient(
+        90deg,
+        #E53935,
+        #FFD928
+    ) !important;
+
+    box-shadow:
+        0 0 9px rgba(255, 217, 40, .28),
+        0 0 12px rgba(229, 57, 53, .12) !important;
+
+    transform: scaleX(0) !important;
+    transform-origin: center !important;
+
+    transition: transform .25s ease !important;
+}
+
+.main-nav a:hover::after,
+.main-nav a.active::after {
+    transform: scaleX(1) !important;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: #FFD928 !important;
+    text-shadow: 0 0 10px rgba(255, 217, 40, .15) !important;
+}
+
+/* =========================================================
+   LOGO ET TITRES
+========================================================= */
+
+.brand-name strong,
+h1,
+h2,
+h3,
+h4 {
+    color: #F5F2E9;
+}
+
+.brand-name small,
+.section-eyebrow {
+    color: #FFD928 !important;
+}
+
+/* =========================================================
+   BOUTON DE THÈME
+========================================================= */
+
+.theme-toggle {
+    border-color: #FFD928 !important;
+    color: #FFD928 !important;
+    background: transparent !important;
+}
+
+.theme-toggle:hover {
+    background: #FFD928 !important;
+    color: #101013 !important;
+
+    box-shadow:
+        0 0 16px rgba(255, 217, 40, .22) !important;
+}
+
+/* =========================================================
+   BOUTON PRINCIPAL
+========================================================= */
+
+.btn-primary {
+    background: #E53935 !important;
+    border: 1px solid #E53935 !important;
+    color: #FFFFFF !important;
+
+    border-radius: 6px !important;
+
+    box-shadow:
+        0 5px 16px rgba(229, 57, 53, .2) !important;
+}
+
+.btn-primary:hover {
+    background: #F04B45 !important;
+    border-color: #F04B45 !important;
+    color: #FFFFFF !important;
+
+    box-shadow:
+        0 7px 22px rgba(229, 57, 53, .32) !important;
+}
+
+/* =========================================================
+   BOUTON SECONDAIRE
+========================================================= */
+
+.btn-secondary {
+    background: transparent !important;
+    border: 1px solid #FFD928 !important;
+    color: #FFD928 !important;
+    border-radius: 6px !important;
+}
+
+.btn-secondary:hover {
+    background: #FFD928 !important;
+    color: #101013 !important;
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+section,
+.featured-section,
+.shop-page {
+    background-color: transparent;
+}
+
+/* =========================================================
+   CARTES PRODUITS
+========================================================= */
+
+.product-card,
+.featured-products .product-card,
+#shop-products .product-card {
+    background: #151518 !important;
+    border: 1px solid rgba(255, 217, 40, .24) !important;
+    border-radius: 10px !important;
+
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, .42) !important;
+}
+
+.product-card:hover,
+.featured-products .product-card:hover,
+#shop-products .product-card:hover {
+    border-color: #FFD928 !important;
+
+    box-shadow:
+        0 14px 32px rgba(0, 0, 0, .52),
+        0 0 14px rgba(255, 217, 40, .09) !important;
+}
+
+/* =========================================================
+   IMAGES PRODUITS
+========================================================= */
+
+.product-image,
+.featured-products .product-image,
+#shop-products .product-image {
+    background: #101013 !important;
+}
+
+/* =========================================================
+   INFORMATIONS PRODUITS
+========================================================= */
+
+.product-info h2,
+.product-info h3 {
+    color: #F5F2E9 !important;
+}
+
+.product-info p {
+    color: #B9B9BE !important;
+}
+
+/* =========================================================
+   PRIX
+========================================================= */
+
+.product-price,
+.featured-products .product-price {
+    color: #FFD928 !important;
+}
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.product-badge {
+    background: #FFD928 !important;
+    color: #111111 !important;
+    border: 0 !important;
+}
+
+/* =========================================================
+   BOUTONS PRODUITS
+========================================================= */
+
+.product-button,
+.featured-products .product-button {
+    background: #E53935 !important;
+    border: 1px solid #E53935 !important;
+    border-radius: 5px !important;
+
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+.product-button:hover,
+.featured-products .product-button:hover {
+    background: #F04B45 !important;
+    border-color: #F04B45 !important;
+    color: #FFFFFF !important;
+}
+
+/* =========================================================
+   LIEN TOUTE LA BOUTIQUE
+========================================================= */
+
+.featured-footer .all-products-button {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    color: #F5F2E9 !important;
+    box-shadow: none !important;
+}
+
+.featured-footer .all-products-button::after {
+    background: #FFD928 !important;
+}
+
+.featured-footer .all-products-button:hover {
+    color: #FFD928 !important;
+}
+
+/* =========================================================
+   FORMULAIRES, RECHERCHE ET FILTRES
+========================================================= */
+
+input,
+textarea,
+select,
+.shop-toolbar input,
+.shop-toolbar select {
+    background: #151518 !important;
+    color: #F5F2E9 !important;
+
+    border: 1px solid rgba(255, 217, 40, .28) !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.shop-toolbar input:focus,
+.shop-toolbar select:focus {
+    border-color: #FFD928 !important;
+
+    box-shadow:
+        0 0 0 3px rgba(255, 217, 40, .1) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #929299 !important;
+}
+
+/* =========================================================
+   STOCK
+========================================================= */
+
+.product-stock {
+    color: #FFD928 !important;
+}
+
+/* =========================================================
+   SÉPARATEURS
+========================================================= */
+
+.gold-divider {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #E53935,
+        #FFD928,
+        transparent
+    ) !important;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    background: #101013 !important;
+    border-top: 1px solid rgba(255, 217, 40, .35) !important;
+    color: #F5F2E9 !important;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+    .site-header {
+        background: #101013 !important;
+    }
+}
+
+/* RESTAURATION QCM CONTACT */
+
+.sav-page .sav-chat {
+    background: #151518;
+    border: 1px solid rgba(255, 217, 40, 0.25);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.sav-page .sav-chat-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px;
+    border-bottom: 1px solid #303036;
+}
+
+.sav-page .sav-bot-avatar {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #FFD928;
+    color: #09090B;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.sav-page .sav-chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 220px;
+    padding: 20px 18px;
+}
+
+.sav-page .sav-bot-message {
+    align-self: flex-start;
+    max-width: 85%;
+    padding: 13px 16px;
+    border-radius: 12px;
+    line-height: 1.6;
+    background: #242428;
+    color: #F5F2E9;
+}
+
+.sav-page .sav-quick-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 18px 18px;
+}
+
+.sav-page .sav-quick-questions button {
+    padding: 9px 11px !important;
+    background: #202024 !important;
+    border: 1px solid #35353b !important;
+    border-radius: 8px !important;
+    color: #e8e5dc !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 12px !important;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.sav-page .sav-quick-questions button:hover {
+    border-color: #ffd928 !important;
+    color: #ffd928 !important;
+    background: #202024 !important;
+}
+
+.sav-page .sav-quick-questions button i {
+    color: #ffd928;
+    margin-right: 5px;
+}
+/* HARMONISATION QCM ET FORMULAIRE CONTACT */
+
+.sav-page .sav-chat {
+    border: 1px solid #29292e !important;
+    border-radius: 14px !important;
+    background: #141416 !important;
+}
+
+.sav-page .sav-chat-header {
+    padding: 20px !important;
+    border-bottom: 1px solid #29292e !important;
+}
+
+.sav-page .sav-bot-avatar {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.sav-page .sav-bot-message {
+    background: #202024 !important;
+    border-radius: 12px !important;
+}
+
+.sav-page .sav-quick-questions {
+    gap: 10px !important;
+    padding: 0 18px 20px !important;
+}
+
+.sav-page .sav-quick-questions button {
+    padding: 12px 14px !important;
+    border: 1px solid #29292e !important;
+    border-radius: 9px !important;
+    background: #151518 !important;
+    font-size: 12px !important;
+}
+
+.sav-page .sav-quick-questions button:hover {
+    border-color: #ffd928 !important;
+}

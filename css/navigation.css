@@ -1,0 +1,56 @@
+/* ==================================================
+   1. NAVIGATION
+================================================== */
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 26px;
+}
+
+.main-nav a {
+    position: relative;
+
+    padding: 12px 0;
+
+    position: relative;
+
+    color: var(--ivory);
+
+    text-decoration: none;
+
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+font-weight: 600;
+
+    white-space: nowrap;
+
+    transition: var(--transition);
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: var(--gold-light);
+}
+
+/* SOULIGNEMENT ACTIF */
+
+/* SOULIGNEMENT ÉLÉGANT DU MENU */
+
+.main-nav a::after {
+    content: "";
+    position: absolute;
+    bottom: -7px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.main-nav a:hover::after,
+.main-nav a.active::after {
+    width: 100%;
+}

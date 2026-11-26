@@ -405,23 +405,35 @@ imageWrapper.appendChild(favoriteButton);
             description.textContent = product.description ||
                 "Aucune description n’a été renseignée pour ce produit.";
 
-            const contact = document.createElement("a");
-            contact.className = "product-detail-buy";
-            contact.href = "contact.html";
+      // BOUTON FAVORIS SUR LA FICHE PRODUIT
+const favoriteButton = document.createElement("button");
+favoriteButton.type = "button";
+favoriteButton.className = "product-detail-buy product-detail-favorite";
 
-            contact.textContent = Number(product.stock) > 0
-                ? "Contacter la boutique pour acheter"
-                : "Contacter la boutique";
+function updateFavoriteButton() {
+    const isFavorite = wishlistIds.has(String(product.id));
 
-            content.append(
-                eyebrow,
-                title,
-                price,
-                stock,
-                description,
-                contact
-            );
+    favoriteButton.classList.toggle("is-favorite", isFavorite);
 
+    favoriteButton.innerHTML = isFavorite
+        ? '<i class="fa-solid fa-heart"></i> Retirer des favoris'
+        : '<i class="fa-regular fa-heart"></i> Ajouter aux favoris';
+}
+
+updateFavoriteButton();
+
+favoriteButton.addEventListener("click", async () => {
+    await toggleWishlist(product, favoriteButton);
+    updateFavoriteButton();
+});
+content.append(
+    eyebrow,
+    title,
+    price,
+    stock,
+    description,
+    favoriteButton
+);
             container.append(image, content);
 
             await loadRelatedProducts(product);

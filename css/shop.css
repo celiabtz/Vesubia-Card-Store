@@ -1,0 +1,211 @@
+/* ==========================================
+   BOUTIQUE VESUBIA
+========================================== */
+
+.shop-page {
+    width: min(1200px, 92%);
+    margin: 0 auto;
+    padding: 65px 0 90px;
+}
+
+.shop-heading {
+    text-align: center;
+    margin-bottom: 55px;
+}
+
+.shop-heading .section-eyebrow {
+    color: #c9a65e;
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-weight: 700;
+}
+
+.shop-heading h1 {
+    margin: 15px 0;
+    font-size: clamp(34px, 5vw, 52px);
+}
+
+.shop-heading p {
+    max-width: 620px;
+    margin: auto;
+    line-height: 1.7;
+    opacity: 0.75;
+}
+
+.shop-toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.shop-search {
+    flex: 1;
+}
+
+.shop-toolbar input,
+.shop-toolbar select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    color: inherit;
+    background: var(--surface-color, #0d192a);
+    border: 1px solid rgba(197, 164, 96, 0.35);
+    border-radius: 6px;
+}
+
+.shop-toolbar select {
+    max-width: 240px;
+}
+
+.shop-results {
+    margin-bottom: 20px;
+    opacity: 0.7;
+    font-size: 13px;
+}
+
+.product-stock {
+    color: #b9c8b0;
+    font-size: 12px;
+}
+
+.products-empty {
+    grid-column: 1 / -1;
+    padding: 50px 15px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+@media (max-width: 650px) {
+    .shop-toolbar {
+        flex-direction: column;
+    }
+
+    .shop-toolbar select {
+        max-width: none;
+    }
+
+    .shop-page {
+        padding-top: 40px;
+    }
+}
+
+/* ==========================================
+   BOUTIQUE - ESPACEMENTS COMPACTS
+========================================== */
+
+.shop-page {
+    padding-top: 20px !important;
+    padding-bottom: 50px;
+}
+
+.shop-heading,
+.shop-heading-compact {
+    margin: 0 0 20px !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+}
+
+.shop-heading h1 {
+    margin: 8px 0 0 !important;
+}
+
+.shop-catalogue {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.shop-toolbar {
+    margin-top: 0 !important;
+    margin-bottom: 18px !important;
+}
+
+.shop-results {
+    margin-top: 0 !important;
+    margin-bottom: 15px !important;
+}
+
+/* CORRECTION BOUTON MOBILE BOUTIQUE */
+
+@media (max-width: 580px) {
+    #shop-products .product-bottom {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    #shop-products .product-bottom .product-button {
+        width: auto !important;
+        flex: 0 0 auto !important;
+        padding: 8px 14px !important;
+        font-size: 12px !important;
+    }
+}
+
+/* VESUBIA — INDEX MOBILE : 1 PRODUIT PAR LIGNE */
+
+@media screen and (max-width: 650px) {
+
+    #shop-products {
+        grid-template-columns: minmax(0, 1fr) !important;
+        justify-items: center !important;
+        gap: 22px !important;
+    }
+
+    #shop-products .product-card {
+        width: 100% !important;
+        max-width: 340px !important;
+        margin: 0 auto !important;
+    }
+}
+
+/* ==========================================
+   VESUBIA — DESCRIPTION SÉLECTION BOUTIQUE
+========================================== */
+
+.shop-selection-description {
+    text-align: center;
+    color: #c5c0c0;
+    font-size: 13px;
+    line-height: 1.8;
+    max-width: 700px;
+    margin: 0 auto 30px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.shop-page .shop-heading.shop-heading-compact {
+    position: relative;
+}
+
+.shop-page .shop-heading.shop-heading-compact .shop-selection-description {
+    position: relative;
+    max-width: 620px;
+    margin: 20px auto 30px !important;
+    padding: 20px 25px;
+    line-height: 1.7;
+    opacity: 1;
+    z-index: 1;
+}
+
+.shop-page .shop-heading.shop-heading-compact .shop-selection-description {
+    background: radial-gradient(
+        ellipse at center,
+        rgba(175, 172, 131, 0.18) 0%,
+        rgba(243, 229, 165, 0.08) 45%,
+        transparent 75%
+    );
+}
+
+/* CORRECTION FINALE DE LA DESCRIPTION */
+
+.shop-selection-description {
+    text-align: center;
+    color: #c5c4c0;
+    font-size: 13px;
+    line-height: 1.8;
+    max-width: 700px;
+    margin: 0 auto 30px;
+    font-family: 'Poppins', sans-serif;
+}

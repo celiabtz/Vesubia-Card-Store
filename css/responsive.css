@@ -167,3 +167,769 @@
         padding: 12px !important;
     }
 }
+/* ==================================================
+   1. RESPONSIVE TABLETTES
+================================================== */
+
+@media (max-width: 1100px) {
+
+    .site-header {
+        flex-wrap: wrap;
+        justify-content: center;
+
+        padding: 20px 3%;
+    }
+
+    .main-nav {
+        order: 3;
+        width: 100%;
+
+        flex-wrap: wrap;
+        gap: 22px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+}/* ==================================================
+   17. RESPONSIVE TELEPHONES
+================================================== */
+
+@media (max-width: 650px) {
+
+    .site-header {
+        padding: 15px 4%;
+        gap: 15px;
+    }
+
+    .brand {
+        gap: 10px;
+    }
+
+    .brand img {
+        width: 52px;
+        height: 52px;
+    }
+
+    .brand-name strong {
+        font-size: 19px;
+    }
+
+    .brand-name small {
+        font-size: 8px;
+        letter-spacing: 3px;
+    }
+
+    .main-nav {
+        justify-content: flex-start;
+
+        flex-wrap: nowrap;
+        overflow-x: auto;
+
+        width: 100%;
+        padding: 5px 0 10px;
+
+        gap: 20px;
+    }
+
+    .main-nav a {
+        font-size: 13px;
+    }
+
+    .header-actions {
+        gap: 12px;
+    }
+
+    .header-search,
+    .header-cart {
+        font-size: 11px;
+    }
+
+    .theme-toggle {
+        width: 36px;
+        height: 36px;
+        font-size: 17px;
+    }
+
+    section {
+        padding: 45px 5%;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px;
+    }
+
+}
+
+
+/* ==================================================
+   18. PETITS TELEPHONES
+================================================== */
+
+@media (max-width: 380px) {
+
+    .brand-name strong {
+        font-size: 16px;
+    }
+
+    .header-actions {
+        gap: 8px;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* =================================
+   ADAPTATION MOBILE
+================================= */
+
+@media (max-width: 850px) {
+    .featured-products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .product-image {
+        height: 230px;
+    }
+}
+
+@media (max-width: 520px) {
+    .featured-section {
+        padding: 55px 16px;
+    }
+
+    .section-heading {
+        margin-bottom: 30px;
+    }
+
+    .section-heading p {
+        font-size: 13px;
+    }
+
+    .featured-products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .product-image {
+        height: 165px;
+    }
+
+    .product-info {
+        padding: 12px;
+    }
+
+    .product-info h2 {
+        font-size: 14px;
+    }
+
+    .product-info p {
+        font-size: 11px;
+        min-height: 55px;
+    }
+
+    .product-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .product-price {
+        font-size: 17px;
+    }
+
+    .product-button {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+}
+
+
+/* PACKS À LA UNE — RESPONSIVE */
+
+@media (max-width: 850px) {
+    #featured-products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 580px) {
+    #featured-products {
+        grid-template-columns: 1fr;
+        max-width: 390px;
+        padding: 0 18px;
+    }
+
+    #featured-products .product-card {
+        min-height: 420px;
+    }
+}
+
+
+/* =========================================
+   MOBILE — HEADER ET BOUTIQUE
+========================================= */
+
+@media (max-width: 650px) {
+
+    .site-header,
+    .rare-page .site-header {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        padding: 12px 12px 10px !important;
+        gap: 8px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Logo */
+
+    .site-header > .brand,
+    .rare-page .site-header > .brand {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .site-header .brand img,
+    .rare-page .site-header .brand img {
+        width: 48px !important;
+        height: 48px !important;
+    }
+
+    .site-header .brand-name strong,
+    .rare-page .site-header .brand-name strong {
+        font-size: 21px !important;
+    }
+
+    /* Navigation */
+
+    .site-header > .main-nav,
+    .rare-page .site-header > .main-nav {
+        order: 2 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 3px 0 7px !important;
+        gap: clamp(10px, 3vw, 18px) !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        scrollbar-width: none !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .site-header > .main-nav::-webkit-scrollbar,
+    .rare-page .site-header > .main-nav::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .site-header .main-nav a,
+    .rare-page .site-header .main-nav a {
+        flex: 0 0 auto !important;
+        padding: 7px 0 !important;
+        font-size: 13px !important;
+        line-height: 1.2 !important;
+        white-space: nowrap !important;
+    }
+
+    /* Actions masquées sur mobile */
+
+    .site-header > .header-actions,
+    .site-header > .header-icons {
+        display: none !important;
+    }
+
+    /* Cartes boutique */
+
+    #shop-products .product-card > .product-image img {
+        height: 155px !important;
+    }
+
+    #shop-products .product-card > .product-info {
+        padding: 12px !important;
+    }
+}
+
+/* Très petits écrans */
+
+@media (max-width: 380px) {
+
+    .site-header .main-nav,
+    .rare-page .site-header .main-nav {
+        gap: 9px !important;
+    }
+
+    .site-header .main-nav a,
+    .rare-page .site-header .main-nav a {
+        font-size: 12px !important;
+    }
+}
+
+/* =========================================
+   VESUBIA — UNIFORMISATION MENU MOBILE
+   Taille identique à la deuxième capture
+========================================= */
+
+@media (max-width: 650px) {
+
+    .site-header .main-nav a,
+    .rare-page .site-header .main-nav a {
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        line-height: 1.3 !important;
+        white-space: nowrap !important;
+    }
+
+}
+
+@media (max-width: 380px) {
+
+    .site-header .main-nav a,
+    .rare-page .site-header .main-nav a {
+        font-size: 14px !important;
+    }
+
+}
+
+/* ==========================================
+   VESUBIA — MENU RESPONSIVE PROPRE
+========================================== */
+
+/* BOUTON HAMBURGER */
+
+.menu-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    z-index: 10000;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 21px;
+    height: 2px;
+    background: var(--gold-light);
+    border-radius: 2px;
+    transition: 0.3s ease;
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* TABLETTES : MENU CLASSIQUE COMPACT */
+
+@media (min-width: 651px) and (max-width: 1100px) {
+
+    .site-header {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: nowrap !important;
+        gap: 10px !important;
+        padding: 12px 2% !important;
+        min-height: 90px !important;
+        height: auto !important;
+        box-sizing: border-box !important;
+    }
+
+    .site-header > .brand {
+        display: flex !important;
+        flex: 0 0 auto !important;
+        align-items: center !important;
+        gap: 6px !important;
+        width: auto !important;
+        margin: 0 !important;
+    }
+
+    .site-header .brand img {
+        width: 43px !important;
+        height: 43px !important;
+        object-fit: contain !important;
+    }
+
+    .site-header .brand-name strong {
+        font-size: 18px !important;
+    }
+
+    .site-header .brand-name small {
+        font-size: 7px !important;
+        letter-spacing: 2px !important;
+    }
+
+    .site-header > .menu-toggle {
+        display: none !important;
+    }
+
+    .site-header > .main-nav {
+        display: flex !important;
+        position: static !important;
+        transform: none !important;
+        flex: 1 1 auto !important;
+        width: auto !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 5px 12px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    .site-header > .main-nav a {
+        display: inline-flex !important;
+        width: auto !important;
+        flex: 0 0 auto !important;
+        padding: 5px 0 !important;
+        font-size: 12px !important;
+        white-space: nowrap !important;
+    }
+}
+
+/* TÉLÉPHONES : MENU HAMBURGER */
+
+@media (max-width: 650px) {
+
+    .site-header {
+        position: relative !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-wrap: nowrap !important;
+        width: 100% !important;
+        min-height: 76px !important;
+        padding: 10px 12px !important;
+        gap: 0 !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+    }
+
+    .site-header > .brand {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: auto !important;
+        margin: 0 auto !important;
+        gap: 8px !important;
+    }
+
+    .site-header .brand img {
+        width: 48px !important;
+        height: 48px !important;
+    }
+
+    .site-header .brand-name strong {
+        font-size: 20px !important;
+    }
+
+    .site-header .brand-name small {
+        font-size: 8px !important;
+        letter-spacing: 3px !important;
+    }
+
+    .site-header > .menu-toggle {
+        display: flex !important;
+        position: absolute !important;
+        right: 12px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+    }
+
+    .site-header > .main-nav {
+        display: none !important;
+        position: fixed !important;
+        top: 76px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        justify-content: flex-start !important;
+        gap: 0 !important;
+        margin: 0 !important;
+        padding: 12px 5% 20px !important;
+        box-sizing: border-box !important;
+        background: #101014 !important;
+        border-bottom: 2px solid var(--gold) !important;
+        box-shadow: 0 12px 25px rgba(0,0,0,0.45) !important;
+        z-index: 9999 !important;
+    }
+
+    .site-header > .main-nav.is-open {
+        display: flex !important;
+    }
+
+    .site-header > .main-nav a {
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+        padding: 13px 8px !important;
+        font-size: 15px !important;
+        border-bottom: 1px solid rgba(182,154,97,0.15);
+    }
+
+    .site-header > .main-nav a::after {
+        display: none !important;
+    }
+}
+
+/* VESUBIA — FIX MENU CARTES RARES */
+
+@media (max-width: 650px) {
+
+    .rare-page .site-header > .main-nav:not(.is-open) {
+        display: none !important;
+    }
+
+    .rare-page .site-header > .main-nav.is-open {
+        display: flex !important;
+        position: fixed !important;
+        top: 76px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        flex-direction: column !important;
+        background: #101014 !important;
+        z-index: 9999 !important;
+        padding: 12px 5% 20px !important;
+        box-sizing: border-box !important;
+    }
+
+    .rare-page .site-header > .main-nav a {
+        display: flex !important;
+        width: 100% !important;
+        padding: 13px 8px !important;
+        box-sizing: border-box !important;
+    }
+}
+
+/* VESUBIA — ESPACEMENT LOGO / MENU TABLETTE */
+
+@media (min-width: 651px) and (max-width: 1100px) {
+
+    .site-header {
+        justify-content: space-between !important;
+        gap: 20px !important;
+        padding: 12px 3% !important;
+    }
+
+    .site-header > .brand {
+        flex-shrink: 0 !important;
+        margin-right: 10px !important;
+    }
+
+    .site-header .brand img {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .site-header .brand-name strong {
+        font-size: 16px !important;
+    }
+
+    .site-header .brand-name small {
+        font-size: 6px !important;
+        letter-spacing: 2px !important;
+    }
+
+    .site-header > .main-nav {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        justify-content: flex-end !important;
+        gap: 5px 10px !important;
+    }
+
+    .site-header > .main-nav a {
+        font-size: 11px !important;
+    }
+}
+
+/* VESUBIA — CORRECTION DEFINITIVE TABLETTES */
+
+@media (min-width: 651px) and (max-width: 1400px) {
+
+    .site-header {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 15px !important;
+        padding: 12px 3% !important;
+        min-height: 90px !important;
+    }
+
+    .site-header > .brand {
+        position: relative !important;
+        left: auto !important;
+        transform: none !important;
+        flex: 0 0 auto !important;
+        margin: 0 !important;
+        gap: 6px !important;
+    }
+
+    .site-header > .brand img {
+        width: 42px !important;
+        height: 42px !important;
+    }
+
+    .site-header > .brand .brand-name strong {
+        font-size: 18px !important;
+    }
+
+    .site-header > .main-nav {
+        position: static !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        transform: none !important;
+
+        display: flex !important;
+        flex: 1 1 auto !important;
+        width: auto !important;
+        max-width: none !important;
+        min-width: 0 !important;
+
+        justify-content: center !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 5px 12px !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .site-header > .main-nav a {
+        width: auto !important;
+        flex: 0 0 auto !important;
+        font-size: 15px !important;
+        padding: 7px 0 !important;
+        white-space: nowrap !important;
+    }
+
+    .site-header > .menu-toggle {
+        display: none !important;
+    }
+}
+
+/* ==========================================
+   VESUBIA — RESTAURATION MENU MOBILE
+========================================== */
+
+@media screen and (max-width: 650px) {
+
+    /* RESTAURATION DU HAMBURGER */
+
+    .site-header > .menu-toggle {
+        display: flex !important;
+        position: absolute !important;
+        right: 12px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        z-index: 10000 !important;
+    }
+
+    /* MENU FERMÉ PAR DÉFAUT */
+
+    .site-header > .main-nav:not(.is-open) {
+        display: none !important;
+    }
+
+    /* MENU OUVERT AU CLIC */
+
+    .site-header > .main-nav.is-open {
+        display: flex !important;
+        position: fixed !important;
+        top: 76px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        flex-direction: column !important;
+        background: #101014 !important;
+        z-index: 9999 !important;
+    }
+}/* =========================================
+   CONTACT — CENTRAGE REEL DU MENU DESKTOP
+========================================= */
+
+@media (min-width: 1401px) {
+    .sav-page .site-header > .main-nav {
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: max-content !important;
+        max-width: none !important;
+        flex: none !important;
+        justify-content: center !important;
+        margin: 0 !important;
+    }
+}
+
+@media (min-width: 651px) and (max-width: 1400px) {
+    .sav-page .site-header {
+        position: relative !important;
+    }
+
+    .sav-page .site-header > .main-nav {
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: max-content !important;
+        max-width: calc(100% - 380px) !important;
+        flex: none !important;
+        justify-content: center !important;
+        margin: 0 !important;
+    }
+}

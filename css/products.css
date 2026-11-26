@@ -1,0 +1,784 @@
+/* ==================================================
+   1. CARTES PRODUITS
+================================================== */
+
+.products-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 25px;
+}
+
+.product-card {
+    overflow: hidden;
+
+    background: var(--surface);
+
+    border: 1px solid rgba(182,154,97,0.2);
+    border-radius: 5px;
+
+    transition: var(--transition);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+
+    border-color: var(--gold);
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.product-card img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 18px;
+}
+
+.product-info h3 {
+    margin-bottom: 8px;
+
+    color: var(--text);
+    font-size: 19px;
+}
+
+.product-price {
+    margin: 12px 0;
+
+    color: var(--gold-light);
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* =================================
+   PACKS À LA UNE
+================================= */
+
+.featured-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 85px 6%;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.section-eyebrow {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: 600;
+}
+
+.section-heading h1 {
+    font-size: clamp(30px, 4vw, 44px);
+    margin: 14px 0;
+}
+
+.section-heading p {
+    color: #AEB9C8;
+    font-size: 15px;
+}
+
+.featured-products {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+}
+
+.product-card {
+    overflow: hidden;
+    border: 1px solid rgba(197, 164, 93, 0.2);
+    border-radius: 12px;
+    background: rgba(15, 29, 48, 0.75);
+    transition: transform 0.35s ease, border-color 0.35s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--gold);
+}
+
+.product-image {
+    position: relative;
+    height: 280px;
+    overflow: hidden;
+    background: #101C2D;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 15px;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05);
+}
+
+.product-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 1;
+    background: var(--gold);
+    color: #080E1C;
+    padding: 7px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.product-info {
+    padding: 22px;
+}
+
+.product-info h2 {
+    font-size: 19px;
+    margin: 0 0 10px;
+}
+
+.product-info p {
+    color: #AEB9C8;
+    font-size: 13px;
+    line-height: 1.7;
+    min-height: 44px;
+}
+
+.product-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.product-price {
+    color: var(--gold);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.product-button,
+.all-products-button {
+    display: inline-block;
+    padding: 11px 17px;
+    border: 1px solid var(--gold);
+    border-radius: 5px;
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 13px;
+    transition: 0.3s ease;
+}
+
+.product-button:hover,
+.all-products-button:hover {
+    background: var(--gold);
+    color: #080E1C;
+}
+
+.featured-footer {
+    text-align: center;
+    margin-top: 45px;
+}
+
+
+/* =========================================
+   BOUTIQUE — CARTES PRODUITS
+========================================= */
+
+#shop-products {
+    align-items: stretch;
+}
+
+#shop-products .product-card {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    background: #151518 !important;
+}
+
+#shop-products .product-card > .product-image {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #101013 !important;
+    border: 0 !important;
+}
+
+#shop-products .product-card > .product-image img {
+    display: block !important;
+    width: 100% !important;
+    height: 220px !important;
+    margin: 0 !important;
+    object-fit: contain !important;
+    background: transparent !important;
+}
+
+#shop-products .product-card > .product-info {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 16px 18px !important;
+    background: #151518 !important;
+    border: 0 !important;
+    gap: 0 !important;
+}
+
+#shop-products .product-card .product-bottom {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    margin-top: auto !important;
+    padding-top: 16px !important;
+}
+
+/* Neutralisation des bandes parasites */
+
+#shop-products .product-card::before,
+#shop-products .product-card::after,
+#shop-products .product-image::before,
+#shop-products .product-image::after,
+#shop-products .product-info::before,
+#shop-products .product-info::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* ==========================================
+   VESUBIA — CARTES PRODUITS
+   Design harmonisé : À LA UNE + BOUTIQUE
+========================================== */
+
+/* POLICE */
+#featured-products .product-card,
+#shop-products .product-card {
+    font-family: 'Playfair Display', serif !important;
+}
+
+/* CARTE EXTÉRIEURE — DIMENSIONS CONSERVÉES */
+#featured-products .product-card,
+#shop-products .product-card {
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    background: #151518 !important;
+    border: 1px solid rgba(255, 217, 40, .30) !important;
+    border-radius: 13px !important;
+}
+
+/* CADRE PHOTO — NE PAS AGRANDIR */
+#featured-products .product-card > .product-image,
+#shop-products .product-card > .product-image {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    background: #101013 !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 10px !important;
+}
+
+/* IMAGE — PLUS GRANDE DANS LE MÊME CADRE */
+#featured-products .product-card > .product-image img,
+#shop-products .product-card > .product-image img {
+    display: block !important;
+    width: 96% !important;
+    height: 96% !important;
+    max-width: 96% !important;
+    max-height: 96% !important;
+    object-fit: contain !important;
+    padding: 0 !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transition: transform .3s ease !important;
+}
+
+#featured-products .product-card:hover > .product-image img,
+#shop-products .product-card:hover > .product-image img {
+    transform: scale(1.02);
+}
+
+/* INFORMATIONS */
+#featured-products .product-info,
+#shop-products .product-info {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+    padding: 12px 14px !important;
+    gap: 8px !important;
+    background: #18181b !important;
+    overflow: hidden !important;
+}
+
+/* TITRES */
+#featured-products .product-info h2,
+#featured-products .product-info h3,
+#shop-products .product-info h2,
+#shop-products .product-info h3 {
+    margin: 0 !important;
+    color: #F5F2E9 !important;
+    font-family: 'Playfair Display', serif !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    line-height: 1.35 !important;
+}
+
+/* DESCRIPTIONS MASQUÉES SUR LES CARTES */
+#featured-products .product-info p,
+#shop-products .product-info p {
+    display: none !important;
+}
+
+/* PRIX ET BOUTON */
+#featured-products .product-bottom,
+#shop-products .product-bottom {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    margin-top: auto !important;
+    padding-top: 8px !important;
+}
+
+#featured-products .product-price,
+#shop-products .product-price {
+    margin: 0 !important;
+    color: #DDB66A !important;
+    font-family: 'Playfair Display', serif !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+}
+
+#featured-products .product-button,
+#shop-products .product-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px 17px !important;
+    background: #E53935 !important;
+    border: 1px solid #E53935 !important;
+    border-radius: 8px !important;
+    color: #fff !important;
+    font-family: 'Playfair Display', serif !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+}
+
+/* TABLETTE */
+@media (max-width: 850px) {
+    #featured-products,
+    #shop-products {
+        gap: 20px !important;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 580px) {
+    #featured-products .product-card > .product-image img,
+    #shop-products .product-card > .product-image img {
+        width: 96% !important;
+        height: 96% !important;
+        max-width: 96% !important;
+        max-height: 96% !important;
+    }
+
+    #featured-products .product-price,
+    #shop-products .product-price {
+        font-size: 17px !important;
+    }
+}
+
+/* BOUTON LISTE D'ENVIES */
+
+.wishlist-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 5;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #D0B477;
+    border-radius: 50%;
+    background: rgba(10, 15, 27, 0.9);
+    color: #D0B477;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.25s ease;
+}
+
+.wishlist-button:hover,
+.wishlist-button.is-favorite {
+    background: #D0B477;
+    color: #101B30;
+}
+
+.product-image {
+    position: relative;
+}
+
+/* CORRECTION TAILLE DES PRIX BOUTIQUE */
+
+#shop-products .product-info .product-price {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #D0B477 !important;
+    display: inline-block;
+    line-height: 1.4;
+}
+
+/* VESUBIA — PRIX PLUS VISIBLES */
+
+#featured-products .product-price,
+#shop-products .product-price,
+#featured-products .product-price *,
+#shop-products .product-price * {
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    color: #FFD928 !important;
+    line-height: 1.2 !important;
+}
+
+/* MOBILE */
+
+@media (max-width: 580px) {
+    #featured-products .product-price,
+    #shop-products .product-price,
+    #featured-products .product-price *,
+    #shop-products .product-price * {
+        font-size: 18px !important;
+    }
+}
+
+/* PRIX — VESUBIA */
+
+#shop-products .product-price,
+#featured-products .product-price {
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 24px !important;
+    font-weight: 800 !important;
+    color: #FFD928 !important;
+    line-height: 1.2 !important;
+}
+
+@media (max-width: 580px) {
+    #shop-products .product-price,
+    #featured-products .product-price {
+        font-size: 21px !important;
+    }
+}
+#featured-products .wishlist-button,
+#shop-products .wishlist-button {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    font-size: 18px !important;
+    box-sizing: border-box !important;
+}
+
+
+/* =========================================
+   FAVORIS — BOUTONS ET SÉLECTION
+========================================= */
+
+#favorite-products .product-card {
+    position: relative !important;
+    cursor: pointer;
+    display: flex !important;
+    flex-direction: column !important;
+    background: #151518 !important;
+    border: 1px solid rgba(255, 217, 40, .30) !important;
+    border-radius: 13px !important;
+    overflow: hidden !important;
+}
+
+#favorite-products .product-image {
+    position: relative !important;
+    height: 260px !important;
+    background: #101013 !important;
+}
+
+#favorite-products .product-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    padding: 15px !important;
+}
+
+/* Retirer des favoris */
+#favorite-products .wishlist-button {
+    position: absolute !important;
+    top: 12px !important;
+    right: 12px !important;
+    z-index: 10 !important;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    background: #171717 !important;
+    border: 1px solid #FFD928 !important;
+    color: #FFD928 !important;
+    font-size: 18px !important;
+    cursor: pointer !important;
+}
+
+#favorite-products .wishlist-button:hover {
+    background: #E53935 !important;
+    border-color: #E53935 !important;
+    color: white !important;
+}
+
+/* Sélection pour réservation */
+#favorite-products .reservation-selection {
+    position: absolute !important;
+    top: 12px !important;
+    left: 12px !important;
+    z-index: 10 !important;
+    width: 42px !important;
+    height: 42px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    background: rgba(15, 15, 15, .9) !important;
+    border: 1px solid rgba(255, 217, 40, .5) !important;
+    cursor: pointer !important;
+}
+
+#favorite-products .reservation-selection input {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    width: 22px !important;
+    height: 22px !important;
+    margin: 0 !important;
+    border: 2px solid #D0B477 !important;
+    border-radius: 5px !important;
+    background: transparent !important;
+    cursor: pointer !important;
+}
+
+#favorite-products .reservation-selection input:checked {
+    background: #FFD928 !important;
+    border-color: #FFD928 !important;
+}
+
+#favorite-products .reservation-selection input:checked::after {
+    content: "✓";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #111 !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+}
+
+/* Infos */
+#favorite-products .product-info {
+    padding: 16px !important;
+    background: #151518 !important;
+}
+
+#favorite-products .product-info h2 {
+    font-size: 17px !important;
+    line-height: 1.4 !important;
+    margin: 0 0 10px !important;
+}
+
+/* Sélection visuellement active */
+#favorite-products .product-card:has(.reservation-selection input:checked) {
+    border: 2px solid #FFD928 !important;
+    box-shadow: 0 0 15px rgba(255, 217, 40, .15) !important;
+}
+
+/* Bouton réservation */
+#reservation-request-button {
+    margin: 25px 0 !important;
+    padding: 14px 24px !important;
+    background: #FFD928 !important;
+    color: #111 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+}
+/* ==========================================
+   FICHE PRODUIT — SUGGESTIONS
+========================================== */
+
+#related-products-section {
+    max-width: 1250px;
+    margin: 70px auto 50px;
+    padding: 0 20px;
+}
+
+#related-products-section .section-heading {
+    text-align: left;
+    margin-bottom: 28px;
+}
+
+#related-products-section .section-heading h2 {
+    font-size: 32px;
+    margin-top: 10px;
+}
+
+/* Grille */
+#related-products {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+}
+
+/* Cartes */
+#related-products .product-card {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    height: auto !important;
+    min-height: 0 !important;
+    background: #151518 !important;
+    border: 1px solid rgba(255, 217, 40, .25) !important;
+    border-radius: 12px !important;
+    transition: transform .25s ease, border-color .25s ease !important;
+}
+
+#related-products .product-card:hover {
+    transform: translateY(-4px) !important;
+    border-color: #D6B45B !important;
+}
+
+/* Images */
+#related-products .product-card .product-image {
+    height: 230px !important;
+    min-height: 230px !important;
+    max-height: 230px !important;
+    overflow: hidden !important;
+    background: #101013 !important;
+}
+
+#related-products .product-card .product-image img {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 12px !important;
+    object-fit: contain !important;
+}
+
+/* Informations */
+#related-products .product-info {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 15px !important;
+    gap: 8px !important;
+    background: #151518 !important;
+}
+
+/* Titre */
+#related-products .product-info h2,
+#related-products .product-info h3 {
+    font-size: 17px !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+}
+
+/* Description masquée */
+#related-products .product-info p {
+    display: none !important;
+}
+
+/* Prix + bouton */
+#related-products .product-bottom {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    margin-top: 10px !important;
+    padding: 0 !important;
+}
+
+#related-products .product-price {
+    color: #FFD928 !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    margin: 0 !important;
+}
+
+/* Découvrir */
+#related-products .product-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 9px 16px !important;
+    background: transparent !important;
+    border: 1px solid #D6B45B !important;
+    border-radius: 6px !important;
+    color: #D6B45B !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 12px !important;
+    text-decoration: none !important;
+    transition: .25s ease !important;
+}
+
+#related-products .product-button:hover {
+    background: #D6B45B !important;
+    color: #111 !important;
+}
+
+/* Tablette */
+@media (max-width: 850px) {
+    #related-products {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 580px) {
+    #related-products {
+        grid-template-columns: 1fr !important;
+    }
+
+    #related-products .product-card .product-image {
+        height: 220px !important;
+        min-height: 220px !important;
+        max-height: 220px !important;
+    }
+
+    #related-products-section .section-heading h2 {
+        font-size: 26px !important;
+    }
+}

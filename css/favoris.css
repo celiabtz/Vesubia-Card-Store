@@ -1,0 +1,389 @@
+
+/* ==========================================
+   VESUBIA - PAGE FAVORIS
+========================================== */
+
+.cart-page {
+    width: min(1200px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 45px 0 80px;
+    color: #f5f2e9;
+}
+
+/* RETOUR */
+
+.cart-back {
+    display: inline-block;
+    color: #aaa;
+    text-decoration: none;
+    font-size: 12px;
+    margin-bottom: 25px;
+    transition: color .2s ease;
+}
+
+.cart-back:hover {
+    color: #d6b45b;
+}
+
+/* INTRO */
+
+.cart-page .section-eyebrow {
+    color: #d6b45b;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+
+.cart-page h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 5vw, 58px);
+    font-weight: 500;
+    margin: 0 0 15px;
+}
+
+.cart-page > p:not(.section-eyebrow) {
+    color: #aaa;
+    font-size: 13px;
+    margin-bottom: 35px;
+}
+
+/* CONTENEUR CARTES */
+
+#favorite-products {
+    margin-top: 25px;
+}
+
+/* MESSAGE VIDE */
+
+#favorite-products > p {
+    color: #aaa;
+    padding: 30px 0;
+    font-size: 14px;
+}
+
+/* TOTAL */
+
+.cart-summary {
+    margin-top: 45px;
+    padding: 25px;
+    background: #151518;
+    border: 1px solid rgba(214,180,91,.3);
+    border-radius: 12px;
+}
+
+.cart-summary h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 500;
+    margin: 0 0 20px;
+}
+
+.cart-summary h2 span {
+    color: #d6b45b;
+}
+
+/* BOUTON */
+
+.cart-summary .product-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #d6b45b, #a9823b);
+    color: #111;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    transition: .25s ease;
+}
+
+.cart-summary .product-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+}
+
+/* MOBILE */
+
+@media(max-width: 650px) {
+    .cart-page {
+        width: calc(100% - 30px);
+        padding: 35px 0 60px;
+    }
+
+    .cart-page h1 {
+        font-size: 38px;
+    }
+
+    .cart-summary {
+        padding: 20px;
+    }
+}
+
+/* ==========================================
+   CORRECTION AFFICHAGE CARTES FAVORIS
+========================================== */
+
+#favorite-products {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 25px !important;
+    align-items: stretch !important;
+}
+
+/* Carte */
+#favorite-products .product-card {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    background: #151518 !important;
+    border: 1px solid rgba(255, 217, 40, .3) !important;
+    border-radius: 12px !important;
+}
+
+/* Image */
+#favorite-products .product-card .product-image {
+    position: relative !important;
+    width: 100% !important;
+    height: 260px !important;
+    min-height: 260px !important;
+    max-height: 260px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    background: #101013 !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
+}
+
+#favorite-products .product-card .product-image img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    padding: 0 !important;
+}
+
+/* Informations */
+#favorite-products .product-info {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+    padding: 15px !important;
+    gap: 10px !important;
+    background: #151518 !important;
+    box-sizing: border-box !important;
+}
+
+/* Titre */
+#favorite-products .product-info h2,
+#favorite-products .product-info h3 {
+    font-size: 17px !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+    color: #f5f2e9 !important;
+}
+
+/* Description */
+#favorite-products .product-info p {
+    display: none !important;
+}
+
+/* Prix et boutons */
+#favorite-products .product-bottom {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    margin-top: auto !important;
+    padding-top: 10px !important;
+}
+
+#favorite-products .product-price {
+    font-size: 20px !important;
+    color: #FFD928 !important;
+    font-weight: 800 !important;
+    margin: 0 !important;
+}
+
+#favorite-products .product-button {
+    padding: 10px 15px !important;
+    font-size: 12px !important;
+}
+
+/* Responsive */
+@media (max-width: 850px) {
+    #favorite-products {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 580px) {
+    #favorite-products {
+        grid-template-columns: 1fr !important;
+    }
+
+    #favorite-products .product-card .product-image {
+        height: 250px !important;
+        min-height: 250px !important;
+        max-height: 250px !important;
+    }
+}
+
+/* ==========================================
+   FAVORIS - DESIGN DES ICONES
+========================================== */
+
+#favorite-products .product-image {
+    position: relative !important;
+}
+
+/* BOUTON COEUR */
+#favorite-products .wishlist-button {
+    position: absolute !important;
+    top: 14px !important;
+    left: 14px !important;
+    z-index: 20 !important;
+
+    width: 38px !important;
+    height: 38px !important;
+
+    border-radius: 50% !important;
+    background: rgba(20,20,20,.95) !important;
+    border: 1px solid rgba(255,60,60,.45) !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    padding: 0 !important;
+    cursor: pointer !important;
+}
+
+/* CŒUR : ON FORCE SON AFFICHAGE */
+#favorite-products .wishlist-button::after {
+    content: "♥" !important;
+    color: #ff4545 !important;
+    font-size: 19px !important;
+    line-height: 1 !important;
+    display: block !important;
+}
+
+#favorite-products .wishlist-button i {
+    display: none !important;
+}
+
+#favorite-products .wishlist-button:hover {
+    background: #ff4545 !important;
+}
+
+#favorite-products .wishlist-button:hover::after {
+    color: white !important;
+}
+
+/* SELECTION PLUS DISCRETE */
+#favorite-products .reservation-selection {
+    position: absolute !important;
+    top: 14px !important;
+    right: 14px !important;
+    z-index: 20 !important;
+
+    width: 36px !important;
+    height: 36px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    background: rgba(20,20,20,.95) !important;
+    border: 1px solid rgba(255,217,40,.4) !important;
+    border-radius: 50% !important;
+
+    cursor: pointer !important;
+}
+
+/* PETIT CERCLE DE SELECTION */
+#favorite-products .reservation-selection input {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+
+    width: 17px !important;
+    height: 17px !important;
+
+    margin: 0 !important;
+    border: 1.5px solid #d6b45b !important;
+    border-radius: 50% !important;
+
+    background: transparent !important;
+    cursor: pointer !important;
+}
+
+/* SELECTION ACTIVE */
+#favorite-products .reservation-selection input:checked {
+    background: #FFD928 !important;
+    border-color: #FFD928 !important;
+    box-shadow: inset 0 0 0 3px #191919 !important;
+}
+
+/* CARTE SELECTIONNEE */
+#favorite-products .product-card:has(.reservation-selection input:checked) {
+    border: 2px solid #FFD928 !important;
+    box-shadow: 0 0 15px rgba(255,217,40,.12) !important;
+}
+/* SELECTION RESERVATION - STYLE ELEGANT */
+
+#favorite-products .reservation-selection {
+    position: absolute !important;
+    top: 14px !important;
+    right: 14px !important;
+    width: 28px !important;
+    height: 28px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    z-index: 5 !important;
+}
+
+#favorite-products .reservation-selection input {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    width: 20px !important;
+    height: 20px !important;
+    margin: 0 !important;
+    border: 1px solid rgba(214, 180, 91, .65) !important;
+    border-radius: 6px !important;
+    background: rgba(255,255,255,.03) !important;
+    cursor: pointer !important;
+    transition: all .2s ease !important;
+    position: relative !important;
+}
+
+#favorite-products .reservation-selection input:hover {
+    border-color: #d6b45b !important;
+    background: rgba(214,180,91,.12) !important;
+}
+
+#favorite-products .reservation-selection input:checked {
+    background: #d6b45b !important;
+    border-color: #d6b45b !important;
+}
+
+#favorite-products .reservation-selection input:checked::after {
+    content: "✓" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #111 !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+}

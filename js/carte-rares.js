@@ -199,9 +199,9 @@ function renderCards(cards) {
                     ${Number(card.price).toFixed(2).replace(".", ",")} €
                 </div>
 
-                <a href="contact.html" class="rare-button">
-                    Nous contacter
-                </a>
+                <button class="rare-button rare-favorite-button" data-card-id="${escapeAttribute(card.id)}" type="button">
+    ♡ Ajouter aux favoris
+</button>
             </div>
         `;
 
@@ -226,5 +226,72 @@ function escapeHTML(value) {
 function escapeAttribute(value) {
     return escapeHTML(value || "");
 }
+// =========================
+// FAVORIS CARTES RARES
+// =========================
+
+grid.addEventListener("click", async (event) => {
+    const button = event.target.closest(".rare-favorite-button");
+
+    if (!button) return;
+
+    const cardId = button.dataset.cardId;
+    button.disabled = true;
+
+    try {
+        const { data: { user }, error: authError } =
+            await rareClient.auth.getUser();
+
+        if (authError) throw authError;
+
+        if (!user) {
+            window.location.href = "connexion.html";
+            return;
+        }
+
+        const { data: existing, error: checkError } = await rareClient
+            .from("rare_wishlist")
+            .select("id")
+            .eq("user_id", user.id)
+            .eq("rare_card_id", cardId)
+            .maybeSingle();
+
+        if (checkError) throw checkError;
+
+        // SI DÉJÀ EN FAVORIS : ON RETIRE
+        if (existing) {
+            const { error: deleteError } = await rareClient
+                .from("rare_wishlist")
+                .delete()
+                .eq("id", existing.id);
+
+            if (deleteError) throw deleteError;
+
+            button.innerHTML = "♡ Ajouter aux favoris";
+            button.classList.remove("is-favorite");
+
+            return;
+        }
+
+        // SINON : ON AJOUTE
+        const { error: insertError } = await rareClient
+            .from("rare_wishlist")
+            .insert({
+                user_id: user.id,
+                rare_card_id: cardId
+            });
+
+        if (insertError) throw insertError;
+
+        button.innerHTML = "♥ Ajouté aux favoris";
+        button.classList.add("is-favorite");
+
+    } catch (error) {
+        console.error("Erreur favoris carte rare :", error);
+        alert("Erreur : " + (error.message || error));
+    } finally {
+        button.disabled = false;
+    }
+});
 
 loadRareCards();
