@@ -1,98 +1,121 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Mon espace client | Vesubia Card Store</title>
 
     <link rel="icon" type="image/png" href="images/logo/logop.png">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/header.css">
-<link rel="stylesheet" href="css/navigation.css">
-<link rel="stylesheet" href="css/buttons.css">
-<link rel="stylesheet" href="css/footer.css">
-<link rel="stylesheet" href="css/responsive.css">
-<link rel="stylesheet" href="css/palette.css">
-<link rel="stylesheet" href="css/effects.css">
-<link rel="stylesheet" href="css/mon-compte.css">
-    <!-- SUPABASE -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/palette.css">
+    <link rel="stylesheet" href="css/effects.css">
+    <link rel="stylesheet" href="css/mon-compte.css">
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="admin/supabase.js"></script>
 </head>
+
 <body>
 
 <header class="site-header">
 
     <a href="index.html" class="brand">
         <img src="images/logo/logom.png" alt="Logo Vesubia Card Store">
-
         <span class="brand-name">
             <strong>VESUBIA</strong>
             <small>CARD STORE</small>
         </span>
     </a>
 
-    <button class="menu-toggle"
-            id="menu-toggle"
-            type="button"
-            aria-label="Ouvrir le menu"
-            aria-expanded="false"
-            aria-controls="main-nav">
+    <button class="menu-toggle" id="menu-toggle"
+            type="button" aria-label="Ouvrir le menu"
+            aria-expanded="false" aria-controls="main-nav">
         <span></span>
         <span></span>
         <span></span>
     </button>
 
     <nav class="main-nav" id="main-nav">
-
         <a href="index.html">Accueil</a>
         <a href="boutique.html">Boutique</a>
         <a href="cartes-rares.html">Cartes rares</a>
         <a href="histoire.html">Notre histoire</a>
         <a href="contact.html">Contact</a>
-
-        <a href="connexion.html">
-    <i class="fa-regular fa-user"></i> Mon compte
-</a>
-
-        <a href="avis.html" class="header-avis-btn">
-            <span>★</span> Avis
-        </a>
-
-        <a href="favoris.html" aria-label="Favoris">
-            <i class="fa-regular fa-heart"></i>
-        </a>
-
+        <a href="connexion.html"><i class="fa-regular fa-user"></i> Mon compte</a>
+        <a href="avis.html" class="header-avis-btn"><span>★</span> Avis</a>
+        <a href="favoris.html" aria-label="Favoris"><i class="fa-regular fa-heart"></i></a>
     </nav>
 
 </header>
 
+
 <main class="customer-dashboard">
+
     <div class="dashboard-container">
 
         <div class="dashboard-welcome">
             <span class="dashboard-eyebrow">ESPACE COLLECTIONNEUR</span>
-            <h1>Bienvenue, <span id="customer-name">Collectionneur</span></h1>
+
+            <h1>
+                Bienvenue,
+                <span id="customer-name">Collectionneur</span>
+            </h1>
+
             <p>Retrouvez ici toutes les informations de votre compte Vesubia.</p>
         </div>
 
+
         <div class="dashboard-grid">
 
-            <div class="dashboard-card" onclick="window.location.href='favoris.html'" role="link" tabindex="0" onkeydown="if(event.key==='Enter') window.location.href='favoris.html'">
-    <i class="fa-regular fa-heart"></i>
-    <h3>Mes favoris</h3>
-    <p>Gardez vos cartes préférées à portée de main.</p>
-</div>
-        
-        
+            <div class="dashboard-card"
+                 onclick="window.location.href='favoris.html'"
+                 role="link" tabindex="0"
+                 onkeydown="if(event.key==='Enter')window.location.href='favoris.html'">
+
+                <i class="fa-regular fa-heart"></i>
+                <h3>Mes favoris</h3>
+                <p>Gardez vos cartes préférées à portée de main.</p>
+
+            </div>
+
+        </div>
+
+
+        <!-- MES RESERVATIONS -->
+
+        <section class="dashboard-section" id="reservations-section">
+
+            <h2>
+                <i class="fa-solid fa-ticket"></i>
+                Mes réservations
+            </h2>
+
+            <p>Retrouvez vos demandes de réservation et leur état d'avancement.</p>
+
+            <div id="customer-reservations">
+                <p>Chargement de vos réservations...</p>
+            </div>
+
+        </section>
+
+
+        <!-- PROFIL -->
+
         <section class="dashboard-section">
-            <h2><i class="fa-regular fa-user"></i> Mon profil</h2>
+
+            <h2>
+                <i class="fa-regular fa-user"></i>
+                Mon profil
+            </h2>
+
             <p>Consultez et modifiez vos informations personnelles.</p>
 
             <form id="profile-form" class="profile-form">
@@ -113,33 +136,48 @@
                 </div>
 
                 <div class="profile-actions">
+
                     <button type="submit" class="dashboard-button" id="save-profile">
                         <i class="fa-solid fa-floppy-disk"></i>
                         Enregistrer mes modifications
                     </button>
 
                     <p id="profile-message" class="dashboard-message" role="status"></p>
+
                 </div>
 
             </form>
+
         </section>
 
+
+        <!-- SECURITE -->
+
         <section class="dashboard-section">
-            <h2><i class="fa-solid fa-shield-halved"></i> Sécurité</h2>
+
+            <h2>
+                <i class="fa-solid fa-shield-halved"></i>
+                Sécurité
+            </h2>
+
             <p>Vous êtes connecté à votre espace personnel.</p>
 
             <button type="button" id="logout-button" class="dashboard-logout">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Me déconnecter
             </button>
+
         </section>
 
     </div>
+
 </main>
+
 
 <footer class="site-footer">
     <p>© 2026 <strong>VESUBIA CARD STORE</strong> — Tous droits réservés.</p>
 </footer>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
@@ -152,9 +190,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     const saveButton = document.getElementById("save-profile");
     const profileForm = document.getElementById("profile-form");
     const logoutButton = document.getElementById("logout-button");
+    const reservationsContainer = document.getElementById("customer-reservations");
+
+
+    // =========================================
+    // AUTHENTIFICATION
+    // =========================================
 
     if (typeof supabaseClient === "undefined") {
-        profileMessage.textContent = "Erreur : connexion à Supabase impossible.";
+        reservationsContainer.textContent = "Connexion à Supabase impossible.";
+        profileMessage.textContent = "Connexion à Supabase impossible.";
         return;
     }
 
@@ -167,31 +212,607 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let user = data.user;
 
+
+    // =========================================
+    // PROFIL
+    // =========================================
+
     function displayProfile() {
+
         const firstName = user.user_metadata?.first_name || "";
         const lastName = user.user_metadata?.last_name || "";
 
         firstNameInput.value = firstName;
         lastNameInput.value = lastName;
         emailInput.value = user.email || "";
+
         customerName.textContent = firstName || "Collectionneur";
     }
 
     displayProfile();
 
-    profileForm.addEventListener("submit", async (event) => {
+
+    // =========================================
+    // FORMATAGE
+    // =========================================
+
+    function formatPrice(price) {
+        return Number(price || 0).toLocaleString("fr-FR", {
+            style: "currency",
+            currency: "EUR"
+        });
+    }
+
+    function formatDate(date) {
+
+        if (!date) return "Non renseignée";
+
+        const parsed = new Date(date);
+
+        if (Number.isNaN(parsed.getTime())) {
+            return "Non renseignée";
+        }
+
+        return parsed.toLocaleDateString("fr-FR", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric"
+        });
+    }
+
+
+    // =========================================
+    // STATUTS
+    // =========================================
+
+    function getStatusInfo(status) {
+
+        switch (status) {
+
+            case "pending":
+                return {
+                    icon: "fa-hourglass-half",
+                    label: "En attente de validation",
+                    color: "#d4a017"
+                };
+
+            case "confirmed":
+                return {
+                    icon: "fa-circle-check",
+                    label: "Réservation confirmée",
+                    color: "#4caf50"
+                };
+
+            case "completed":
+                return {
+                    icon: "fa-check-double",
+                    label: "Carte(s) récupérée(s)",
+                    color: "#4caf50"
+                };
+
+            case "expired":
+                return {
+                    icon: "fa-clock",
+                    label: "Réservation expirée",
+                    color: "#999"
+                };
+
+            case "cancelled":
+                return {
+                    icon: "fa-circle-xmark",
+                    label: "Réservation annulée",
+                    color: "#e53935"
+                };
+
+            default:
+                return {
+                    icon: "fa-circle-question",
+                    label: "Statut inconnu",
+                    color: "#999"
+                };
+        }
+    }
+
+
+    // =========================================
+    // CHARGEMENT RESERVATIONS
+    // =========================================
+
+    async function loadReservations() {
+
+        reservationsContainer.innerHTML =
+            "<p>Chargement de vos réservations...</p>";
+
+        const { data, error } = await supabaseClient
+            .from("reservations")
+            .select(`
+                id,
+                status,
+                pickup_code,
+                created_at,
+                reservation_date,
+                reservation_time,
+                reservation_items (
+                    card_name,
+                    unit_price,
+                    quantity
+                )
+            `)
+            .eq("user_id", user.id)
+            .order("created_at", { ascending: false });
+
+
+        if (error) {
+
+            console.error("Erreur réservations :", error);
+
+            reservationsContainer.innerHTML = `
+                <p>Impossible de charger vos réservations.</p>
+            `;
+
+            return;
+        }
+
+
+        reservationsContainer.innerHTML = "";
+
+
+        // AUCUNE RESERVATION
+
+        if (!data || data.length === 0) {
+
+            reservationsContainer.innerHTML = `
+                <div style="
+                    display:block !important;
+                    position:static !important;
+                    float:none !important;
+                    clear:both !important;
+                    width:100% !important;
+                    margin:25px 0 0 !important;
+                    padding:0 !important;
+                ">
+
+                    <div style="
+                        display:block !important;
+                        position:static !important;
+                        margin:0 0 18px !important;
+                        padding:0 !important;
+                    ">
+                        <i class="fa-regular fa-calendar"
+                           style="display:inline-block !important;position:static !important;margin:0 !important;"></i>
+                    </div>
+
+                    <p style="
+                        display:block !important;
+                        position:static !important;
+                        float:none !important;
+                        clear:both !important;
+                        width:100% !important;
+                        margin:0 0 20px !important;
+                        padding:0 !important;
+                        line-height:1.8 !important;
+                    ">
+                        Vous n'avez aucune réservation pour le moment.
+                    </p>
+
+                    <div style="
+                        display:block !important;
+                        position:static !important;
+                        float:none !important;
+                        clear:both !important;
+                        margin:0 !important;
+                        padding:0 !important;
+                    ">
+
+                        <a href="boutique.html"
+                           class="dashboard-button"
+                           style="
+                                display:inline-flex !important;
+                                position:static !important;
+                                float:none !important;
+                                clear:both !important;
+                                margin:0 !important;
+                                width:auto !important;
+                                height:auto !important;
+                                max-width:max-content !important;
+                                align-items:center !important;
+                                justify-content:center !important;
+                           ">
+                            Découvrir la boutique
+                        </a>
+
+                    </div>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        // =========================================
+        // AFFICHAGE DES RESERVATIONS
+        // =========================================
+
+        data.forEach(reservation => {
+
+            const statusInfo = getStatusInfo(reservation.status);
+
+            const card = document.createElement("article");
+
+            card.className = "reservation-card";
+
+            card.style.cssText = `
+                display:block;
+                width:100%;
+                box-sizing:border-box;
+                margin:20px 0;
+                padding:22px;
+                border:1px solid rgba(212,160,23,0.25);
+                border-radius:14px;
+                background:rgba(255,255,255,0.025);
+            `;
+
+
+            // ENTETE
+
+            const header = document.createElement("div");
+
+            header.style.cssText = `
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                flex-wrap:wrap;
+                gap:12px;
+                margin-bottom:18px;
+            `;
+
+            const title = document.createElement("h3");
+
+            title.textContent = "Réservation #" + reservation.id.slice(0,8);
+
+            title.style.margin = "0";
+
+
+            const status = document.createElement("span");
+
+            status.style.cssText = `
+                display:inline-flex;
+                align-items:center;
+                gap:8px;
+                color:${statusInfo.color};
+                font-weight:600;
+            `;
+
+            const statusIcon = document.createElement("i");
+            statusIcon.className = "fa-solid " + statusInfo.icon;
+
+            const statusLabel = document.createElement("span");
+            statusLabel.textContent = statusInfo.label;
+
+            status.append(statusIcon, statusLabel);
+
+            header.append(title, status);
+
+
+            // ARTICLES
+
+            const details = document.createElement("div");
+
+            details.style.cssText = `
+                display:flex;
+                flex-direction:column;
+                gap:10px;
+            `;
+
+            const items = reservation.reservation_items || [];
+
+            let calculatedTotal = 0;
+
+
+            items.forEach(item => {
+
+                const quantity = Number(item.quantity || 1);
+                const unitPrice = Number(item.unit_price || 0);
+                const subtotal = unitPrice * quantity;
+
+                calculatedTotal += subtotal;
+
+                const line = document.createElement("div");
+
+                line.style.cssText = `
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:12px;
+                    padding:10px 0;
+                    border-bottom:1px solid rgba(255,255,255,0.08);
+                `;
+
+                const name = document.createElement("span");
+
+                name.textContent =
+                    `${item.card_name || "Carte"} × ${quantity}`;
+
+                const price = document.createElement("span");
+
+                price.textContent = formatPrice(subtotal);
+
+                line.append(name, price);
+
+                details.appendChild(line);
+
+            });
+
+
+            // DATE DE DEMANDE
+
+            const created = document.createElement("p");
+
+            created.style.cssText = `
+                margin-top:15px;
+                opacity:0.75;
+                font-size:0.9rem;
+            `;
+
+            created.textContent =
+                "Demande envoyée le " + formatDate(reservation.created_at);
+
+
+            // TOTAL
+
+            const total = document.createElement("p");
+
+            total.style.cssText = `
+                margin-top:15px;
+                font-weight:700;
+                font-size:1.1rem;
+            `;
+
+            total.textContent =
+                "Total : " + formatPrice(calculatedTotal);
+
+
+            card.append(header, details, created);
+
+
+            // EN ATTENTE
+
+            if (reservation.status === "pending") {
+
+                const message = document.createElement("p");
+
+                message.style.cssText = `
+                    margin-top:15px;
+                    color:#d4a017;
+                    line-height:1.6;
+                `;
+
+                message.innerHTML =
+                    '<i class="fa-solid fa-hourglass-half"></i> Votre demande est en attente de validation par la boutique.';
+
+                card.appendChild(message);
+            }
+
+
+            // CONFIRMEE
+
+            if (reservation.status === "confirmed") {
+
+                const message = document.createElement("p");
+
+                message.style.cssText = `
+                    margin-top:15px;
+                    color:#4caf50;
+                    line-height:1.6;
+                `;
+
+                message.innerHTML =
+                    '<i class="fa-solid fa-circle-check"></i> Votre réservation est confirmée.';
+
+                card.appendChild(message);
+
+
+                // CODE DE RETRAIT
+
+                if (reservation.pickup_code) {
+
+                    const pickupCodeBox = document.createElement("div");
+
+                    pickupCodeBox.style.cssText = `
+                        margin-top:18px;
+                        padding:16px;
+                        border:1px solid #d4a017;
+                        border-radius:12px;
+                        background:rgba(212,160,23,0.06);
+                    `;
+
+                    const codeTitle = document.createElement("p");
+
+                    codeTitle.textContent = "Code de retrait";
+
+                    codeTitle.style.cssText = `
+                        margin:0 0 10px;
+                        color:#d4a017;
+                        font-weight:700;
+                    `;
+
+
+                    const codeValue = document.createElement("div");
+
+                    codeValue.textContent = reservation.pickup_code;
+
+                    codeValue.style.cssText = `
+                        font-size:26px;
+                        font-weight:700;
+                        letter-spacing:5px;
+                        color:#d4a017;
+                        margin-bottom:12px;
+                    `;
+
+
+                    const copyButton = document.createElement("button");
+
+                    copyButton.type = "button";
+                    copyButton.textContent = "Copier le code";
+                    copyButton.className = "dashboard-button";
+
+
+                    copyButton.addEventListener("click", async () => {
+
+                        try {
+
+                            await navigator.clipboard.writeText(
+                                String(reservation.pickup_code)
+                            );
+
+                            copyButton.textContent = "Code copié !";
+
+                        } catch (err) {
+
+                            prompt(
+                                "Copiez votre code de retrait :",
+                                reservation.pickup_code
+                            );
+
+                        }
+
+                    });
+
+
+                    pickupCodeBox.append(
+                        codeTitle,
+                        codeValue,
+                        copyButton
+                    );
+
+                    card.appendChild(pickupCodeBox);
+
+                }
+
+            }
+
+
+            // DATE DE RETRAIT CHOISIE PAR LE CLIENT
+
+            if (
+                reservation.reservation_date &&
+                (
+                    reservation.status === "confirmed" ||
+                    reservation.status === "pending"
+                )
+            ) {
+
+                const pickupDate = document.createElement("p");
+
+                pickupDate.style.cssText = `
+                    margin-top:10px;
+                    color:#d4a017;
+                `;
+
+                const pickupTime = reservation.reservation_time
+                    ? " à " + reservation.reservation_time.slice(0, 5)
+                    : "";
+
+                pickupDate.textContent =
+                    "Date de retrait : " +
+                    formatDate(reservation.reservation_date) +
+                    pickupTime;
+
+                card.appendChild(pickupDate);
+            }
+
+
+            // RECUPEREE
+
+            if (reservation.status === "completed") {
+
+                const message = document.createElement("p");
+
+                message.style.cssText = `
+                    margin-top:15px;
+                    color:#4caf50;
+                `;
+
+                message.innerHTML =
+                    '<i class="fa-solid fa-check-double"></i> Votre réservation a été récupérée.';
+
+                card.appendChild(message);
+            }
+
+
+            // EXPIREE
+
+            if (reservation.status === "expired") {
+
+                const message = document.createElement("p");
+
+                message.style.cssText = `
+                    margin-top:15px;
+                    color:#999;
+                `;
+
+                message.textContent =
+                    "Cette réservation a expiré.";
+
+                card.appendChild(message);
+            }
+
+
+            // ANNULEE
+
+            if (reservation.status === "cancelled") {
+
+                const message = document.createElement("p");
+
+                message.style.cssText = `
+                    margin-top:15px;
+                    color:#e53935;
+                `;
+
+                message.textContent =
+                    "Cette réservation a été annulée.";
+
+                card.appendChild(message);
+            }
+
+
+            card.appendChild(total);
+
+            reservationsContainer.appendChild(card);
+
+        });
+
+    }
+
+
+    await loadReservations();
+
+
+    // =========================================
+    // MODIFICATION PROFIL
+    // =========================================
+
+    profileForm.addEventListener("submit", async event => {
+
         event.preventDefault();
 
         const firstName = firstNameInput.value.trim();
         const lastName = lastNameInput.value.trim();
 
         if (!firstName || !lastName) {
-            profileMessage.textContent = "Veuillez remplir votre prénom et votre nom.";
+
+            profileMessage.textContent =
+                "Veuillez remplir votre prénom et votre nom.";
+
             return;
         }
 
         saveButton.disabled = true;
-        saveButton.textContent = "Enregistrement...";
+
+        saveButton.innerHTML =
+            '<i class="fa-solid fa-spinner fa-spin"></i> Enregistrement...';
+
 
         const { data, error } = await supabaseClient.auth.updateUser({
             data: {
@@ -200,62 +821,107 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         });
 
+
         saveButton.disabled = false;
-        saveButton.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Enregistrer mes modifications';
+
+        saveButton.innerHTML =
+            '<i class="fa-solid fa-floppy-disk"></i> Enregistrer mes modifications';
+
 
         if (error) {
+
             profileMessage.textContent = "Erreur : " + error.message;
+
             return;
         }
 
+
         user = data.user;
+
         customerName.textContent = firstName;
-        profileMessage.textContent = "Vos informations ont bien été enregistrées !";
+
+        profileMessage.textContent =
+            "Vos informations ont bien été enregistrées !";
+
     });
 
+
+    // =========================================
+    // DECONNEXION
+    // =========================================
+
     logoutButton.addEventListener("click", async () => {
+
         logoutButton.disabled = true;
-        logoutButton.textContent = "Déconnexion...";
+
+        logoutButton.innerHTML =
+            '<i class="fa-solid fa-spinner fa-spin"></i> Déconnexion...';
+
 
         const { error } = await supabaseClient.auth.signOut();
 
+
         if (error) {
+
             logoutButton.disabled = false;
-            logoutButton.textContent = "Erreur de déconnexion";
+
+            logoutButton.innerHTML =
+                '<i class="fa-solid fa-right-from-bracket"></i> Me déconnecter';
+
+            console.error(error);
+
+            alert("Impossible de vous déconnecter.");
+
             return;
         }
 
         window.location.href = "connexion.html";
+
     });
 
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const button = document.getElementById("menu-toggle");
+
+    // =========================================
+    // MENU MOBILE
+    // =========================================
+
+    const menuButton = document.getElementById("menu-toggle");
     const menu = document.getElementById("main-nav");
 
-    if (!button || !menu) return;
+    if (!menuButton || !menu) return;
 
-    button.addEventListener("click", () => {
+
+    menuButton.addEventListener("click", () => {
+
         const opened = menu.classList.toggle("is-open");
 
-        button.classList.toggle("active", opened);
-        button.setAttribute("aria-expanded", opened);
-        button.setAttribute(
+        menuButton.classList.toggle("active", opened);
+
+        menuButton.setAttribute("aria-expanded", String(opened));
+
+        menuButton.setAttribute(
             "aria-label",
             opened ? "Fermer le menu" : "Ouvrir le menu"
         );
+
     });
 
+
     menu.querySelectorAll("a").forEach(link => {
+
         link.addEventListener("click", () => {
+
             menu.classList.remove("is-open");
-            button.classList.remove("active");
-            button.setAttribute("aria-expanded", "false");
+
+            menuButton.classList.remove("active");
+
+            menuButton.setAttribute("aria-expanded", "false");
+
         });
+
     });
+
 });
 </script>
+
 </body>
 </html>

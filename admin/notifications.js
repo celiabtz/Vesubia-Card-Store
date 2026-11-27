@@ -1,349 +1,432 @@
+/* ==========================================
+   VESUBIA - NOTIFICATIONS RESERVATIONS
+   REALTIME + VERIFICATION AUTOMATIQUE
+========================================== */
 
-/* =========================================
-   VESUBIA - SYSTEME DE NOTIFICATIONS
-========================================= */
+document.addEventListener("DOMContentLoaded", async () => {
 
-(function () {
-    if (window.notificationsInitialized) return;
-    window.notificationsInitialized = true;
+    const bell = document.getElementById("notification-bell");
+    const badge = document.getElementById("notification-count");
+    const panel = document.getElementById("notification-panel");
+    const list = document.getElementById("notification-list");
+    const panelCount = document.getElementById("notification-panel-count");
 
-    function initNotifications() {
-        if (typeof supabaseClient === "undefined") {
-            console.error("Supabase client introuvable.");
+    if (!bell || !badge || !panel || !list) return;
+
+    if (typeof supabaseClient === "undefined") {
+        console.error("Supabase client introuvable.");
+        return;
+    }
+
+    let pendingReservations = [];
+    let knownReservationIds = new Set();
+    let initialized = false;
+    let realtimeConnected = false;
+
+
+    // ==========================================
+    // SON
+    // ==========================================
+
+    function playNotificationSound() {
+
+        try {
+
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+            const oscillator = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+
+            oscillator.type = "sine";
+            oscillator.frequency.setValueAtTime(880, audioContext.currentTime);
+            oscillator.frequency.setValueAtTime(1174, audioContext.currentTime + 0.12);
+
+            gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.12, audioContext.currentTime + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.4);
+
+            oscillator.connect(gain);
+            gain.connect(audioContext.destination);
+
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + 0.4);
+
+            oscillator.onended = () => {
+                audioContext.close().catch(() => {});
+            };
+
+        } catch (error) {
+
+            console.warn("Son notification impossible :", error);
+
+        }
+
+    }
+
+
+    // ==========================================
+    // ANIMATION CLOCHE
+    // ==========================================
+
+    function animateBell() {
+
+        bell.classList.remove("notification-shake");
+
+        void bell.offsetWidth;
+
+        bell.classList.add("notification-shake");
+
+        setTimeout(() => {
+            bell.classList.remove("notification-shake");
+        }, 1000);
+
+    }
+
+
+    // ==========================================
+    // BADGE
+    // ==========================================
+
+    function updateBadge() {
+
+        const count = pendingReservations.length;
+
+        badge.textContent = count;
+        badge.hidden = count === 0;
+
+        if (panelCount) {
+            panelCount.textContent =
+                `${count} réservation${count > 1 ? "s" : ""} en attente`;
+        }
+
+    }
+
+
+    // ==========================================
+    // AFFICHAGE
+    // ==========================================
+
+    function renderNotifications() {
+
+        list.innerHTML = "";
+
+        if (pendingReservations.length === 0) {
+
+            list.innerHTML = `
+                <p class="notification-empty">
+                    Aucune nouvelle réservation.
+                </p>
+            `;
+
+            updateBadge();
+
             return;
         }
 
-        const header = document.querySelector(".admin-header-actions");
 
-        if (!header) {
-            console.error("Header administration introuvable.");
+        pendingReservations.forEach(reservation => {
+
+            const item = document.createElement("div");
+
+            item.className = "notification-item";
+
+            const date = reservation.reservation_date
+                ? new Date(
+                    reservation.reservation_date + "T00:00:00"
+                ).toLocaleDateString("fr-FR")
+                : "Date inconnue";
+
+            const time = reservation.reservation_time
+                ? reservation.reservation_time.slice(0, 5)
+                : "";
+
+
+            item.innerHTML = `
+                <div class="notification-item-dot"></div>
+
+                <div class="notification-item-content">
+                    <strong>Nouvelle réservation</strong>
+                    <p>${date} à ${time}</p>
+                    <small>Réservation en attente de validation</small>
+                </div>
+            `;
+
+
+            item.addEventListener("click", () => {
+
+                window.location.href = "calendrier.html";
+
+            });
+
+
+            list.appendChild(item);
+
+        });
+
+
+        updateBadge();
+
+    }
+
+
+    // ==========================================
+    // DETECTION NOUVELLE RESERVATION
+    // ==========================================
+
+    function handleNewReservation(reservation) {
+
+        if (!reservation || reservation.status !== "pending") return;
+
+        if (knownReservationIds.has(reservation.id)) return;
+
+        knownReservationIds.add(reservation.id);
+
+        pendingReservations.unshift(reservation);
+
+        renderNotifications();
+
+        playNotificationSound();
+
+        animateBell();
+
+    }
+
+
+    // ==========================================
+    // CHARGEMENT / VERIFICATION
+    // ==========================================
+
+    async function loadNotifications(isCheck = false) {
+
+        const { data, error } = await supabaseClient
+            .from("reservations")
+            .select("id, status, reservation_date, reservation_time, created_at")
+            .eq("status", "pending")
+            .order("created_at", { ascending: false });
+
+
+        if (error) {
+
+            console.error("Erreur notifications :", error);
+
             return;
+
         }
 
-        if (document.getElementById("notification-bell")) return;
 
-        const wrapper = document.createElement("div");
-        wrapper.className = "notification-wrapper";
+        const currentReservations = data || [];
 
-        wrapper.innerHTML = `
-            <button class="notification-bell" id="notification-bell" aria-label="Notifications">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-                    <path d="M10 21h4"/>
-                </svg>
-                <span class="notification-count" id="notification-count"></span>
-            </button>
 
-            <div class="notification-panel" id="notification-panel">
-                <div class="notification-panel-header">
-                    <div>
-                        <h3>Notifications</h3>
-                        <span id="notification-subtitle">Chargement...</span>
-                    </div>
-                    <button id="notification-read-all">Tout lire</button>
-                </div>
+        // Première initialisation : pas de son
+        if (!initialized) {
 
-                <div class="notification-list" id="notification-list">
-                    <div class="notification-loading">Chargement des notifications...</div>
-                </div>
-            </div>
-        `;
+            pendingReservations = currentReservations;
 
-        header.insertBefore(wrapper, header.firstChild);
+            currentReservations.forEach(reservation => {
+                knownReservationIds.add(reservation.id);
+            });
 
-        const bell = document.getElementById("notification-bell");
-        const panel = document.getElementById("notification-panel");
-        const count = document.getElementById("notification-count");
-        const list = document.getElementById("notification-list");
-        const subtitle = document.getElementById("notification-subtitle");
+            initialized = true;
 
-        let notifications = [];
-        let previousNotificationIds = null;
+            renderNotifications();
 
-        /* =========================================
-           SON DE NOTIFICATION - PREMIUM
-        ========================================= */
+            return;
 
-        let audioContext = null;
-        let audioUnlocked = false;
-
-        async function unlockAudio() {
-            if (audioUnlocked) return;
-
-            try {
-                const AudioContextClass =
-                    window.AudioContext || window.webkitAudioContext;
-
-                if (!AudioContextClass) return;
-
-                if (!audioContext) {
-                    audioContext = new AudioContextClass();
-                }
-
-                if (audioContext.state === "suspended") {
-                    await audioContext.resume();
-                }
-
-                if (audioContext.state === "running") {
-                    audioUnlocked = true;
-
-                    document.removeEventListener("click", unlockAudio);
-                    document.removeEventListener("keydown", unlockAudio);
-                }
-
-            } catch (error) {
-                console.error("Impossible d'activer le son :", error);
-            }
         }
 
-        document.addEventListener("click", unlockAudio);
-        document.addEventListener("keydown", unlockAudio);
 
-        function playNotificationSound() {
-            if (!audioContext || audioContext.state !== "running") return;
+        // Détection des nouvelles réservations
+        if (isCheck) {
 
-            try {
-                const now = audioContext.currentTime;
+            currentReservations.forEach(reservation => {
 
-                function tone(frequency, start, duration, volume) {
-                    const oscillator = audioContext.createOscillator();
-                    const gain = audioContext.createGain();
+                if (!knownReservationIds.has(reservation.id)) {
 
-                    oscillator.type = "sine";
-                    oscillator.frequency.setValueAtTime(frequency, start);
+                    handleNewReservation(reservation);
 
-                    gain.gain.setValueAtTime(0.0001, start);
-                    gain.gain.exponentialRampToValueAtTime(
-                        volume,
-                        start + 0.025
-                    );
-                    gain.gain.exponentialRampToValueAtTime(
-                        0.0001,
-                        start + duration
-                    );
-
-                    oscillator.connect(gain);
-                    gain.connect(audioContext.destination);
-
-                    oscillator.start(start);
-                    oscillator.stop(start + duration + 0.02);
                 }
 
-                tone(587, now, 0.30, 0.25);
-                tone(880, now + 0.08, 0.40, 0.22);
+            });
 
-            } catch (error) {
-                console.error("Erreur du son de notification :", error);
-            }
         }
 
-        /* =========================================
-           OUVERTURE DU PANNEAU
-        ========================================= */
 
-        bell.addEventListener("click", (event) => {
-            event.stopPropagation();
-            panel.classList.toggle("active");
+        // Mise à jour de la liste des réservations en attente
+        pendingReservations = currentReservations;
 
-            if (panel.classList.contains("active")) {
-                loadNotifications();
-            }
+        currentReservations.forEach(reservation => {
+            knownReservationIds.add(reservation.id);
         });
 
-        document.addEventListener("click", (event) => {
-            if (!wrapper.contains(event.target)) {
-                panel.classList.remove("active");
+
+        // Nettoyage des anciennes réservations qui ne sont plus en attente
+        const currentIds = new Set(
+            currentReservations.map(reservation => reservation.id)
+        );
+
+        knownReservationIds.forEach(id => {
+
+            if (!currentIds.has(id)) {
+
+                knownReservationIds.delete(id);
+
             }
+
         });
 
-        /* =========================================
-           CHARGEMENT DES NOTIFICATIONS
-        ========================================= */
 
-        async function loadNotifications() {
-            const { data, error } = await supabaseClient
-                .from("notifications")
-                .select("*")
-                .order("created_at", { ascending: false })
-                .limit(50);
+        renderNotifications();
 
-            if (error) {
-                console.error("Erreur notifications :", error);
+    }
 
-                list.innerHTML = `
-                    <div class="notification-empty">
-                        Impossible de charger les notifications.
-                    </div>
-                `;
-                return;
+
+    // ==========================================
+    // OUVERTURE / FERMETURE
+    // ==========================================
+
+    bell.addEventListener("click", () => {
+
+        panel.hidden = !panel.hidden;
+
+    });
+
+
+    document.addEventListener("click", event => {
+
+        if (!event.target.closest(".notification-wrapper")) {
+
+            panel.hidden = true;
+
+        }
+
+    });
+
+
+    // ==========================================
+    // INITIALISATION
+    // ==========================================
+
+    await loadNotifications(false);
+
+
+    // ==========================================
+    // TEMPS REEL SUPABASE
+    // ==========================================
+
+    const notificationChannel = supabaseClient
+        .channel("reservations-notifications-" + Date.now())
+
+
+        // NOUVELLE RESERVATION
+
+        .on(
+            "postgres_changes",
+            {
+                event: "INSERT",
+                schema: "public",
+                table: "reservations"
+            },
+            payload => {
+
+                console.log("Nouvelle réservation reçue :", payload.new);
+
+                handleNewReservation(payload.new);
+
+            }
+        )
+
+
+        // MODIFICATION RESERVATION
+
+        .on(
+            "postgres_changes",
+            {
+                event: "UPDATE",
+                schema: "public",
+                table: "reservations"
+            },
+            payload => {
+
+                console.log("Réservation modifiée :", payload.new);
+
+                const reservation = payload.new;
+
+
+                if (reservation.status !== "pending") {
+
+                    pendingReservations = pendingReservations.filter(
+                        item => item.id !== reservation.id
+                    );
+
+                    knownReservationIds.delete(reservation.id);
+
+                    renderNotifications();
+
+                }
+
+            }
+        )
+
+
+        // CONNEXION
+
+        .subscribe((status, error) => {
+
+            console.log("Statut Realtime notifications :", status);
+
+            if (status === "SUBSCRIBED") {
+
+                realtimeConnected = true;
+
+                console.log("Notifications Realtime connectées.");
+
             }
 
-            const newNotifications = data || [];
+            if (
+                status === "CHANNEL_ERROR" ||
+                status === "TIMED_OUT" ||
+                status === "CLOSED"
+            ) {
 
-            /* Détection des nouvelles notifications */
+                realtimeConnected = false;
 
-            if (previousNotificationIds !== null) {
-                const previousIds = previousNotificationIds;
-
-                const arrivals = newNotifications.filter(notification =>
-                    !previousIds.has(notification.id)
+                console.warn(
+                    "Realtime notifications déconnecté :",
+                    status,
+                    error
                 );
 
-                if (arrivals.length > 0) {
-                    playNotificationSound();
-                }
             }
 
-            previousNotificationIds = new Set(
-                newNotifications.map(notification => notification.id)
-            );
+        });
 
-            notifications = newNotifications;
-            renderNotifications();
+
+    // ==========================================
+    // VERIFICATION AUTOMATIQUE TOUTES LES 30 SEC
+    // ==========================================
+
+    setInterval(() => {
+
+        loadNotifications(true);
+
+    }, 30000);
+
+
+    // ==========================================
+    // VERIFICATION QUAND ON REVIENT SUR LA PAGE
+    // ==========================================
+
+    document.addEventListener("visibilitychange", () => {
+
+        if (!document.hidden) {
+
+            loadNotifications(true);
+
         }
 
-        /* =========================================
-           AFFICHAGE
-        ========================================= */
+    });
 
-        function renderNotifications() {
-            const unread = notifications.filter(n => !n.is_read);
-            const unreadCount = unread.length;
 
-            count.textContent = unreadCount > 99 ? "99+" : unreadCount;
-            count.classList.toggle("visible", unreadCount > 0);
+    console.log("Système de notifications Vesubia initialisé.");
 
-            subtitle.textContent = unreadCount === 0
-                ? "Aucune notification non lue"
-                : `${unreadCount} notification${unreadCount > 1 ? "s" : ""} non lue${unreadCount > 1 ? "s" : ""}`;
-
-            if (!notifications.length) {
-                list.innerHTML = `
-                    <div class="notification-empty">
-                        Aucune notification pour le moment.
-                    </div>
-                `;
-                return;
-            }
-
-            list.innerHTML = notifications.map(notification => `
-                <div class="notification-item ${notification.is_read ? "read" : "unread"}"
-                     data-id="${notification.id}"
-                     data-url="${escapeHTML(notification.target_url || "")}">
-                    <div class="notification-indicator"></div>
-                    <div class="notification-content">
-                        <strong>${escapeHTML(notification.title)}</strong>
-                        <p>${escapeHTML(notification.message)}</p>
-                        <span>${formatDate(notification.created_at)}</span>
-                    </div>
-                </div>
-            `).join("");
-
-            list.querySelectorAll(".notification-item").forEach(item => {
-                item.addEventListener("click", async () => {
-                    const id = item.dataset.id;
-                    const url = item.dataset.url;
-
-                    await markAsRead(id);
-
-                    if (url) {
-                        window.location.href = url;
-                    }
-                });
-            });
-        }
-
-        /* =========================================
-           MARQUER COMME LU
-        ========================================= */
-
-        async function markAsRead(id) {
-            const { error } = await supabaseClient
-                .from("notifications")
-                .update({ is_read: true })
-                .eq("id", id);
-
-            if (error) {
-                console.error("Erreur lecture notification :", error);
-                return;
-            }
-
-            notifications = notifications.map(n =>
-                n.id === id ? { ...n, is_read: true } : n
-            );
-
-            renderNotifications();
-        }
-
-        /* =========================================
-           TOUT LIRE
-        ========================================= */
-
-        document.getElementById("notification-read-all")
-            .addEventListener("click", async () => {
-
-                const unreadIds = notifications
-                    .filter(n => !n.is_read)
-                    .map(n => n.id);
-
-                if (!unreadIds.length) return;
-
-                const { error } = await supabaseClient
-                    .from("notifications")
-                    .update({ is_read: true })
-                    .in("id", unreadIds);
-
-                if (error) {
-                    console.error("Erreur :", error);
-                    return;
-                }
-
-                notifications = notifications.map(n => ({
-                    ...n,
-                    is_read: true
-                }));
-
-                renderNotifications();
-            });
-
-        /* =========================================
-           UTILITAIRES
-        ========================================= */
-
-        function escapeHTML(value) {
-            return String(value ?? "").replace(/[&<>"']/g, char => ({
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#39;"
-            }[char]));
-        }
-
-        function formatDate(date) {
-            const d = new Date(date);
-
-            return d.toLocaleString("fr-FR", {
-                day: "2-digit",
-                month: "2-digit",
-                hour: "2-digit",
-                minute: "2-digit"
-            });
-        }
-
-        /* =========================================
-           INITIALISATION + ACTUALISATION
-        ========================================= */
-
-        loadNotifications();
-
-        setInterval(loadNotifications, 30000);
-    }
-
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initNotifications);
-    } else {
-        initNotifications();
-    }
-})();
+});

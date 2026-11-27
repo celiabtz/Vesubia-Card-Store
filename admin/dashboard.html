@@ -13,25 +13,47 @@
     <link rel="stylesheet" href="notifications.css">
 </head>
 <body class="admin-page">
-    <header class="admin-header">
-        <a href="../index.html" class="admin-brand">
-           <img src="logorouge.png" alt="Vesubia">
-            <span>
-                <strong>VESUBIA</strong>
-                <small>CARD STORE · ADMINISTRATION</small>
-            </span>
-        </a>
-        <div class="admin-header-actions">
-    <div class="admin-header-actions">
-    <a href="../index.html" class="admin-header-link admin-shop-button">
-        Retour boutique
+    
+
+<header class="admin-header">
+    <a href="../index.html" class="admin-brand">
+        <img src="logorouge.png" alt="Vesubia">
+        <span>
+            <strong>VESUBIA</strong>
+            <small>CARD STORE · ADMINISTRATION</small>
+        </span>
     </a>
 
-    <button id="dashboard-logout" class="admin-logout">
-        Déconnexion
-    </button>
-</div>
-    </header>
+    <div class="admin-header-actions">
+
+        <!-- NOTIFICATIONS -->
+        <div class="notification-wrapper">
+            <button type="button" id="notification-bell" aria-label="Notifications">
+                <span class="notification-bell-icon">🔔</span>
+                <span id="notification-count" hidden>0</span>
+            </button>
+
+            <div id="notification-panel" hidden>
+                <div class="notification-panel-header">
+                    <strong>Notifications</strong>
+                    <span id="notification-panel-count">0 en attente</span>
+                </div>
+
+                <div id="notification-list">
+                    <p class="notification-empty">Chargement...</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="../index.html" class="admin-header-link admin-shop-button">
+            Retour boutique
+        </a>
+
+        <button id="dashboard-logout" class="admin-logout">
+            Déconnexion
+        </button>
+    </div>
+</header>
 
     <main class="admin-container">
         <section class="admin-welcome">

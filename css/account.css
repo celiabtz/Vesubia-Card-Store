@@ -500,3 +500,48 @@
     margin: 0 !important;
     padding: 0 !important;
 }
+
+/* CORRECTION AFFICHAGE MES RESERVATIONS */
+
+#customer-reservations {
+    width: 100%;
+}
+
+#customer-reservations .reservation-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 15px;
+    padding: 25px 0 10px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#customer-reservations .reservation-empty i {
+    display: block;
+    position: static;
+    margin: 0;
+}
+
+#customer-reservations .reservation-empty p {
+    display: block;
+    position: static;
+    margin: 0;
+    line-height: 1.7;
+}
+
+#customer-reservations .reservation-empty a {
+    display: inline-flex;
+    position: static;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#customer-reservations .reservation-empty * {
+    float: none;
+}

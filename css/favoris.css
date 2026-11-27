@@ -1,24 +1,22 @@
-
 /* ==========================================
-   VESUBIA - PAGE FAVORIS
+   VESUBIA - PAGE FAVORIS | DESIGN PREMIUM
 ========================================== */
 
 .cart-page {
     width: min(1200px, calc(100% - 40px));
     margin: 0 auto;
-    padding: 45px 0 80px;
+    padding: 50px 0 90px;
     color: #f5f2e9;
 }
 
 /* RETOUR */
-
 .cart-back {
     display: inline-block;
-    color: #aaa;
+    color: #929292;
     text-decoration: none;
     font-size: 12px;
-    margin-bottom: 25px;
-    transition: color .2s ease;
+    margin-bottom: 30px;
+    transition: color .25s ease;
 }
 
 .cart-back:hover {
@@ -26,137 +24,102 @@
 }
 
 /* INTRO */
-
 .cart-page .section-eyebrow {
     color: #d6b45b;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 3px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .cart-page h1 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(38px, 5vw, 58px);
+    font-size: clamp(40px, 5vw, 64px);
     font-weight: 500;
+    letter-spacing: -1px;
     margin: 0 0 15px;
 }
 
 .cart-page > p:not(.section-eyebrow) {
-    color: #aaa;
-    font-size: 13px;
-    margin-bottom: 35px;
-}
-
-/* CONTENEUR CARTES */
-
-#favorite-products {
-    margin-top: 25px;
-}
-
-/* MESSAGE VIDE */
-
-#favorite-products > p {
-    color: #aaa;
-    padding: 30px 0;
+    color: #a5a5a5;
     font-size: 14px;
-}
-
-/* TOTAL */
-
-.cart-summary {
-    margin-top: 45px;
-    padding: 25px;
-    background: #151518;
-    border: 1px solid rgba(214,180,91,.3);
-    border-radius: 12px;
-}
-
-.cart-summary h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    font-weight: 500;
-    margin: 0 0 20px;
-}
-
-.cart-summary h2 span {
-    color: #d6b45b;
-}
-
-/* BOUTON */
-
-.cart-summary .product-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 20px;
-    background: linear-gradient(135deg, #d6b45b, #a9823b);
-    color: #111;
-    border-radius: 7px;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 700;
-    transition: .25s ease;
-}
-
-.cart-summary .product-button:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.08);
-}
-
-/* MOBILE */
-
-@media(max-width: 650px) {
-    .cart-page {
-        width: calc(100% - 30px);
-        padding: 35px 0 60px;
-    }
-
-    .cart-page h1 {
-        font-size: 38px;
-    }
-
-    .cart-summary {
-        padding: 20px;
-    }
+    margin-bottom: 35px;
+    line-height: 1.7;
 }
 
 /* ==========================================
-   CORRECTION AFFICHAGE CARTES FAVORIS
+   GRILLE FAVORIS
 ========================================== */
 
 #favorite-products {
     display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 25px !important;
-    align-items: stretch !important;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 300px)) !important;
+    gap: 28px !important;
+    align-items: start !important;
+    margin-top: 30px;
 }
 
-/* Carte */
+/* MESSAGE / INFORMATIONS NON-CARTE */
+#favorite-products > *:not(.product-card) {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 17px 22px !important;
+    margin: 0 0 5px !important;
+    border-radius: 10px !important;
+    background: linear-gradient(110deg, rgba(130, 20, 20, .13), rgba(20,20,20,.5)) !important;
+    border: 1px solid rgba(180, 60, 60, .25) !important;
+    color: #c8c8c8 !important;
+    font-size: 13px !important;
+    line-height: 1.7 !important;
+    text-align: left !important;
+}
+
+/* MESSAGE VIDE */
+#favorite-products > p {
+    color: #aaa;
+    padding: 25px 0;
+    font-size: 14px;
+}
+
+/* ==========================================
+   CARTES PRODUITS
+========================================== */
+
 #favorite-products .product-card {
     display: flex !important;
     flex-direction: column !important;
     height: auto !important;
     min-height: 0 !important;
     overflow: hidden !important;
-    background: #151518 !important;
-    border: 1px solid rgba(255, 217, 40, .3) !important;
-    border-radius: 12px !important;
+    background: #121214 !important;
+    border: 1px solid rgba(214,180,91,.22) !important;
+    border-radius: 13px !important;
+    transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease !important;
+    position: relative !important;
 }
 
-/* Image */
+#favorite-products .product-card:hover {
+    transform: translateY(-5px) !important;
+    border-color: rgba(214,180,91,.6) !important;
+    box-shadow: 0 12px 35px rgba(0,0,0,.25) !important;
+}
+
+/* IMAGE */
 #favorite-products .product-card .product-image {
     position: relative !important;
     width: 100% !important;
-    height: 260px !important;
-    min-height: 260px !important;
-    max-height: 260px !important;
+    height: 280px !important;
+    min-height: 280px !important;
+    max-height: 280px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     overflow: hidden !important;
-    background: #101013 !important;
-    padding: 10px !important;
+    background: radial-gradient(circle at center, #1b1b1e 0%, #101012 75%) !important;
+    padding: 15px !important;
     box-sizing: border-box !important;
 }
 
@@ -167,111 +130,93 @@
     max-height: 100% !important;
     object-fit: contain !important;
     padding: 0 !important;
+    transition: transform .35s ease !important;
 }
 
-/* Informations */
+#favorite-products .product-card:hover .product-image img {
+    transform: scale(1.04) !important;
+}
+
+/* INFORMATIONS */
 #favorite-products .product-info {
     display: flex !important;
     flex-direction: column !important;
     flex: 1 !important;
     min-height: 0 !important;
-    padding: 15px !important;
-    gap: 10px !important;
+    padding: 18px !important;
+    gap: 12px !important;
     background: #151518 !important;
     box-sizing: border-box !important;
 }
 
-/* Titre */
+/* TITRE */
 #favorite-products .product-info h2,
 #favorite-products .product-info h3 {
-    font-size: 17px !important;
-    line-height: 1.4 !important;
+    font-family: 'Playfair Display', serif !important;
+    font-size: 18px !important;
+    line-height: 1.5 !important;
     margin: 0 !important;
     color: #f5f2e9 !important;
+    font-weight: 500 !important;
 }
 
-/* Description */
+/* DESCRIPTION */
 #favorite-products .product-info p {
     display: none !important;
 }
 
-/* Prix et boutons */
+/* BAS DE CARTE */
 #favorite-products .product-bottom {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
     flex-wrap: wrap !important;
-    gap: 10px !important;
+    gap: 12px !important;
     margin-top: auto !important;
-    padding-top: 10px !important;
+    padding-top: 12px !important;
 }
 
+/* PRIX */
 #favorite-products .product-price {
-    font-size: 20px !important;
-    color: #FFD928 !important;
-    font-weight: 800 !important;
+    font-size: 21px !important;
+    color: #d6b45b !important;
+    font-weight: 700 !important;
     margin: 0 !important;
 }
 
+/* BOUTONS */
 #favorite-products .product-button {
     padding: 10px 15px !important;
     font-size: 12px !important;
 }
 
-/* Responsive */
-@media (max-width: 850px) {
-    #favorite-products {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
-}
-
-@media (max-width: 580px) {
-    #favorite-products {
-        grid-template-columns: 1fr !important;
-    }
-
-    #favorite-products .product-card .product-image {
-        height: 250px !important;
-        min-height: 250px !important;
-        max-height: 250px !important;
-    }
-}
-
 /* ==========================================
-   FAVORIS - DESIGN DES ICONES
+   COEUR FAVORIS
 ========================================== */
 
-#favorite-products .product-image {
-    position: relative !important;
-}
-
-/* BOUTON COEUR */
 #favorite-products .wishlist-button {
     position: absolute !important;
     top: 14px !important;
     left: 14px !important;
     z-index: 20 !important;
-
     width: 38px !important;
     height: 38px !important;
-
     border-radius: 50% !important;
-    background: rgba(20,20,20,.95) !important;
-    border: 1px solid rgba(255,60,60,.45) !important;
-
+    background: rgba(12,12,12,.85) !important;
+    backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(210,70,70,.35) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-
     padding: 0 !important;
     cursor: pointer !important;
+    transition: .25s ease !important;
 }
 
-/* CŒUR : ON FORCE SON AFFICHAGE */
 #favorite-products .wishlist-button::after {
     content: "♥" !important;
-    color: #ff4545 !important;
-    font-size: 19px !important;
+    color: #e64a4a !important;
+    font-size: 18px !important;
     line-height: 1 !important;
     display: block !important;
 }
@@ -281,86 +226,41 @@
 }
 
 #favorite-products .wishlist-button:hover {
-    background: #ff4545 !important;
+    background: #a82929 !important;
+    border-color: #a82929 !important;
+    transform: scale(1.08) !important;
 }
 
 #favorite-products .wishlist-button:hover::after {
     color: white !important;
 }
 
-/* SELECTION PLUS DISCRETE */
+/* ==========================================
+   SELECTION RESERVATION
+========================================== */
+
 #favorite-products .reservation-selection {
     position: absolute !important;
     top: 14px !important;
     right: 14px !important;
+    width: 30px !important;
+    height: 30px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
     z-index: 20 !important;
-
-    width: 36px !important;
-    height: 36px !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    background: rgba(20,20,20,.95) !important;
-    border: 1px solid rgba(255,217,40,.4) !important;
-    border-radius: 50% !important;
-
-    cursor: pointer !important;
-}
-
-/* PETIT CERCLE DE SELECTION */
-#favorite-products .reservation-selection input {
-    appearance: none !important;
-    -webkit-appearance: none !important;
-
-    width: 17px !important;
-    height: 17px !important;
-
-    margin: 0 !important;
-    border: 1.5px solid #d6b45b !important;
-    border-radius: 50% !important;
-
-    background: transparent !important;
-    cursor: pointer !important;
-}
-
-/* SELECTION ACTIVE */
-#favorite-products .reservation-selection input:checked {
-    background: #FFD928 !important;
-    border-color: #FFD928 !important;
-    box-shadow: inset 0 0 0 3px #191919 !important;
-}
-
-/* CARTE SELECTIONNEE */
-#favorite-products .product-card:has(.reservation-selection input:checked) {
-    border: 2px solid #FFD928 !important;
-    box-shadow: 0 0 15px rgba(255,217,40,.12) !important;
-}
-/* SELECTION RESERVATION - STYLE ELEGANT */
-
-#favorite-products .reservation-selection {
-    position: absolute !important;
-    top: 14px !important;
-    right: 14px !important;
-    width: 28px !important;
-    height: 28px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    cursor: pointer !important;
-    z-index: 5 !important;
 }
 
 #favorite-products .reservation-selection input {
     appearance: none !important;
     -webkit-appearance: none !important;
-    width: 20px !important;
-    height: 20px !important;
+    width: 21px !important;
+    height: 21px !important;
     margin: 0 !important;
-    border: 1px solid rgba(214, 180, 91, .65) !important;
+    border: 1px solid rgba(214,180,91,.7) !important;
     border-radius: 6px !important;
-    background: rgba(255,255,255,.03) !important;
+    background: rgba(10,10,10,.8) !important;
     cursor: pointer !important;
     transition: all .2s ease !important;
     position: relative !important;
@@ -386,4 +286,94 @@
     color: #111 !important;
     font-size: 13px !important;
     font-weight: 900 !important;
+}
+
+/* CARTE SELECTIONNEE */
+#favorite-products .product-card:has(.reservation-selection input:checked) {
+    border: 1px solid #d6b45b !important;
+    box-shadow: 0 0 18px rgba(214,180,91,.12) !important;
+}
+
+/* ==========================================
+   RECAPITULATIF
+========================================== */
+
+.cart-summary {
+    margin-top: 50px;
+    padding: 30px;
+    background: linear-gradient(145deg, #171719, #111113);
+    border: 1px solid rgba(214,180,91,.25);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.15);
+}
+
+.cart-summary h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 500;
+    margin: 0 0 25px;
+    color: #f5f2e9;
+}
+
+.cart-summary h2 span {
+    color: #d6b45b;
+}
+
+/* BOUTON RESERVATION */
+.cart-summary .product-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #d6b45b, #a9823b);
+    color: #111;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    transition: .25s ease;
+    border: none;
+}
+
+.cart-summary .product-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+    box-shadow: 0 5px 20px rgba(214,180,91,.15);
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 850px) {
+    #favorite-products {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+    }
+}
+
+@media (max-width: 580px) {
+    .cart-page {
+        width: calc(100% - 30px);
+        padding: 35px 0 60px;
+    }
+
+    .cart-page h1 {
+        font-size: 38px;
+    }
+
+    #favorite-products {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+
+    #favorite-products .product-card .product-image {
+        height: 260px !important;
+        min-height: 260px !important;
+        max-height: 260px !important;
+    }
+
+    .cart-summary {
+        padding: 22px;
+    }
 }
